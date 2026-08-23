@@ -290,7 +290,7 @@ Status: **R** ratified · **Q** queued · **B** backlog · **—** not started. 
 
 ## Method
 
-GNOMON runs under the Falsifiable Spec method (v0.4), self-applied: this README is itself versioned, reviewable, and carries its own open questions. Provenance follows house practice — SHA-256-pinned sources per essay, hash-chained ledgers, HIRI-compatible signing planned for ratified artifacts. The corpus is written so that a hostile reviewer, a stranger, and eventually a synthetic person can each verify not that it is *good*, but exactly what it *claims* — and where its jurisdiction ends.
+GNOMON runs under the Falsifiable Spec method (v0.4), self-applied: this README is itself versioned, reviewable, and carries its own open questions. Provenance follows house practice — SHA-256-pinned sources per essay, hash-chained ledgers, HIRI-compatible https://skreen5hot.github.io/HIRI/developer-guide.html signing planned for ratified artifacts. The corpus is written so that a hostile reviewer, a stranger, and eventually a synthetic person can each verify not that it is *good*, but exactly what it *claims* — and where its jurisdiction ends.
 
 **Open questions for adjudication (v0.1):** window size for the completeness criterion; whether ARCH.md drift-checking against live FNSR specs is mechanical (id match) or adjudicated; whether situations may be contributed anonymously; license split confirmation.
 
