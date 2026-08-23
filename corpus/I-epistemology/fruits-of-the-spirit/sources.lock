@@ -1,0 +1,27 @@
+# E-I.1 — The Fruits of the Spirit · sources.lock
+#
+# STATUS: EMPTY — no citation has been pinned. Open item: O-SRC-F01.
+#
+# ESSAY.md carries the corpus's heaviest citation load and the only empirically falsifiable
+# claims in it: a References section plus an empirical research program (§11) proposing three
+# study designs, and a convergence hypothesis (§10.4) that the program is meant to test.
+#
+# This matters more here than elsewhere. An essay that proposes empirical studies and cites
+# psychological literature (Ryff & Singer, Seligman, Ryan & Deci, Keyes, Henrich, and others
+# via the parent framework) is making claims whose sources can go stale, be retracted, or fail
+# replication. Unpinned, a ratified argument can be silently undermined by its own citations —
+# and gnomon-sources cannot verify what it cannot address.
+#
+# Format not yet defined (services/gnomon-sources, SVC-1). Proposed record shape is documented
+# in ../judge-not/sources.lock.
+#
+# Additional open question specific to this essay, deferred to gnomon-sources:
+#   - Empirical citations need a replication/retraction status field, not only a hash. A hash
+#     pins the text; it does not pin whether the finding still stands. Pinning a paper that was
+#     later retracted would verify green while the argument rots. Is retraction-checking
+#     mechanical (a DOI status lookup) or adjudicated at review?
+#   - The BFO commitment (§3.1) cites an ontology with its own versioning. Pinning a paper about
+#     BFO is not the same as pinning the BFO version whose semantics the argument relies on.
+
+version: 0
+sources: []

@@ -1,0 +1,59 @@
+# E-I.1 — The Fruits of the Spirit
+#
+# STATUS: STUB. Jurisdiction has NOT been declared for this essay.
+#
+# This file is deliberately written to FAIL lint: does_not_decide is empty, and an essay that
+# declines to declare its limits fails lint before it reaches review. That failure is correct
+# and should not be silenced. The essay is listed as ratified v2.0 without ever having declared
+# a jurisdiction panel — which is the finding, not the linter.
+#
+# The `status` key is proposed, not ratified; the schema is undefined (services/gnomon-lint,
+# SVC-1). If the schema adopts a stub state, a stub MUST still fail the G0 gate — it may only
+# change the error from "malformed" to "undeclared", which are different findings.
+#
+# Open item: O-JUR-F01.
+
+status: stub
+
+id: E-I.1
+title: "The Fruits of the Spirit as Phenomenological Indicators of Integral Alignment"
+version: null          # ESSAY.md carries no version line; README claims 2.0 — see LEDGER.md
+movement: I
+
+# Candidate entries below are a READING of ESSAY.md, not a declaration. They are commented out
+# so that nothing here can be mistaken for a claim the essay has made. Declaring them is an
+# authoring act performed at G0 and adjudicated at G2.
+decides: []
+  # - the measurement problem left open by Integral Ethics §7.3
+  # - the ontological status of the fruits: dispositions with variable realization, not metrics
+  # - recognition conditions: who may recognize, and the accreditation problem
+  # - the division of labor between formal systems and human judgment
+  # - absence as diagnostic question rather than verdict
+
+# MUST be non-empty before G0. Currently empty — fails lint by design.
+does_not_decide: []
+  # - what a person finally is                      -> reserved, INV-03
+  # - whether an individual's absence of fruit is culpable
+  # - the binding force of one's own conscience     -> E-I.3
+  # - prudential judgment of conduct                -> E-I.2
+
+handoffs: []
+
+axes:
+  responsibility: null
+  humility: null
+
+registers: []
+
+reserved_strata_touched: []
+
+invariants:
+  INV-01: undeclared
+  INV-02: undeclared
+  INV-03: undeclared
+  INV-04: undeclared
+  INV-05: undeclared
+
+grounds: []            # ESSAY.md names IEE; not yet declared here — see ARCH.md (A-I.1)
+
+carrier: null          # not drafted — C-I.1

@@ -99,8 +99,20 @@ gnomon/
 ├── SPINE.md                     # lifecycle spine, movements, scales
 ├── GLOSSARY.md                  # controlled vocabulary: lock/gavel, registers,
 │                                #   strata, axes, knock, carrier, gnomon condition
-├── ROADMAP.md                   # sequencing detail, critical path, session log
-├── LICENSE                      # dual: essays CC BY-SA 4.0; tooling Apache-2.0
+├── ROADMAP.md                   # sequencing detail, critical path, session log,
+│                                #   consolidated open-item register
+├── LICENSE                      # the split, declared by file kind and by path
+├── LICENSE-CC-BY-SA-4.0         # corpus prose and its adjudication record
+├── LICENSE-Apache-2.0           # tooling, schemas, fixtures, machine-readable panels
+│
+├── foundations/                 # inherited documents — NOT corpus artifacts:
+│   │                            #   no triptych, no gates, no jurisdiction.yaml;
+│   │                            #   GNOMON does not own their version chains
+│   ├── README.md                # inventory, dependency map, no-relicensing rule
+│   ├── integral-ethics.md       # substantive foundation: the twelve worldviews,
+│   │                            #   the value ontology GNOMON contributes to
+│   └── falsifiable-spec-method-v0.4.md   # method foundation: the one law, P1-P11,
+│                                #   the rubric, the finding->disposition discipline
 │
 ├── corpus/
 │   ├── I-epistemology/
@@ -142,6 +154,11 @@ gnomon/
 │   # ├── LEDGER.md             # findings, dispositions, version chain
 │   # ├── jurisdiction.yaml     # machine-readable jurisdiction (schema below)
 │   # └── sources.lock          # SHA-256-pinned citations
+│   #
+│   # a not-started essay carries a single STATUS.md in place of the panels:
+│   # id, movement, priority, charter note, and the G0 checklist. The panels are
+│   # created when drafting begins — an empty jurisdiction.yaml would lint red
+│   # forever and say nothing true about the essay.
 │
 ├── routing/
 │   ├── PROTOCOL.md              # the Routing Test, completeness criterion
@@ -292,7 +309,9 @@ Status: **R** ratified · **Q** queued · **B** backlog · **—** not started. 
 
 GNOMON runs under the Falsifiable Spec method (v0.4), self-applied: this README is itself versioned, reviewable, and carries its own open questions. Provenance follows house practice — SHA-256-pinned sources per essay, hash-chained ledgers, HIRI-compatible https://skreen5hot.github.io/HIRI/developer-guide.html signing planned for ratified artifacts. The corpus is written so that a hostile reviewer, a stranger, and eventually a synthetic person can each verify not that it is *good*, but exactly what it *claims* — and where its jurisdiction ends.
 
-**Open questions for adjudication (v0.1):** window size for the completeness criterion; whether ARCH.md drift-checking against live FNSR specs is mechanical (id match) or adjudicated; whether situations may be contributed anonymously; license split confirmation.
+**Open questions for adjudication (v0.1):** window size for the completeness criterion (→ `routing/PROTOCOL.md` O-RTG-01); whether ARCH.md drift-checking against live FNSR specs is mechanical (id match) or adjudicated (→ `services/README.md` O-SVC-02); whether situations may be contributed anonymously (→ `CHARTER.md` O-CHT-03). The license split is executed — see `LICENSE`.
+
+Each question now lives with the artifact that owns it rather than in this list. The consolidated register of every open item raised across the corpus is `ROADMAP.md`.
 
 ---
 

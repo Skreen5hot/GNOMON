@@ -1,0 +1,46 @@
+# S-0001 — route
+#
+# STATUS: STUB. No routing has been adjudicated. The situation itself is not authored
+# (../situations/S-0001-sleepover.md), and a route over an unwritten case would be fiction.
+#
+# The schema below is PROPOSED, not ratified — services/gnomon-route does not exist and
+# O-RTG-05 owns the format. Field names here are a first draft and will change.
+#
+# A route is a reviewable artifact: a route is a judgment, and judgments get adjudicated
+# (PROTOCOL.md §2). This one has been adjudicated by no one.
+
+status: stub
+situation: S-0001
+
+# The single essay that holds this situation. Exactly one, or the situation is contested.
+primary_jurisdiction: null
+
+# Essays that bear on the situation without holding it.
+contributing: []
+
+# The chain of does_not_decide -> handoff hops traversed while routing. Each hop must
+# correspond to a declared handoff in the source essay's jurisdiction.yaml, or the route
+# has invented a connection the corpus does not license.
+handoff_chain: []
+
+# Filed if the situation routes nowhere. Mutually exclusive with primary_jurisdiction.
+gap: null
+
+adjudication:
+  adjudicated_by: null
+  date: null
+  contested: null        # true | false — undefined until O-RTG-02 defines the term
+  reasons: null
+
+# Notes toward the eventual route, held here rather than in the situation file so that the
+# situation is not pre-routed by its own author:
+#
+#   The obvious answer is E-I.2, whose carrier uses this exact scene. That is what makes
+#   S-0001 a weak first test — it is the corpus's own worked example handed back to it.
+#   The interesting question is whether the route needs a handoff the essay does not declare:
+#   the parent who declines the sleepover still has to decide what, if anything, to say to
+#   the other family. That is speech about a third party under uncertainty, which is E-II.1
+#   (Truthfulness) and E-II.3 (Display) territory, and E-I.2's declared handoffs are
+#   [E-III.1, E-III.2, E-I.3, E-VI.1] — none of them. If the route needs a hop the corpus
+#   has not declared, that is a finding against E-I.2's jurisdiction panel, not against the
+#   route.

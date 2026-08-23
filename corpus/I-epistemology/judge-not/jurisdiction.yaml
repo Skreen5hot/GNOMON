@@ -1,0 +1,52 @@
+# E-I.2 — Judge Not
+#
+# STATUS: transcribed from README.md, where it is published as an ABRIDGED example.
+# This file is therefore incomplete by construction: the abridgement means fields may be
+# missing that the schema will require, and the listed entries may be a subset of the
+# essay's actual jurisdiction. It has NOT been reconciled against ESSAY.md v1.0.
+#
+# Schema is not yet defined (services/gnomon-lint, SVC-1). Key names below are inherited
+# from the README example and are provisional.
+#
+# Open item: O-JUR-J01 — reconcile against ESSAY.md v1.0 and complete the abridged fields.
+
+id: E-I.2
+title: "Judge Not: Discernment, Responsibility, and the Judgment of the Self"
+version: "1.0"
+movement: I
+
+decides:
+  - license conditions for prudential judgment of conduct
+  - verdict/precaution register separation (two thresholds)
+  - "delegated corporate judgment: duties to accuser, accused, institution"
+  - "reflexive limit: examination without self-sentence"
+
+# MUST be non-empty. An essay that declines to declare its limits fails lint before review.
+does_not_decide:
+  - post-wrong first-person repair            # -> E-III.1
+  - release of the offender                   # -> E-III.2
+  - binding force of one's own conscience     # -> E-I.3
+  - legitimacy and limits of authority        # -> E-VI.1
+
+handoffs: [E-III.1, E-III.2, E-I.3, E-VI.1]
+
+axes:
+  responsibility: "rises stranger -> household; peaks at guardianship"
+  humility: "rises toward the interior; absolute at strata 4-5"
+
+registers: [verdict, precaution]
+
+reserved_strata_touched: [acts, patterns, intention_culpability]
+
+invariants:
+  INV-01: declared
+  INV-02: declared
+  INV-03: declared
+  INV-04: declared
+  INV-05: declared
+
+grounds: [ARCHON, CTS, ARIADNE, WillObservatory]   # elaborated in ARCH.md — not yet written
+
+carrier:
+  title: "The Gavel and the Watch"
+  version: "1.0"

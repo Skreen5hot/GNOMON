@@ -1,0 +1,34 @@
+# E-I.2 — Judge Not · sources.lock
+#
+# STATUS: EMPTY — no citation has been pinned. Open item: O-SRC-J01.
+#
+# ESSAY.md v1.0 cites Scripture (ESV), Augustine, Aquinas (Summa Theologiae II-II q.60),
+# Tolstoy, Dostoevsky (Zosima), Alphonsus Liguori, the Ignatian Spiritual Exercises, and
+# Malle (2006), among others. None is pinned. Provenance for this ratified essay therefore
+# rests on the reference list in the essay body, which gnomon-sources cannot verify.
+#
+# Format is not yet defined (services/gnomon-sources, SVC-1). The shape below is proposed,
+# not ratified: one record per cited source, pinning a SHA-256 over an archived copy so that
+# a citation cannot silently change under a ratified argument.
+#
+# Proposed record:
+#
+#   - id: aquinas-st-ii-ii-q60
+#     cited_as: "Aquinas, Summa Theologiae II-II, q. 60"
+#     edition: ""              # translation, publisher, year — REQUIRED; editions differ materially
+#     locator: "q. 60, aa. 1-4"
+#     archived: ""             # path or URI of the archived copy the hash is taken over
+#     sha256: ""
+#     retrieved: ""            # ISO-8601
+#     used_at: ["§4", "§3.1", "§5.2", "§8", "§9.2", "§11.5"]
+#
+# Open questions this file cannot answer alone, deferred to gnomon-sources:
+#   - What is pinned for a public-domain classical text with many editions — the edition used,
+#     or a canonical locator? The essay's argument turns on Aquinas's exact wording in
+#     translation, so the edition is load-bearing and a locator alone is insufficient.
+#   - What is pinned for Scripture, where ESV is named in the essay but no edition/year is given?
+#   - Does an unpinnable source (a print-only edition) block ratification, or is it declared
+#     as an absence with a reason, per the FS method's declared-absence discipline (NG-*)?
+
+version: 0
+sources: []
