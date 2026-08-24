@@ -45,6 +45,8 @@ at G0.**
 | **BE-008** | `tools/fixture-harness/**` | v0.1.0 | 2026-08-24 | *not started* |
 | **BE-009** | `.github/workflows/fixtures.yml` | — | 2026-08-24 | *not started* |
 | **BE-010** | `.gitattributes` | — | 2026-08-24 | *not started* |
+| **BE-011** | `foundations/PRECEDENT.md` | v0.1 | 2026-08-24 | *not started* |
+| **BE-012** | `TENSIONS.md` | v0.1 | 2026-08-24 | *not started* |
 
 **No sunset clock is running.** D-F is open: neither N nor the unit of "review cycle" is set, and
 per `CHARTER.md` §4.11 a sunset with an undefined clock binds nothing and MUST NOT be reported as
@@ -53,6 +55,32 @@ binding. The column is present so that it cannot be quietly omitted once D-F clo
 **Re-ratification queue** (§4.4.5): the conferral model first, ratified under its own procedure;
 this charter second; `INVARIANTS.md` third; the remainder in an order the architect sets and
 ledgers.
+
+---
+
+## 1a. Drift register
+
+Adopted from ARIADNE's `00-foundation/drift-record.md` (`foundations/PRECEDENT.md` §1.2), which
+records **intentional** divergence — original position, new position, reason, approver — so that a
+deliberate departure is distinguishable from decay.
+
+**One divergence from the precedent, and it is the whole point.** ARIADNE has seven drift records
+of which **one** carries a real approver; the rest read `—` or `Pending`. A register with an
+unfilled approval column does not confer, it accumulates: an unauthorised backlog that looks like
+governance until you read the last column.
+
+> **`Approved by` MUST be a named party and a date, or the entry is `pending-conferral` and is
+> reported as unapproved.** It is never rendered as though the change had been accepted.
+
+Under `CHARTER.md` §4.6 the only party currently able to approve is the self-declared ratifying
+architect, so entries below will read `pending-conferral` until O-CHT-01 closes. **That is the
+honest state, and showing it is the reason the column exists.**
+
+*Empty.* No intentional divergence from a foundation has yet been recorded.
+
+| Id | Original position | New position | Reason | Approved by |
+|---|---|---|---|---|
+| — | — | — | — | — |
 
 ---
 
@@ -167,6 +195,20 @@ at `main`, not ratification records** — stronger than *reported*, weaker than 
 `CHARTER.md` §2.3 does not accept self-declaration as conferral — the same standard the corpus
 applies to its own two essays, which is why they sit at `pending-conferral`. Rows are **located
 and versioned, not ratified**, and `ARCH.md` notes must say so per D-B(d).
+
+### Cycle 6 — ARIADNE as precedent · 2026-08-24
+
+GNOMON is a spin-out of ARIADNE, so ARIADNE's management is evidence about GNOMON's likely failure
+modes rather than an unrelated repository. Read at `main`; analysis at `foundations/PRECEDENT.md`.
+
+| Id | Finding | Disposition |
+|---|---|---|
+| **R-35** | **GNOMON had no register for tensions.** A contradiction *between* artifacts is not a defect *in* one, and filing it as a finding implies someone can fix it. R-32 (Triple-I) was mis-filed for exactly this reason. ARIADNE has carried a tension log with 20 entries and a vocabulary GNOMON lacked — including `Open, likely irreducible — an honestly named limit, not a defect`. | ACCEPT → `TENSIONS.md` created and seeded with four real tensions. R-32 reclassified as **T-001, `inherited`** — it is between two ARIADNE documents and is not GNOMON's to adjudicate |
+| **R-36** | **Registers without approval authority accumulate rather than confer.** ARIADNE has 7 drift records of which 1 has a real approver; 6 read `—` or `Pending`. It also parks 6 tensions at `Resolved in principle`, meaning agreed-but-unverified. This is O-CHT-01's failure mode demonstrated at scale, not predicted. | ACCEPT → drift register added at §1a with a **mandatory named approver**; `Resolved in principle` explicitly **not adopted** — a tension stays `open` with an exit criterion, because a status that lets an item stop moving while looking finished is worse than an open one |
+| **R-37** | **Periodic manual review leaves drift invisible between rounds, and cannot diff a phrase across 111 files.** ARIADNE's reviews cluster at 2026-01-30 and 2026-05-15 — 3.3 months stale as of today — and the Triple-I contradiction survived a tension log built for exactly that, because no human diffs every load-bearing phrase twice a year. | ACCEPT → confirms the Phase 1 ordering rather than changing it: mechanical checks on every push, controlled vocabulary enforced by `gnomon-xref` (O-GLS-02). Recorded in `PRECEDENT.md` §2.2–2.3 so the ordering has evidence behind it, not just an argument |
+| **R-38** | **Generated artifacts and filename-versioning decay.** `service_inventory.json` is stale against its own directory with `sha256: "PENDING"`; three SHML versions coexist under two separator conventions; a download artifact `MDRE-…-v1.3 (1).md`, a typo'd filename `OERS-Specificaiton.md`, and a `nul` file are all committed. | ACCEPT → GNOMON's existing practices confirmed as deliberate divergences and now stated as such: version lives in the ledger, never the filename; a generated artifact is regenerated in CI or is not trusted (O-LDG-G02) |
+| **R-39** | **ARIADNE's `spec-index.md` may be the closest thing to a conferral record the two essays have.** It records *Fruits of the Spirit — PASS (exemplary), 2026-05-15* and reviews of Judge Not under a named 7-check rubric. GNOMON has been treating both essays as having no conferral record at all. | ACCEPT → bears directly on **O-CHT-04**. Whether an upstream coherence review under ARIADNE's rubric constitutes conferral under `CHARTER.md` §3 is a question for O-CHT-01; it is at minimum *evidence*, and recording it as nothing was an error |
+| **R-40** | **ARIADNE's 7-check review rubric has no GNOMON equivalent.** Gates G0–G3 say when review happens, not what a reviewer works through. Its **One-Paragraph Test** — can you still explain the system simply — is a system-level analogue of the Carrier Test and catches "every part is fine, the whole is now incoherent," which nothing in GNOMON does. | ACCEPT → **new open item O-CHT-07**: adopt a per-artifact review rubric at G1, including a corpus-level One-Paragraph Test. Sequenced with O-CHT-02 (review independence) at 0.7 |
 
 ---
 

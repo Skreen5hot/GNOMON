@@ -1,7 +1,17 @@
 # Foundations
 
-**Status:** v0.1 — stub. Inventory and dependency declarations are stated; provenance
-fields and license notices are open items.
+**Status:** v0.2. Inventory and dependency declarations are stated; provenance fields and license
+notices are open items.
+
+> **GNOMON is a spin-out of [`Skreen5hot/ariadne`](https://github.com/Skreen5hot/ariadne)** — the
+> moral-judgment work moved into a repository that can hold it properly. ARIADNE remains the
+> parent program and the coherence discipline over the wider ecosystem (111 documents, 64 service
+> specs). What GNOMON inherits from its management, what it deliberately does differently, and the
+> evidence for each, is [`PRECEDENT.md`](PRECEDENT.md).
+>
+> **The migration is unfinished.** `ariadne/docs/01-philosophy/` still holds `integral-ethics.md`,
+> `fruits-of-the-spirit.md`, and `judge-not-v1.0.md`. Two copies, neither declared canonical, and
+> content anchors cannot see across repositories — **O-FND-01**.
 
 Documents GNOMON *inherits* and answers to. They are not corpus artifacts: they do not
 ship as triptychs, they are not gated at G0–G3, they carry no `jurisdiction.yaml`, and
@@ -57,9 +67,15 @@ Two kinds sit here, and the distinction matters:
 3. **Version pinning is required before ratification depends on it.** An essay whose argument
    turns on a foundation document must cite it by version. Where the document carries no
    version, that is a defect in the dependency, not a licence to cite loosely — see F-01.
-4. **Drift is a finding.** When an upstream version supersedes what the corpus cites, the
-   supersession walk (FS method P10.3) runs here before dependent artifacts keep their
-   dispositions.
+4. **Drift is a finding — but some drift is intentional.** When an upstream version supersedes
+   what the corpus cites, the supersession walk (FS method P10.3) runs here before dependent
+   artifacts keep their dispositions. Where the divergence is *deliberate and argued*, its
+   disposition is a **drift record** in `../LEDGER.md` §1a stating the original position, the new
+   position, the reason, and — unlike the precedent — **a named approver**. Adopted from ARIADNE's
+   `drift-record.md`; see `PRECEDENT.md` §1.2 and §2.1 for why the approver is mandatory here.
+5. **A contradiction between artifacts is a tension, not a finding.** It goes in `../TENSIONS.md`.
+   A finding implies someone can fix it; some contradictions are permanent and saying so is a
+   result, not a failure.
 
 ---
 
