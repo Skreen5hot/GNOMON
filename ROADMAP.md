@@ -1,8 +1,13 @@
 # Roadmap
 
-**Status:** v0.3.1 — point release. Supersedes v0.3 after a second adversarial review of the
-machinery v0.3 introduced (findings R-14…R-19, dispositioned at §10.2). **Ratified under:
-bootstrap** — see §2.1.
+**Status:** v0.3.2 — maintenance release. Supersedes v0.3.1. **Ratified under: bootstrap** ·
+`bootstrap-entry: BE-006` — see §2.1.
+
+**What v0.3.2 fixes.** Three items landed after v0.3.1 was written — 0.12 fixture harness, 0.4a
+F-03 confirmation, 0.13 precedent review — and the document was edited in place without a version
+bump, leaving ten defects. Two are self-contradictions this file would fail its own review on:
+§3 argued both that CTS may be sketch-grade *and* that 0.4a proved it is not, and §2.1 forbade a
+second bootstrap registry while keeping one four lines later. Full list at §10.3.
 
 **Why a point release before Phase 0 runs.** v0.3's four load-bearing repairs were sound in
 design and three carried defects introduced *by the repair*: the bootstrap mark was overloaded
@@ -34,13 +39,14 @@ the repair, and it is the reason this version exists.
 | Essays (formal) | 22 | 2 | — |
 | Carriers | 22 | 1 | — |
 | Architecture notes | 22 | 0 | **blocked — B-1** |
-| Ledgers | 22 | 2 | 0 chained; **3 panels content-anchored** (pre-chain, 2026-08-23) |
+| Ledgers | 22 + governance | 2 + `LEDGER.md` | 0 chained; **3 panels content-anchored** (pre-chain) |
 | `jurisdiction.yaml` | 22 | 2 | 1 validates *against a G0 schema* † |
 | `sources.lock` | 22 | 2 empty | 0 |
 | Situations | window size **undecided** ‡ | 0 (5 placeholders) | — |
 | Routes | ≥ 1 per essay | 0 | — |
 | Gaps filed | — | 0 | — |
 | Services | 5 + shared | 0 | — |
+| Tensions logged | — | **4** (1 inherited, 1 irreducible) | `TENSIONS.md`, new at 0.13 |
 | Schema | 1 | 1 (v1.0, **bootstrap**) | **witnessed** against 11 fixtures § |
 
 † E-I.2's panel validates against a schema that is itself unratified. "Conformant" here means
@@ -77,7 +83,8 @@ exist before the first gate is run, not discovered when one jams.
 > **Normative text now lives at `CHARTER.md` §4** (specified 2026-08-24, closing O-CHT-05). What
 > follows is the roadmap's summary of why the protocol exists and what it does for sequencing.
 > Where this section and `CHARTER.md` §4 disagree, **§4 governs** and the divergence is a finding.
-> The registry of marked artifacts is `CHARTER.md` §4.8, not here — one register, not two.
+> The registry of marked artifacts is `CHARTER.md` §4.10 (and `LEDGER.md` §1), not here — one
+> register, not two.
 
 `CHARTER.md` §2.3 refuses self-certification. But Phase 0 produces the artifacts that *make the
 gates real* — invariant elaborations, the conferral model, review-independence criteria — and
@@ -120,14 +127,13 @@ queryability requirement is what forbids the overload.
 This honours the charter by *declaring* the exception rather than hiding it, which is what the
 corpus does with declared absences everywhere else.
 
-**Currently `ratified-under: bootstrap`:** `INVARIANTS.md` §Declaration ·
-`services/gnomon-lint/SCHEMA.md` · `jurisdiction.schema.json` · the fixtures · this file.
+**Where the marked artifacts are listed:** `CHARTER.md` §4.10 and `LEDGER.md` §1, and nowhere
+else. v0.3.1 kept its own copy of that list here — four lines below a note forbidding exactly
+that, so the "one register, not two" rule was violated inside the section stating it. The list has
+since grown from five entries to twelve, and the copy here was already stale. Removed rather than
+refreshed: a second register that must be manually synchronised is the defect, not its contents.
 
-**Currently `ratification: pending-conferral`:** E-I.1 `ESSAY.md` · E-I.2 `ESSAY.md` · E-I.2
-`CARRIER.md`. **The carrier is included** — v0.3's backlog marked the essay provisional and left
-the carrier at an unqualified "R v1.0," though its ratification at CG is exactly as unconferred.
-
-Neither mark is mechanized — neither field is in any schema. That is item 0.1.
+Neither mark is mechanized — neither field is in any schema. That is item 0.1 (O-CHT-06).
 
 ### 2.2 Deferral semantics · resolves R-04
 
@@ -265,40 +271,32 @@ Governance-Ready, Normative Draft, Publication Draft, Reference Architecture, an
 with no version at all. A single drift-check rule cannot serve all of them, which is exactly the
 argument for status-graded `ARCH.md`.
 
-#### `essay-upstream` — the resolution v0.3 omitted · new in v0.3.1 (R-18)
+#### `essay-upstream` — retained, and falsified by 0.4a · R-18, superseded
 
-v0.3's "Assess" rows admitted only two outcomes, vendor or pin, and both assume the spec is the
-upstream artifact. A third exists, and for sketch-grade specs it is the right one:
+**This subsection records a prediction that turned out to be wrong.** It is retained rather than
+deleted: the reasoning was sound and only its premise was false, and a roadmap that quietly removes
+its own falsified forecasts cannot be checked against its history.
 
-> **If CTS is sketch-grade, then E-II.2 is not blocked by CTS. CTS is blocked by E-II.2.**
+R-18 argued that if a spec is sketch-grade the grounding direction inverts — the essay becomes the
+upstream artifact and the spec is written against it, which is the project's own logic from
+`README.md` (*you cannot ground an agent in an ethics no one has specified*). On that reasoning
+B-1 would split into a blocking half and a generative half.
 
-The grounding direction inverts, and this is not a workaround — it is the singular project's
-stated logic, from `README.md`: *you cannot ground an agent in an ethics no one has specified;
-GNOMON is the specification.* A ratified essay is precisely the artifact a service spec should be
-written against. An essay waiting on a sketch it is supposed to ground has the dependency backwards.
+**0.4a falsified the premise.** CTS is v1.2.1 and implementation-ready; NIS v2.1 FINAL; DES v2.0.0
+Release Candidate; CSS v2.0.0 Final. No row in the table is sketch-grade, so the split does not
+occur and `essay-upstream` survives as a valid status in D-B(d) with **zero occupants**.
 
-**Consequence: B-1 splits.**
+What the reasoning still buys: the status exists for the case it described, so a future citation
+landing on a genuine sketch already has somewhere to go.
 
-| Spec state | B-1 is… | Because |
-|---|---|---|
-| ratified elsewhere (ARIADNE), or rc (Will Observatory) | **genuinely blocking** | Drift risk is real; the essay must agree with something that already exists and moves |
-| sketch-grade (CTS, NIS, DES/CSS?) | **generative, not blocking** | The "blocker" is the work, correctly ordered. The essay ships first |
-| in-corpus only (IEE) | undetermined | Depends on whether an external spec exists at all |
-
-So B-1's true scope is smaller than v0.3 claimed — but its *shape* is unknown until 0.4a, which is
-another reason 0.4a is retrieval-cheap and high-value.
-
-**What the distribution implies for D-B.** If the states hold, neither "hold everything incomplete"
-nor "vendor stubs and accept drift" is right, because the states are *heterogeneous*. The answer is
-option (d), **status-graded `ARCH.md`** — a note pins spec-version **plus status**, and
-drift-checking is graded per status:
+**D-B(d)'s grading, which stands:**
 
 | Spec status | Drift check |
 |---|---|
 | `ratified` | Strict — any divergence is a finding |
 | `rc-with-open-findings` | Against the spec's findings register; divergence on an open finding is expected, not a defect |
 | `sketch` | Grounds nothing; the note declares that as an absence |
-| **`essay-upstream`** | **Inverted — the spec is drift-checked against the essay, not the essay against the spec** |
+| `essay-upstream` | Inverted — the spec is drift-checked against the essay. **Zero occupants as of 0.4a** |
 
 ### B-2 · O-CHT-01 — conferral model unspecified
 
@@ -319,6 +317,11 @@ in a backlog cell as a note on one Phase 6 essay.
 
 An essay cannot cite a foundation by version when the foundation has none (`foundations/README.md`
 rule 3). **Exit:** version and status header exist upstream; dependent artifacts cite by version.
+
+**Partially evidenced 2026-08-24 (0.13).** ARIADNE's `spec-index.md` lists *Integral Ethics · —
+(no version) · **Stable** · reviewed 2026-01-30 · PASS (1 flag)*. A **status** exists upstream; a
+**version** still does not, and the version is the half that blocks citation. The exit criterion is
+unchanged, but the remaining work is smaller than B-4 implied.
 
 ---
 
@@ -377,7 +380,7 @@ graph TD
     DEF ==>|makes reachable| G3
     HG ==>|breaks topological trap| G3
 
-    F03 ==>|blocks ratified+rc only| ARCH
+    F03 ==>|blocks all 22| ARCH
     SCH --> LINT
     SHARED --> LINT
     SHARED --> XREF
@@ -452,8 +455,8 @@ existing artifacts are marked. A gate run after this point has vocabulary to rep
 | 0.9 | **B-4 / F-01** — version `integral-ethics.md` | S | R-09 |
 | **0.10** | **RT-1a — seed ~20 situations** with `provenance:` **and `derived_from:`** | M | R-03, **R-17**. See below |
 | 0.11 | `coupled:` relation in schema | S | R-07 |
-| **0.13** | **Precedent review — DONE 2026-08-24.** Studied ARIADNE's management; adopted the tension log and drift register, rejected `Resolved in principle` and blank approvers. `foundations/PRECEDENT.md`, `TENSIONS.md`. Findings R-35…R-40 | S | Evidence for the Phase 1 ordering |
 | **0.12** | **Fixture harness + CI** — O-SVC-05. **DONE 2026-08-24.** `tools/fixture-harness`, ESM + JSDoc, `tsc --checkJs`, expectations as per-fixture data, mutation-tested; workflow on LTS+current with a line-ending guard | S | D-E. Gives the red discipline its first witness |
+| **0.13** | **Precedent review — DONE 2026-08-24.** Studied ARIADNE's management; adopted the tension log and drift register, rejected `Resolved in principle` and blank approvers. `foundations/PRECEDENT.md`, `TENSIONS.md`. Findings R-35…R-40 | S | Evidence for the Phase 1 ordering |
 
 **0.10 is the change most likely to be skipped and should not be.** Situation *authoring* is
 cheap and depends on nothing but a provisional provenance stance. v0.2 put situations in Phase 4
@@ -611,7 +614,7 @@ regardless of what phase says otherwise.
 | # | Decision | Status |
 |---|---|---|
 | **D-A** | Phase 2a before Phase 3? | **Decided: yes.** 2a is S/M conformance work gating Phase 3; 2b (the carrier) runs parallel and does not gate |
-| **D-B** | If F-03 cannot clear, what happens to triptych completeness? | **Provisionally decided: (d) status-graded `ARCH.md`, with `essay-upstream` as a fourth status.** Confirmation gated on 0.4a. *Corrected in v0.3.1 (R-16): v0.3 marked this open while item 5.5 enacted (d) in the build order — the same theater v0.3 convicted v0.2 of.* **Delta if 0.4a surprises:** homogeneous states revive the simple options — all-ratified revives (a)-as-strictness, all-sketch means B-1 is not a blocker at all and (c) is moot. 5.5 stands **conditioned** on confirmation |
+| **D-B** | If F-03 cannot clear, what happens to triptych completeness? | **Decided 2026-08-24: (d) status-graded `ARCH.md`.** 0.4a confirmed it — and surprised in the direction opposite to the one v0.3.1 anticipated. The stated delta was "all-sketch means B-1 is not a blocker at all"; the finding was that **seven of nine rows are versioned at Final / RC / Governance-Ready / Normative Draft**, so B-1 is *more* blocking, not less, and `essay-upstream` has zero occupants. Six distinct status values across nine documents is exactly why one drift rule cannot serve them. 5.5 is now unconditioned |
 | **D-C** | Ratify E-I.1/E-I.2 retroactively, or restate as provisional? | **Resolved by §2.1.** Restate under `ratification: pending-conferral` — *not* the bootstrap mark (R-14); corpus prose carries no self-conferred force. Exits on first conferral, not on sunset. Applies to E-I.2's **carrier** as well as both essays |
 | **D-D** | Draft ahead of the gates? | **Decided: no — option (a).** v0.2 listed this as open while its entire phase structure assumed (a); a decision table containing an already-made decision is theater. *Delta under (b):* Phase 3 could start immediately, at the cost of re-review against O-INV-01 and re-anchoring under 1.4 |
 | **D-E** | Service implementation language | **Decided 2026-08-24.** Modern **ESM JavaScript**, typed via **JSDoc** with `tsc --checkJs` enforced in CI. **Zero build step** — the same file runs unmodified in Node and browser, which is the commitment's actual content. Promotion to TS is a v0.4 question with a migration note if `checkJs` proves too weak for the graph code; that cost is not pre-paid. **Runtime:** develop on Node 25 freely; CI pins active LTS as the floor (`engines` + `.nvmrc`) and runs an LTS + current matrix. **Dependencies:** fixtures and schema stay language-agnostic data; harnesses may take a minimal pinned dev-set (`yaml`, `ajv`) with a lockfile. Cores stay pure; dual-host equivalence still gates service ratification per R-13, not first use |
@@ -631,13 +634,13 @@ corrected in v0.3.1 (R-14), where v0.3 left E-I.2's carrier at an unqualified "R
 | E-I.1 | The Fruits of the Spirit | v2.0 **PC** | — | — | 2a/2b | Jurisdiction undeclared; carrier C-I.1; A-I.1 blocked; v2.0 unverified |
 | E-I.2 | Judge Not | v1.0 **PC** | v1.0 **PC** | — | 2a | Panel validates against a bootstrap schema; A-I.2 blocked. Carrier's CG ratification is exactly as unconferred as the essay's |
 | E-I.3 | Conscience | — | — | — | 3 | Erring conscience; formation vs. scrupulosity; refusal |
-| E-II.1 | Truthfulness | — | — | — | 5 | Grounds SHML (v3.3) |
-| E-II.2 | Promise & Covenant | — | — | — | 5 | Pair with E-II.1. Grounds CTS (state unknown) |
-| E-II.3 | Display | — | — | — | 5 | **Transitively F-03-blocked.** Grounds Will Observatory (rc1, findings open) |
+| E-II.1 | Truthfulness | — | — | — | 5 | Grounds **SHML v3.3**, "Normative Draft" |
+| E-II.2 | Promise & Covenant | — | — | — | 5 | Pair with E-II.1. Grounds **CTS v1.2.1**, "Ready for Milestone 1 Implementation" |
+| E-II.3 | Display | — | — | — | 5 | **Transitively F-03-blocked.** Grounds **Will Observatory v1.0 Final** (conceptual; subsystem specs separately unratified) |
 | E-III.1 | Repentance | — | — | — | 3 | **P0**, coupled to E-III.2 |
 | E-III.2 | Forgiveness | — | — | — | 3 | **P0**, coupled to E-III.1 |
 | E-III.3 | Reconciliation | — | — | — | 3 | Depends on 3.1 |
-| E-VI.1 | Authority & Refusal | — | — | — | **5** | **Pulled forward.** Grounds ARCHON — highest-stakes grounding, and ARCHON's state is unknown |
+| E-VI.1 | Authority & Refusal | — | — | — | **5** | **Pulled forward.** Grounds ARCHON — highest-stakes grounding. **Two documents:** framework v2.0 "Publication Draft" and functional requirements v3.0 "Draft for Technical Review"; which one an `ARCH.md` grounds on is unresolved |
 | E-IV.1…4 | Claims of Others | — | — | — | 6 | Unplanned — v0.4 |
 | E-V.1…3 | Formation | — | — | — | 6 | Unplanned — v0.4 |
 | E-VI.2 | The Community's Acts | — | — | — | 6 | Depends on E-VI.1 |
@@ -675,7 +678,8 @@ mislabel, not a silently-moved id, and the correction is recorded here rather th
 | **O-INV-04, 05** | `INVARIANTS.md` | Precedence; supersession | 0 |
 | **O-CHT-01** | `CHARTER.md` | **B-2** — conferral model + sunset N | 0.6 |
 | **O-CHT-02…04** | `CHARTER.md` | Independence; contribution; retroactive conferral | 0, 2a |
-| **O-CHT-05** | `CHARTER.md` | **New** — Bootstrap Protocol | 0.1 |
+| ~~O-CHT-05~~ | `CHARTER.md` | **CLOSED 2026-08-24** — Bootstrap Protocol specified at `CHARTER.md` §4. *Left unstruck in v0.3.1 despite the retention convention stated ten lines above it* | — |
+| **O-CHT-06** | `CHARTER.md` | **New.** §4.2 rule 3 requires both marks machine-queryable; neither field is in any schema, and the §4.10 registry is hand-maintained | 0.1 |
 | **O-SPN-01…03** | `SPINE.md` | Stage definitions; scale rule; self-coverage | 1 |
 | **O-GLS-01…03** | `GLOSSARY.md` | Terms; enforcement; homonyms | 0.8 |
 | ~~O-JUR-01~~ | — | **CLOSED** — schema v1.0 | — |
@@ -732,6 +736,33 @@ carried defects introduced *by the repair* — which is where second-cycle findi
 argued away: the finding pointed at something real (an id whose label changed with no note) and
 was wrong about the mechanism (referent change vs. lossy summary). Both halves are in the ledger.
 
+## 10.3 Maintenance disposition — v0.3.1 → v0.3.2
+
+Not an adversarial review. A **self-audit** prompted by the question *does the roadmap need
+updating*, after three items landed and were edited in place without a version bump.
+
+That is worth naming as a failure mode in its own right: **edit-in-place is how a governed document
+loses its version chain.** v0.3.1 was correct when written; nine defects accumulated in the ~6 hours
+after, because each edit was locally right and nothing re-read the whole.
+
+| # | Defect | Fix |
+|---|---|---|
+| 1 | **§3 argued both sides.** The 0.4a section proved CTS is v1.2.1 and implementation-ready; twelve lines below, the surviving R-18 block still asked "if CTS is sketch-grade" and tabled `sketch-grade (CTS, NIS, DES/CSS?) → generative, not blocking` | R-18 block retained but marked **superseded and falsified**, with the surviving grading table kept. Not deleted — a roadmap that removes its own falsified forecasts cannot be checked against its history |
+| 2 | **§2.1 kept a second bootstrap registry** four lines under its own "one register, not two" rule, and the copy was stale (5 entries against 12) | Removed; §2.1 points at `CHARTER.md` §4.10 and `LEDGER.md` §1 |
+| 3 | **O-CHT-05 closed but unstruck**, violating the retention convention stated ten lines above it in the same register | Struck and retained; **O-CHT-06** registered alongside |
+| 4 | **D-B still read "confirmation gated on 0.4a"** after 0.4a ran | Decided. The recorded delta anticipated the *opposite* surprise, and that is now stated plainly |
+| 5 | Four backlog cells carried "state unknown" / "rc1, findings open" for specs 0.4a had pinned | SHML v3.3, CTS v1.2.1, Will Observatory v1.0 Final, ARCHON's two documents |
+| 6 | Graph edge read `blocks ratified+rc only` — a split that 0.4a showed does not occur | `blocks all 22` |
+| 7 | `TENSIONS.md` and the governance `LEDGER.md` existed in neither §1 nor any register | Both added |
+| 8 | 0.13 listed above 0.12 | Reordered |
+| 9 | B-4 unaware that ARIADNE's `spec-index.md` lists Integral Ethics as **Stable** | Recorded; the missing half is the version, not the status |
+| 10 | §2.1's own pointer cited `CHARTER.md` §4.8 (Enforcement) when the registry is §4.10 — **found while auditing the fix for defect 2**, in the sentence that fix had just rewritten around | Corrected to §4.10 + `LEDGER.md` §1 |
+
+**Standing risk.** Nothing mechanical caught any of these. `gnomon-xref` will resolve cross-references
+but will not notice that two paragraphs disagree, and no check compares a decision's status against
+whether its gating item has run. The corpus's own answer applies to itself: this was found by review,
+and review is what O-CHT-02 and O-CHT-07 exist to make repeatable rather than occasional.
+
 ---
 
 ## 11. Session log
@@ -743,5 +774,6 @@ was wrong about the mechanism (referent change vs. lossy summary). Both halves a
 | 2026-08-23 | Roadmap v0.2: dependency graph, six-phase order, coupling points. Surfaced B-1. | `ROADMAP.md` |
 | 2026-08-23 | **Roadmap v0.3** after adversarial review. Thirteen findings, all accepted. Root defect: partiality defined for checks and nothing else, leaving a plan that could not start (R-01) or ratify (R-04). Added the Bootstrap Protocol, deferral monotonicity, handoff grades, the F-03 resolution table, and the gap-preemption rule; pulled situations to Phase 0. **Content anchors recorded for all three ratified panels.** | `ROADMAP.md`, both `LEDGER.md` |
 | 2026-08-24 | **0.12 — fixture harness (O-SVC-05).** D-E decided: ESM + JSDoc + `tsc --checkJs`, zero build step, LTS floor. `tools/fixture-harness` committed with expectations as per-fixture data and a CI workflow on LTS+current. **The status table's "verified against 11 fixtures" is corrected to "witnessed"** — the prior verifier lived in scratch and was discarded, so the claim had no witness and the red discipline was reassurance. Three findings raised by the build (R-27 id collision, R-28 broken CI guard, R-29 IE-001 overclaim), all accepted; see `LEDGER.md` §3 cycle 4. | `tools/fixture-harness/`, `.github/`, `.gitattributes`, `fixtures/`, `LEDGER.md`, `LICENSE` |
+| 2026-08-24 | **Roadmap v0.3.2** — maintenance release after a self-audit. Three items had landed and been edited in place without a version bump; nine defects had accumulated, two of them self-contradictions the file would fail its own review on (§3 arguing both sides of the sketch-grade question, §2.1 keeping the second registry it forbids). Dispositioned at §10.3. **Edit-in-place is named as the failure mode**: each edit was locally right and nothing re-read the whole. | `ROADMAP.md` |
 | 2026-08-24 | **0.13 — precedent review.** GNOMON is a spin-out of ARIADNE, so ARIADNE's management is evidence about GNOMON's failure modes. Adopted: the **tension log** (R-32 reclassified as an inherited tension, not a finding) and the **drift register**. Rejected with reasons: blank approvers (6 of 7 ARIADNE drift records are unapproved — O-CHT-01's failure mode demonstrated, not predicted) and `Resolved in principle`. Confirmed with evidence: mechanical CI over periodic manual review, version-in-ledger over version-in-filename, self-governance via bootstrap marks. **R-39: ARIADNE's `spec-index.md` may hold the closest thing to a conferral record the two essays have** — bears on O-CHT-04. Findings R-35…R-40. | `foundations/PRECEDENT.md`, `TENSIONS.md`, `LEDGER.md`, `foundations/README.md` |
 | 2026-08-24 | **Roadmap v0.3.1** — point release after a second cycle against v0.3's own machinery. Six findings, all accepted, one partially corrected. Bootstrap mark split into two fields with disjoint scopes (R-14); monotonicity restated as no-regression + admission rather than set-shrinkage, which the first new essay would have violated by existing (R-15); D-B marked provisionally decided rather than open-while-enacted (R-16); `derived_from:` firewall added so harvested situations cannot self-confirm coverage (R-17); `essay-upstream` added, splitting B-1 into blocking and generative halves (R-18); register retention convention fixed and Phase 0 staged into 0-alpha/0-beta (R-19). No content anchors changed. | `ROADMAP.md` |
