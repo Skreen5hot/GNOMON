@@ -21,14 +21,20 @@ into the chain when it exists (O-LDG-J05).
 | `ESSAY.md` | `579416aafb011dfae13a61aa51782cda8efaa1ab67950d022281fd494decb2a0` | 73840 |
 | `CARRIER.md` | `198cdad3a9af8c1baf06ed028d9baf6e6441f51b4ec9b763f73076584d57c43d` | 21394 |
 
-**Anchored byte stream: the committed git blob**, at commit `dc85db5`. This is load-bearing and
-not a formality — `ESSAY.md` hashes *differently* in the working tree, because git normalized its
-line endings on commit while `../fruits-of-the-spirit/ESSAY.md` was already CRLF and did not
-change. An anchor that does not name its byte stream would have verified green on one machine
-and red on the next. Verify with:
+**Anchored byte stream: the committed git blob**, unchanged since commit `dc85db5`. Both panels
+were already stored LF and were **not** affected by the 2026-08-24 line-ending normalization; the
+values above are original. (`../fruits-of-the-spirit/LEDGER.md` records a supersession, because
+that file was one of the two stored with CRLF.)
+
+Naming the byte stream was load-bearing when these anchors were taken: `ESSAY.md` hashed
+differently in the working tree than in the blob, so an anchor that did not say which it meant
+would have verified green on one machine and red on the next. Since `.gitattributes` the working
+tree is byte-identical to the blob and the ambiguity is removed rather than merely documented —
+both of these now verify either way:
 
 ```
-git show <commit>:corpus/I-epistemology/judge-not/ESSAY.md | sha256sum
+git show HEAD:corpus/I-epistemology/judge-not/ESSAY.md | sha256sum
+sha256sum corpus/I-epistemology/judge-not/ESSAY.md
 ```
 
 These anchors prove **integrity, not provenance**. They establish that the text has not changed

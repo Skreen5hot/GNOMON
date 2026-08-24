@@ -1,7 +1,16 @@
 # Roadmap
 
-**Status:** v0.3 — supersedes v0.2 after adversarial review (findings R-01…R-13, dispositioned
-at §10). **Ratified under: bootstrap** — see §2.
+**Status:** v0.3.1 — point release. Supersedes v0.3 after a second adversarial review of the
+machinery v0.3 introduced (findings R-14…R-19, dispositioned at §10.2). **Ratified under:
+bootstrap** — see §2.1.
+
+**Why a point release before Phase 0 runs.** v0.3's four load-bearing repairs were sound in
+design and three carried defects introduced *by the repair*: the bootstrap mark was overloaded
+across two opposite operations (R-14), monotonicity was stated as set-shrinkage over two sets
+that legitimately grow (R-15), and D-B was enacted in the build order while marked open (R-16) —
+the exact defect v0.3 convicted v0.2 of. All three sit in items 0.1–0.3, the vocabulary
+everything else is built on, and R-17 changes 0.10's schema. They could not wait for the
+Phase-5-mandated v0.4.
 
 **What this file is for.** GNOMON has two tracks that look independent and are not: **authoring**
 produces essays, **services** produce the checks the gates depend on. They are coupled at the
@@ -57,6 +66,11 @@ exist before the first gate is run, not discovered when one jams.
 
 ### 2.1 The Bootstrap Protocol · resolves R-01, R-11, D-C
 
+> **Normative text now lives at `CHARTER.md` §4** (specified 2026-08-24, closing O-CHT-05). What
+> follows is the roadmap's summary of why the protocol exists and what it does for sequencing.
+> Where this section and `CHARTER.md` §4 disagree, **§4 governs** and the divergence is a finding.
+> The registry of marked artifacts is `CHARTER.md` §4.8, not here — one register, not two.
+
 `CHARTER.md` §2.3 refuses self-certification. But Phase 0 produces the artifacts that *make the
 gates real* — invariant elaborations, the conferral model, review-independence criteria — and
 those are themselves normative text requiring gates. Reviewed against what standard, when
@@ -66,22 +80,46 @@ O-CHT-01 defines the role? **The constitution cannot be constituted.**
 v0.2 spotted this for the two essays (D-C) and missed that it applies with more force to
 `INVARIANTS.md`, `SCHEMA.md`, and this file.
 
-The resolution is to **mark the exception rather than hide it**:
+The resolution is to **mark the exception rather than hide it**.
 
-| | Rule |
-|---|---|
-| **Who** | Governance and schema artifacts are provisionally self-ratified by the ratifying architect |
-| **Mark** | Each carries `ratified-under: bootstrap` — machine-queryable by `gnomon-ledger` and `gnomon-xref`, never inferred from silence |
-| **Sunset** | Mandatory re-ratification under the conferral model within **N review cycles** of O-CHT-01 closing. N is set in `CHARTER.md`; an artifact past sunset is a finding, not a grandfathered fact |
-| **Scope** | Governance, schema, fixtures, roadmap. **Never essays** — corpus prose does not self-ratify under any circumstance |
+#### Two marks, not one · corrected in v0.3.1 (R-14)
 
-This honours the charter by *declaring* the exception, which is exactly what the corpus does with
-declared absences elsewhere. And it resolves D-C for free: **E-I.1 and E-I.2 restate as
-provisional under the same mark**, upgrading when conferral exists. One mechanism, three problems.
+v0.3 used a single mark for both governance artifacts and the two ratified essays, and thereby
+contradicted itself inside one section: the scope rule said *never essays*, and the next
+paragraph restated E-I.1 and E-I.2 "under the same mark."
 
-**Currently bootstrap-marked:** `INVARIANTS.md` §Declaration · `services/gnomon-lint/SCHEMA.md` ·
-`jurisdiction.schema.json` · the fixtures · this file. The mark is not yet mechanized —
-`ratified-under` is not in any schema. That is item 0.1.
+The contradiction was a symptom. **One mark was carrying two opposite operations.** For a
+governance artifact, the mark *grants* provisional normative force — the artifact functions as
+authority until re-ratified. For a ratified essay, the operation is a *withdrawal* — prose whose
+ratification claim has no conferral record behind it, carrying no self-conferred force at all.
+Sunset does not even apply coherently to the second: what is an essay past sunset, when it never
+self-ratified in the first place?
+
+They are separate fields, with disjoint scopes and different exits:
+
+| | `ratified-under: bootstrap` | `ratification: pending-conferral` |
+|---|---|---|
+| **Applies to** | Governance, schema, fixtures, roadmap | Essays and carriers — all corpus prose |
+| **Operation** | **Grants** provisional normative force; self-ratified by the ratifying architect | **Withholds** it; a ratification claim not backed by a conferral record |
+| **Normative force** | Yes, provisional | **None.** Corpus prose does not self-ratify under any circumstance |
+| **Exit** | Sunset — mandatory re-ratification within N of O-CHT-01 closing | First true conferral under the conferral model |
+| **Past its exit** | A finding, not a grandfathered fact | No sunset applies; it holds until conferred |
+
+Both are machine-queryable and never inferred from silence. The scopes are **disjoint by
+construction**: a query for self-ratified governance MUST NOT return corpus prose, and §2.1's own
+queryability requirement is what forbids the overload.
+
+This honours the charter by *declaring* the exception rather than hiding it, which is what the
+corpus does with declared absences everywhere else.
+
+**Currently `ratified-under: bootstrap`:** `INVARIANTS.md` §Declaration ·
+`services/gnomon-lint/SCHEMA.md` · `jurisdiction.schema.json` · the fixtures · this file.
+
+**Currently `ratification: pending-conferral`:** E-I.1 `ESSAY.md` · E-I.2 `ESSAY.md` · E-I.2
+`CARRIER.md`. **The carrier is included** — v0.3's backlog marked the essay provisional and left
+the carrier at an unqualified "R v1.0," though its ratification at CG is exactly as unconferred.
+
+Neither mark is mechanized — neither field is in any schema. That is item 0.1.
 
 ### 2.2 Deferral semantics · resolves R-04
 
@@ -92,14 +130,28 @@ Without this, G2 and G3 are unreachable until Phase 5 — the graph makes `gnomo
 conjunction of five services, and three of them arrive late. With it, an essay can ratify in
 Phase 3 against the checks that exist, with the rest named.
 
-The rule that keeps it from becoming an excuse:
+The rule that keeps it from becoming an excuse — **restated in v0.3.1 (R-15)**:
 
-> **Deferral is monotone. The deferred set may only shrink. Any new deferral requires a ledger
-> entry stating what was deferred, why, and its exit criterion.**
+> **1 · No element regresses.** A check that has reported *passing* never returns to *deferred*.
+> A regression is permitted only as a recorded finding, never as a status change.
+>
+> **2 · The universe grows only by admission.** New checks may enter the check universe — that is
+> what building services *is* — but each entry is admitted with a ledger record naming what is
+> deferred, why, and its exit criterion. Growth by admission is healthy; growth unrecorded is the
+> failure.
 
-Without monotonicity, "green" quietly becomes negotiable exactly when the corpus grows and green
-gets expensive — which is when it matters. Every gate report carries two lines: the disposition
-and the deferred set. A report that omits the second is malformed.
+**What v0.3 got wrong.** It said "the deferred set may only shrink," and then in the next sentence
+regulated the new deferrals that shrinkage forbids. Set-shrinkage is simply the wrong invariant:
+the deferred set *must* be able to grow, because every service built adds checks that nothing has
+run yet. Under v0.3's wording, implementing `gnomon-route` would have violated §2.2 by existing.
+
+The right invariant is **per-element no-regression plus admission-controlled universe growth.**
+The check universe carries a version; a bump requires a ledger entry. What may never happen is a
+check silently leaving *passing*.
+
+Without this, "green" quietly becomes negotiable exactly when the corpus grows and green gets
+expensive — which is when it matters. Every gate report carries two lines: the disposition and
+the deferred set. A report that omits the second is malformed.
 
 ### 2.3 Handoff grade scale · resolves R-05
 
@@ -115,8 +167,18 @@ induction almost nothing ratifies until nearly everything exists. A topological 
 | `ratified` | Target at G3 | 0 |
 
 **G3 requires every handoff target at ≥ `stub`, plus an open-handoff register** listing each
-target below `ratified` with its expected phase. Deferral monotonicity applies: the register may
-only shrink.
+target below `ratified` with its expected phase.
+
+**Monotonicity here, corrected in v0.3.1 (R-15).** §2.2's two rules apply unchanged, and the same
+mistake was made here: v0.3 said "the register may only shrink" while §6 says, correctly, that
+each new essay *grows* it. Both cannot hold, and the register is the one that must give — a
+corpus that cannot add handoff targets cannot add essays.
+
+- **No target regresses.** A handoff target that has reached a grade never descends to a lower
+  one except as a recorded finding.
+- **New targets enter by admission.** Each is admitted to the register tagged with its expected
+  phase. §6's "each new essay adds handoff targets" is this channel operating normally, not a
+  violation.
 
 ### 2.4 What partiality does *not* cover
 
@@ -150,18 +212,46 @@ Confirming them is item 0.4a; nothing downstream should treat a row as settled u
 | **SHML** | E-II.1 | v3.3 | Pin v3.3 |
 | **Will Observatory** | E-II.3, E-I.2 | v1.0-rc1, **F-08…F-32 open** | Pin rc + status. Cannot be cleanly drift-checked — a spec with open findings will drift by design |
 | **ARCHON** | E-I.2, E-VI.1 | **unknown** | Assess first — highest stakes: grounds *when the synthetic person must say no* |
-| **CTS** | E-I.2, E-II.2 | foundational-period, may be sketch | Assess |
-| **NIS** | E-V.1 | foundational-period, may be sketch | Assess |
-| **DES/CSS** | E-V.3 | foundational-period, may be sketch | Assess |
+| **CTS** | E-I.2, E-II.2 | foundational-period, may be sketch | Assess → likely **`essay-upstream`** |
+| **NIS** | E-V.1 | foundational-period, may be sketch | Assess → likely **`essay-upstream`** |
+| **DES/CSS** | E-V.3 | foundational-period, may be sketch | Assess → likely **`essay-upstream`** |
 | **IEE** | E-I.1 | defined **in-corpus only** (Fruits §3.4) | Decide whether an external spec exists or the corpus definition is canonical |
 | **Triple-I Standard** | `README.md`, `CHARTER.md` | Architectonic Agency Theory papers | Locate and vendor. The corpus's stated grounding is cited from nowhere reachable |
 
-**What the distribution implies for D-B.** If the states above hold, neither "hold everything
-incomplete" nor "vendor stubs and accept drift" is right, because the states are *heterogeneous*.
-The answer is a fourth option v0.2 did not have: **status-graded `ARCH.md`** — a note pins
-spec-version **plus status**, and drift-checking is graded per status (a `ratified` spec is
-drift-checked strictly; an `rc-with-open-findings` spec is checked against its findings register;
-a `sketch` spec grounds nothing and the note declares that as an absence). Added to D-B as (d).
+#### `essay-upstream` — the resolution v0.3 omitted · new in v0.3.1 (R-18)
+
+v0.3's "Assess" rows admitted only two outcomes, vendor or pin, and both assume the spec is the
+upstream artifact. A third exists, and for sketch-grade specs it is the right one:
+
+> **If CTS is sketch-grade, then E-II.2 is not blocked by CTS. CTS is blocked by E-II.2.**
+
+The grounding direction inverts, and this is not a workaround — it is the singular project's
+stated logic, from `README.md`: *you cannot ground an agent in an ethics no one has specified;
+GNOMON is the specification.* A ratified essay is precisely the artifact a service spec should be
+written against. An essay waiting on a sketch it is supposed to ground has the dependency backwards.
+
+**Consequence: B-1 splits.**
+
+| Spec state | B-1 is… | Because |
+|---|---|---|
+| ratified elsewhere (ARIADNE), or rc (Will Observatory) | **genuinely blocking** | Drift risk is real; the essay must agree with something that already exists and moves |
+| sketch-grade (CTS, NIS, DES/CSS?) | **generative, not blocking** | The "blocker" is the work, correctly ordered. The essay ships first |
+| in-corpus only (IEE) | undetermined | Depends on whether an external spec exists at all |
+
+So B-1's true scope is smaller than v0.3 claimed — but its *shape* is unknown until 0.4a, which is
+another reason 0.4a is retrieval-cheap and high-value.
+
+**What the distribution implies for D-B.** If the states hold, neither "hold everything incomplete"
+nor "vendor stubs and accept drift" is right, because the states are *heterogeneous*. The answer is
+option (d), **status-graded `ARCH.md`** — a note pins spec-version **plus status**, and
+drift-checking is graded per status:
+
+| Spec status | Drift check |
+|---|---|
+| `ratified` | Strict — any divergence is a finding |
+| `rc-with-open-findings` | Against the spec's findings register; divergence on an open finding is expected, not a defect |
+| `sketch` | Grounds nothing; the note declares that as an absence |
+| **`essay-upstream`** | **Inverted — the spec is drift-checked against the essay, not the essay against the spec** |
 
 ### B-2 · O-CHT-01 — conferral model unspecified
 
@@ -203,6 +293,7 @@ graph TD
     subgraph GOV["Governance"]
         INV01["B-3 · O-INV-01<br/>invariant elaborations"]
         CHT01["B-2 · O-CHT-01<br/>conferral model"]
+        CHT02["O-CHT-02<br/>review independence"]
         GLS01["O-GLS-01<br/>glossary terms"]
     end
 
@@ -239,8 +330,7 @@ graph TD
     DEF ==>|makes reachable| G3
     HG ==>|breaks topological trap| G3
 
-    F03 ==>|blocks| ARCH
-    F01 --> INV01
+    F03 ==>|blocks ratified+rc only| ARCH
     SCH --> LINT
     SHARED --> LINT
     SHARED --> XREF
@@ -253,6 +343,7 @@ graph TD
 
     XREF ==>|witnesses bite| G1
     INV01 ==> G1
+    CHT02 --> G1
     CHT01 ==> G2
     LANCH --> G2
     LINT --> G0
@@ -262,6 +353,7 @@ graph TD
     SIT ==>|route-first authoring| E31
     SIT --> RT1B
     RT1B --> ROUTE
+    CHT02 -.derivation firewall.-> SIT
     EI1 --> G0
 
     classDef blocked fill:#7f1d1d,stroke:#ef4444,color:#fff
@@ -282,21 +374,36 @@ Sizes are relative (S / M / L), not time.
 
 ### Phase 0 — Constitute
 
-Nothing downstream is sound without this. Items 0.1–0.3 are the §2 vocabulary and come first.
+Nothing downstream is sound without this. **Split into two staged exits in v0.3.1 (R-19):** eleven
+items including two M-sized normative authoring efforts is too much to run before any gate fires
+or any service reports. 0-alpha is the vocabulary; 0-beta is everything that vocabulary governs.
+
+**Phase 0-alpha — vocabulary.** All S-sized. Nothing else in Phase 0 is sound until these land,
+and this review is itself the argument for staging: R-14 through R-16 were defects *in this
+vocabulary*, found on first adversarial read. Getting feedback here before the M-sized items are
+written is the whole point.
 
 | # | Item | Size | Note |
 |---|---|---|---|
-| **0.1** | **Bootstrap Protocol** into `CHARTER.md`; add `ratified-under` to the schema; mark existing artifacts | S | R-01. Unblocks every other Phase 0 item |
-| **0.2** | **Deferral semantics** into the gate definitions; report contract carries the deferred set | S | R-04 |
-| **0.3** | **Handoff grade scale** into gate definitions + `gnomon-xref` contract | S | R-05 |
-| 0.4a | **F-03 confirmation** — verify the 9-row table | S | R-02. Retrieval, not authoring |
-| 0.4b | **F-03 resolution** — vendor or pin per row | ? | Size known only after 0.4a |
+| **0.1** | **Bootstrap Protocol** into `CHARTER.md`; add **both** `ratified-under` and `ratification` to the schema; mark existing artifacts | S | R-01, **R-14** — two fields, disjoint scopes |
+| **0.2** | **Deferral semantics** into gate definitions; report carries the deferred set; check universe versioned | S | R-04, **R-15** — no-regression + admission, *not* set-shrinkage |
+| **0.3** | **Handoff grade scale** into gate definitions + `gnomon-xref` contract; open-handoff register admission channel | S | R-05, **R-15** |
+
+**Exit 0-alpha:** the four partiality grains are defined, mechanized in the schema, and the
+existing artifacts are marked. A gate run after this point has vocabulary to report in.
+
+**Phase 0-beta — everything the vocabulary governs.**
+
+| # | Item | Size | Note |
+|---|---|---|---|
+| 0.4a | **F-03 confirmation** — verify the 9-row table | S | R-02, **R-18**. Retrieval, not authoring. Determines B-1's real scope |
+| 0.4b | **F-03 resolution** — vendor, pin, or declare `essay-upstream` per row | ? | Size known only after 0.4a |
 | 0.5 | **O-INV-01** — elaborate INV-01…05 | M | B-3 |
-| 0.6 | **O-CHT-01** — conferral model; set sunset N | M | B-2 |
-| 0.7 | **O-CHT-02** — review independence | S | — |
+| 0.6 | **O-CHT-01** — conferral model; set sunset **unit and value** | M | B-2, R-19 |
+| 0.7 | **O-CHT-02** — review independence | S | Also grounds 0.10's derivation firewall |
 | 0.8 | **O-GLS-01** — define ~8 pending terms | S | Gates `gnomon-xref` |
 | 0.9 | **B-4 / F-01** — version `integral-ethics.md` | S | R-09 |
-| **0.10** | **RT-1a — seed ~20 situations**, `provenance: internal` | M | R-03. See below |
+| **0.10** | **RT-1a — seed ~20 situations** with `provenance:` **and `derived_from:`** | M | R-03, **R-17**. See below |
 | 0.11 | `coupled:` relation in schema | S | R-07 |
 
 **0.10 is the change most likely to be skipped and should not be.** Situation *authoring* is
@@ -307,8 +414,40 @@ Routing Test is the corpus's **only** empirical feedback on whether `decides` cl
 joints. Material is already in hand — the sleepover, the reporting employee, the suspended
 accused, the spouse's filing cabinet, the 2 a.m. verdict all appear in the ratified essays.
 
-Mark them `provenance: internal` and be honest that architect-authored situations are weaker
-evidence than contributed ones (O-RTG-04). Weaker evidence beats none.
+#### `derived_from:` — the firewall harvesting requires · new in v0.3.1 (R-17)
+
+Harvesting situations from the ratified essays creates a circularity v0.3 missed, and
+`provenance: internal` does not catch it. **Provenance records who authored a situation;
+the defect is *derivation*.** A situation extracted from E-I.2's prose will route back to E-I.2
+with probability approaching one — so using it in the dead-jurisdiction check means the corpus
+grades its coverage with a test set it wrote itself. That is precisely the self-flattery the
+bidirectional test exists to catch.
+
+Every situation therefore carries:
+
+```yaml
+provenance: internal | contributed        # who authored it
+derived_from: [E-I.2]                     # which essays' prose it was extracted from; [] = independent
+```
+
+Three rules over that field:
+
+1. **The dead-jurisdiction check excludes self-derived cases.** A situation with `E-I.2` in
+   `derived_from` is not evidence that E-I.2 holds live jurisdiction. It may still route there;
+   the route just does not count toward E-I.2 escaping dead jurisdiction.
+2. **Coverage reports segregate derived from independent counts.** One number that mixes them
+   overstates coverage and cannot be un-mixed later.
+3. **The completeness window counts independent situations only** (O-RTG-01). A completeness
+   claim resting on self-derived cases is not a completeness claim.
+
+**Route-first authoring survives intact.** Testing E-III.1 and E-III.2 against situations
+harvested from *Judge Not* is exactly right — E-I.2's author did not write those cases for
+E-III, so they are independent evidence *with respect to the essays being tested*. Only the
+reflexive direction needs the firewall. And the five original placeholders are corpus-derived
+too; they inherit this rule rather than escaping it by being older.
+
+O-CHT-02's independence principle already commits the corpus to this. Independence of the
+reviewer and independence of the test case are the same requirement pointed at different objects.
 
 **Exit:** an essay drafted after this point can travel G0 → G3 without waiting on a definition,
 and has live situations to be tested against.
@@ -423,11 +562,11 @@ regardless of what phase says otherwise.
 | # | Decision | Status |
 |---|---|---|
 | **D-A** | Phase 2a before Phase 3? | **Decided: yes.** 2a is S/M conformance work gating Phase 3; 2b (the carrier) runs parallel and does not gate |
-| **D-B** | If F-03 cannot clear, what happens to triptych completeness? | **Open — the most consequential in the project.** (a) hold all topics incomplete (b) make `ARCH.md` conditional (c) vendor stubs, accept drift (d) **status-graded `ARCH.md`** — new in v0.3, and the option the reported spec distribution actually points to. **Cannot be decided before 0.4a** |
-| **D-C** | Ratify E-I.1/E-I.2 retroactively, or restate as provisional? | **Resolved by §2.1.** Restate as provisional under `ratified-under: bootstrap`; upgrade when conferral exists |
+| **D-B** | If F-03 cannot clear, what happens to triptych completeness? | **Provisionally decided: (d) status-graded `ARCH.md`, with `essay-upstream` as a fourth status.** Confirmation gated on 0.4a. *Corrected in v0.3.1 (R-16): v0.3 marked this open while item 5.5 enacted (d) in the build order — the same theater v0.3 convicted v0.2 of.* **Delta if 0.4a surprises:** homogeneous states revive the simple options — all-ratified revives (a)-as-strictness, all-sketch means B-1 is not a blocker at all and (c) is moot. 5.5 stands **conditioned** on confirmation |
+| **D-C** | Ratify E-I.1/E-I.2 retroactively, or restate as provisional? | **Resolved by §2.1.** Restate under `ratification: pending-conferral` — *not* the bootstrap mark (R-14); corpus prose carries no self-conferred force. Exits on first conferral, not on sunset. Applies to E-I.2's **carrier** as well as both essays |
 | **D-D** | Draft ahead of the gates? | **Decided: no — option (a).** v0.2 listed this as open while its entire phase structure assumed (a); a decision table containing an already-made decision is theater. *Delta under (b):* Phase 3 could start immediately, at the cost of re-review against O-INV-01 and re-anchoring under 1.4 |
 | **D-E** | Service implementation language | **Open.** Edge-Canonical implies JS/TS. No `node_modules` committed; schema and fixtures are language-agnostic and stay that way |
-| **D-F** | Sunset N for bootstrap marks | **Open — new.** How many review cycles after O-CHT-01 closes before a bootstrap artifact must be re-ratified. Set in `CHARTER.md` at 0.6 |
+| **D-F** | Sunset N for bootstrap marks | **Open.** Must settle **the unit as well as the value** (R-19): "N review cycles" is undefined — cycles of *what*, counted corpus-wide or per-artifact? A per-artifact count lets a rarely-reviewed governance document outlive its bootstrap indefinitely. Set in `CHARTER.md` at 0.6. Applies to `ratified-under: bootstrap` only; `ratification: pending-conferral` has no sunset |
 
 ---
 
@@ -435,10 +574,13 @@ regardless of what phase says otherwise.
 
 Phases per §5. Status: **R** ratified · **—** not started.
 
+**PC** = `ratification: pending-conferral` (§2.1). Applies to carriers exactly as to essays —
+corrected in v0.3.1 (R-14), where v0.3 left E-I.2's carrier at an unqualified "R v1.0."
+
 | ID | Essay | Formal | Carrier | Arch | Phase | Notes |
 |---|---|---|---|---|---|---|
-| E-I.1 | The Fruits of the Spirit | **R** v2.0 *prov.* | — | — | 2a/2b | Jurisdiction undeclared; carrier C-I.1; A-I.1 blocked; v2.0 unverified |
-| E-I.2 | Judge Not | **R** v1.0 *prov.* | **R** v1.0 | — | 2a | Panel validates against a bootstrap schema; A-I.2 blocked |
+| E-I.1 | The Fruits of the Spirit | v2.0 **PC** | — | — | 2a/2b | Jurisdiction undeclared; carrier C-I.1; A-I.1 blocked; v2.0 unverified |
+| E-I.2 | Judge Not | v1.0 **PC** | v1.0 **PC** | — | 2a | Panel validates against a bootstrap schema; A-I.2 blocked. Carrier's CG ratification is exactly as unconferred as the essay's |
 | E-I.3 | Conscience | — | — | — | 3 | Erring conscience; formation vs. scrupulosity; refusal |
 | E-II.1 | Truthfulness | — | — | — | 5 | Grounds SHML (v3.3) |
 | E-II.2 | Promise & Covenant | — | — | — | 5 | Pair with E-II.1. Grounds CTS (state unknown) |
@@ -458,9 +600,20 @@ Phases per §5. Status: **R** ratified · **—** not started.
 
 ## 9. Open-item register
 
+**Retention convention, fixed in v0.3.1 (R-19): closed items are struck and retained, never
+deleted.** v0.3 was inconsistent — O-INV-02 and O-JUR-01 were struck and kept while O-RDM-01 and
+O-RDM-03 simply vanished. Struck-and-retained is what the hash-chain discipline implies: a
+register that deletes cannot be verified against its own history.
+
+**A note on F-01's label.** v0.2's register summarized `F-01, F-02` as "foundation versioning and
+licensing," and v0.3 relabelled F-01 as the `integral-ethics.md` item without noting the change.
+The **referent never moved** — `foundations/README.md` has defined F-01 as the `integral-ethics.md`
+versioning defect since it was written; v0.2's roadmap label was lossy. This is a corrected
+mislabel, not a silently-moved id, and the correction is recorded here rather than left implicit.
+
 | Id | Owner | Item | Phase |
 |---|---|---|---|
-| **F-01** | `foundations/` | **B-4** — `integral-ethics.md` unversioned | 0.9 |
+| **F-01** | `foundations/` | **B-4** — `integral-ethics.md` unversioned *(label corrected in v0.3.1; referent unchanged)* | 0.9 |
 | **F-02, F-04** | `foundations/` | Licensing; inherited blocked readiness | 0 |
 | **F-03** | `foundations/` | **B-1** — 9-row resolution table | 0.4 |
 | **O-INV-01** | `INVARIANTS.md` | **B-3** — elaborations | 0.5 |
@@ -479,11 +632,14 @@ Phases per §5. Status: **R** ratified · **—** not started.
 | **O-SVC-01…04** | `services/` | Contracts; drift-check; gate order; host equivalence | 1 |
 | **O-RTG-01…05** | `routing/` | Window size; contested routing; gap mechanics; provenance; route schema | 0.10, 4 |
 | **O-LDG-\*** | Ledgers | Conferral; classification; chain; **re-anchor pre-chain hashes** | 2a, 4 |
+| ~~O-RDM-01~~ | this file | **CLOSED at v0.3** — phasing answers whether the scaffold is gate-capable *(restored to the register per the retention convention)* | — |
 | **O-RDM-02** | this file | E-I.1 v2.0 unverified | 2a |
+| ~~O-RDM-03~~ | this file | **CLOSED at v0.3** — session log started *(restored)* | — |
+| **O-RDM-04** | this file | **New (R-19).** Phase 0-beta still carries two M-sized authoring efforts. If 0-alpha's feedback suggests further staging, split again rather than running them blind | 0 |
 
 ---
 
-## 10. Review disposition — v0.2 → v0.3
+## 10.1 Review disposition — v0.2 → v0.3
 
 | Finding | Disposition | Location |
 |---|---|---|
@@ -505,6 +661,24 @@ Phases per §5. Status: **R** ratified · **—** not started.
 a finding — this one produced thirteen, and two of them (R-01, R-04) were blocking defects that
 made the plan unrunnable as written.
 
+## 10.2 Review disposition — v0.3 → v0.3.1
+
+Second cycle, against the machinery v0.3 introduced. Three of v0.3's four load-bearing repairs
+carried defects introduced *by the repair* — which is where second-cycle findings should cluster.
+
+| Finding | Disposition | Location |
+|---|---|---|
+| **R-14** Bootstrap mark overloaded; §2.1 self-contradictory | **ACCEPT** — split into two fields with disjoint scopes: `ratified-under: bootstrap` (governance; grants provisional force; sunsets) and `ratification: pending-conferral` (corpus prose; grants nothing; exits on conferral). "Same mark" sentence removed. Backlog corrected — E-I.2's **carrier** now marked PC alongside the essays | §2.1, 0.1, D-C, §8 |
+| **R-15** Monotonicity mis-specified at both sites | **ACCEPT** — set-shrinkage replaced with per-element no-regression plus admission-controlled universe growth, at §2.2 and §2.3. §6 row 8 is now the admission channel operating normally rather than a contradiction | §2.2, §2.3, 0.2, 0.3 |
+| **R-16** D-B decided by construction while marked open | **ACCEPT** — D-B marked *provisionally decided (d)*, confirmation gated on 0.4a, delta stated; 5.5 stands conditioned. The R-11 defect recommitted, correctly caught | D-B, 5.5 |
+| **R-17** Harvested situations make coverage self-confirming | **ACCEPT** — `derived_from:` added to the situation schema; dead-jurisdiction check excludes self-derived cases; coverage reports segregate; completeness window counts independent only. Route-first authoring survives — only the reflexive direction needs the firewall | 0.10, §6 |
+| **R-18** F-03 "Assess" rows omit their best outcome | **ACCEPT** — `essay-upstream` added as a resolution action and as a fourth D-B(d) drift-check status. **B-1 splits**: genuinely blocking for ratified/rc specs, generative for sketch-grade ones, where the essay is upstream of the spec — which is the singular project's own stated logic | §3 B-1, D-B |
+| **R-19** Hygiene cluster | **ACCEPT with one correction.** Retention convention fixed (struck-and-retained; O-RDM-01/03 restored); sunset unit added to D-F; unjustified `F01 → INV01` edge cut; `CHT02 → G1` edge restored; Phase 0 staged into 0-alpha/0-beta. **Correction:** F-01's *referent* never moved — `foundations/README.md` has always defined it as the `integral-ethics.md` versioning defect. v0.2's roadmap label was lossy and v0.3 corrected it silently. A corrected mislabel, not a supersession violation; noted at §9 | §9, D-F, §4, Phase 0 |
+
+**Six raised, six accepted, one partially corrected.** The correction is recorded rather than
+argued away: the finding pointed at something real (an id whose label changed with no note) and
+was wrong about the mechanism (referent change vs. lossy summary). Both halves are in the ledger.
+
 ---
 
 ## 11. Session log
@@ -515,3 +689,4 @@ made the plan unrunnable as written.
 | 2026-08-23 | **SVC-1 unblocked.** `jurisdiction.yaml` schema v1.0, fixing five v0 defects. Declaration vocabulary fixed (witness required; no waiver). Both panels migrated — E-I.2 clean, E-I.1 fails on 15 real defects. Green base + ten red one-factor deltas verified failing at expected paths. | `INVARIANTS.md`, `services/gnomon-lint/`, both panels, `fixtures/` |
 | 2026-08-23 | Roadmap v0.2: dependency graph, six-phase order, coupling points. Surfaced B-1. | `ROADMAP.md` |
 | 2026-08-23 | **Roadmap v0.3** after adversarial review. Thirteen findings, all accepted. Root defect: partiality defined for checks and nothing else, leaving a plan that could not start (R-01) or ratify (R-04). Added the Bootstrap Protocol, deferral monotonicity, handoff grades, the F-03 resolution table, and the gap-preemption rule; pulled situations to Phase 0. **Content anchors recorded for all three ratified panels.** | `ROADMAP.md`, both `LEDGER.md` |
+| 2026-08-24 | **Roadmap v0.3.1** — point release after a second cycle against v0.3's own machinery. Six findings, all accepted, one partially corrected. Bootstrap mark split into two fields with disjoint scopes (R-14); monotonicity restated as no-regression + admission rather than set-shrinkage, which the first new essay would have violated by existing (R-15); D-B marked provisionally decided rather than open-while-enacted (R-16); `derived_from:` firewall added so harvested situations cannot self-confirm coverage (R-17); `essay-upstream` added, splitting B-1 into blocking and generative halves (R-18); register retention convention fixed and Phase 0 staged into 0-alpha/0-beta (R-19). No content anchors changed. | `ROADMAP.md` |

@@ -87,6 +87,11 @@ Every topic ships as three artifacts. A topic missing a panel is incomplete.
 
 Proven twice: *Fruits* (formal, v2.0) and *Judge Not* v1.0 → *The Gavel and the Watch* v1.0.
 
+Both carry `ratification: pending-conferral` (`CHARTER.md` §4.5): their review cycles ran and
+their texts are hash-anchored, but no conferral record exists, so the *ratified* predicate is
+suspended. What is pending is conferral, not identity. **Neither topic is complete** — each still
+owes an `ARCH.md`, and every `ARCH.md` in the corpus is blocked on F-03.
+
 ---
 
 ## Repository layout
@@ -94,13 +99,19 @@ Proven twice: *Fruits* (formal, v2.0) and *Judge Not* v1.0 → *The Gavel and th
 ```
 gnomon/
 ├── README.md                    # this file
-├── CHARTER.md                   # contribution statement, non-goals, conferral model
+├── CHARTER.md                   # contribution statement, non-goals, conferral model,
+│                                #   and §4 the Bootstrap Protocol (the two marks)
 ├── INVARIANTS.md                # INV-01..05, normative text, versioned
 ├── SPINE.md                     # lifecycle spine, movements, scales
 ├── GLOSSARY.md                  # controlled vocabulary: lock/gavel, registers,
 │                                #   strata, axes, knock, carrier, gnomon condition
-├── ROADMAP.md                   # sequencing detail, critical path, session log,
-│                                #   consolidated open-item register
+├── ROADMAP.md                   # OWNS the backlog: phases, dependency graph,
+│                                #   blockers, decisions, open-item register
+├── LEDGER.md                    # governance ledger — bootstrap register (what
+│                                #   `bootstrap-entry:` resolves into), findings
+│                                #   R-01..R-26, infrastructure events
+├── .gitattributes               # eol=lf — makes worktree bytes == blob bytes, so a
+│                                #   content anchor need not name its byte stream
 ├── LICENSE                      # the split, declared by file kind and by path
 ├── LICENSE-CC-BY-SA-4.0         # corpus prose and its adjudication record
 ├── LICENSE-Apache-2.0           # tooling, schemas, fixtures, machine-readable panels
@@ -116,8 +127,9 @@ gnomon/
 │
 ├── corpus/
 │   ├── I-epistemology/
-│   │   ├── fruits-of-the-spirit/        # E-I.1  RATIFIED (formal v2.0)
-│   │   ├── judge-not/                   # E-I.2  RATIFIED (formal v1.0, carrier v1.0)
+│   │   ├── fruits-of-the-spirit/        # E-I.1  v2.0, pending-conferral
+│   │   ├── judge-not/                   # E-I.2  v1.0 + carrier v1.0,
+│   │   │                                #        both pending-conferral
 │   │   └── conscience/                  # E-I.3  QUEUED
 │   ├── II-the-word/
 │   │   ├── truthfulness/                # E-II.1
@@ -292,36 +304,19 @@ Ratification authority rests with the project's ratifying architect. Reviews are
 
 ## Backlog
 
-Status: **R** ratified · **Q** queued · **B** backlog · **—** not started. Priority: P0 highest.
+**The backlog lives in [`ROADMAP.md`](ROADMAP.md), not here.** It carried two copies for a while —
+this section and the roadmap's §8 — which is the same defect the corpus files against itself as
+O-LDG-J04: two registers of one record, neither canonical, drifting apart at the rate either is
+edited.
 
-| ID | Essay | Formal | Carrier | Arch | Priority / Notes |
-|---|---|---|---|---|---|
-| E-I.1 | The Fruits of the Spirit | **R** v2.0 | — | — | Carrier + ARCH.md are open items (C-I.1, A-I.1) |
-| E-I.2 | Judge Not | **R** v1.0 | **R** v1.0 *The Gavel and the Watch* | — | ARCH.md open (A-I.2): assertion policy — act-classifications and pattern-trust yes; verdicts on interiors never |
-| E-I.3 | Conscience | — | — | — | **P1.** The erring conscience that binds; formation vs. scrupulosity; refusal. Closes the epistemology triangle. Grounds Load-Bearing Vacancy |
-| E-II.1 | Truthfulness | — | — | — | **P2.** Lying, candor, silence, testimony. Ethics half of the Sincerity model. Grounds SHML |
-| E-II.2 | Promise & Covenant | — | — | — | **P2** (pair with E-II.1). What binds a vow; release; fidelity. Grounds CTS |
-| E-II.3 | Display | — | — | — | Hypocrisy as first-century Goodhart. Grounds Will Observatory (the audited channel becomes the performed one) |
-| E-III.1 | Repentance | — | — | — | **P0.** Contrition, confession, restitution, amendment — the constructive act replacing the seized gavel. Judge Not §15 left this door open on purpose |
-| E-III.2 | Forgiveness | — | — | — | **P0** (pair with E-III.1). By what it isn't: not excusing, forgetting, trust, or access; the unrepentant case; self-forgiveness via the reserved verdict |
-| E-III.3 | Reconciliation | — | — | — | Trust rebuilt by behavior over time; impossible/unsafe cases; the elder brother problem |
-| E-IV.1 | The Order of Loves | — | — | — | Samaritan scope; partiality vs. the stranger's claim. Required for any agent serving one principal among many humans |
-| E-IV.2 | The Enemy & Force | — | — | — | Cheek beyond the kenotic interlude; defense of others; punishment — the gavel's one legitimate home; mercy vs. justice |
-| E-IV.3 | Gift & Desert | — | — | — | Merit, envy, gratitude, the vineyard. The comparison economy; credit-assignment |
-| E-IV.4 | Goods & Stewardship | — | — | — | Property, generosity, talents, rest — entrusted goods generalized from children to creation |
-| E-V.1 | Habit & Character | — | — | — | Virtue acquisition; narrative identity (grounds NIS); addiction and culpability |
-| E-V.2 | Desire & Attention | — | — | — | The eye as lamp; attention as first moral resource; the harvesting technologies |
-| E-V.3 | Fear & Providence | — | — | — | Anxiety, courage, planning vs. control-hoarding; hope as virtue (grounds DES/CSS) |
-| E-VI.1 | Authority & Refusal | — | — | — | Obedience limits; Caesar's coin; conscientious refusal. Grounds ARCHON guardian/sovereign; when the synthetic person must say no |
-| E-VI.2 | The Community's Acts | — | — | — | Judge Not §11 to full institutional ethics: due process, office vs. person, scandal, whistleblowing |
-| E-VII.1 | Two Masters | — | — | — | Genuine incommensurability; twelve-worldview collision; moral remainder. The system stress-tests itself |
-| E-VII.2 | Tragedy | — | — | — | Dirty hands, agent-regret, no clean exit — the human grounding of Irreversibility |
-| E-VII.3 | Suffering | — | — | — | Unchosen cost, lament, the cross — honest pain per the carrier standard |
-| E-VII.4 | Hope & Completion | — | — | — | Why act without guaranteed outcomes; the fruits as foretaste — closes the loop to E-I.1 |
+`ROADMAP.md` owns sequencing and status: the 22-essay backlog with per-item phase assignment, the
+dependency graph, the four hard blockers, the six open decisions, and the consolidated open-item
+register. This README describes what the corpus *is*; the roadmap describes what is *left*.
 
-**Non-essay backlog:** C-I.1 Fruits carrier · A-I.1 / A-I.2 arch notes for the two ratified essays · SVC-1 `gnomon-lint` core + red fixtures (first build target, per the fspec-lint pattern) · RT-1 seed situations S-0001…S-0005 and adjudicate first routes.
-
-**Critical path:** E-III.1 + E-III.2 (the open door) → E-I.3 (closes epistemology) → E-II.1 + E-II.2 (highest FNSR leverage: SHML, CTS) → remaining movements. Invert to E-II first only if architecture urgency outranks the pastoral arc.
+**Where the corpus stands**, in one line: 2 essays and 1 carrier exist of 22 topics; **0 topics are
+complete**, since every topic needs an architecture note and every architecture note is blocked on
+F-03; no service is built; no situation has been routed. Both ratified essays carry
+`ratification: pending-conferral` — see [`CHARTER.md`](CHARTER.md) §4.
 
 ---
 

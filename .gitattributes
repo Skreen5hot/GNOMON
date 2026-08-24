@@ -1,0 +1,33 @@
+# Line-ending policy
+#
+# The corpus anchors ratified texts by SHA-256 over file content, and gnomon-ledger will
+# build a hash chain on the same bytes. Without a policy, `core.autocrlf` decides per
+# machine: the same file hashes differently on Windows and Linux, and a chain computed on
+# one platform fails verification on the other.
+#
+# Before this file existed the repository had already drifted — 2 of 70 text files were
+# stored with CRLF and 68 with LF, by accident of how they were uploaded. See LEDGER.md
+# and the anchor supersession recorded in the two corpus ledgers.
+#
+# `eol=lf` is deliberate and does more than pick a convention: it makes the working tree
+# byte-identical to the stored blob. A hash taken with `sha256sum <file>` then equals one
+# taken with `git show HEAD:<file> | sha256sum`, so an anchor no longer has to name which
+# byte stream it means. The ambiguity is removed rather than documented.
+
+* text=auto eol=lf
+
+# Explicit for the formats the services read, so a future `text=auto` heuristic miss
+# cannot silently reintroduce the drift.
+*.md         text eol=lf
+*.yaml       text eol=lf
+*.yml        text eol=lf
+*.json       text eol=lf
+*.lock       text eol=lf
+*.sh         text eol=lf
+LICENSE*     text eol=lf
+.gitattributes text eol=lf
+
+# Binary — never normalize, never diff as text.
+*.png binary
+*.jpg binary
+*.pdf binary

@@ -14,11 +14,31 @@ chain.
 
 | Panel | SHA-256 | Bytes |
 |---|---|---|
-| `ESSAY.md` | `14c0fdc78811fa323b60aee32096c6fabf4c7e357c37547fdcd5c8e579561735` | 67055 |
+| `ESSAY.md` | `879f46cec1b7be0ed276398355129c51cd309f732e2caa145481a441acf109bb` | 66288 |
 
-**Anchored byte stream: the committed git blob**, at commit `dc85db5`. See
-`../judge-not/LEDGER.md` for why the byte stream must be named — the two essays normalize
-differently, and this one happens to match its working-tree hash while the other does not.
+**Anchored byte stream: the committed git blob.** Since `.gitattributes` (2026-08-24) the working
+tree is byte-identical to the blob, so `sha256sum ESSAY.md` and
+`git show HEAD:<path> | sha256sum` now agree and the anchor no longer depends on which stream is
+meant.
+
+#### Anchor supersession — 2026-08-24
+
+| | Value |
+|---|---|
+| **Superseded anchor** | `14c0fdc78811fa323b60aee32096c6fabf4c7e357c37547fdcd5c8e579561735` (67055 bytes, commit `dc85db5`) |
+| **Cause** | Line-ending normalization under `.gitattributes`. This file was one of two in the repository stored with CRLF; all others were LF |
+| **Content changed?** | **No — proven, not asserted.** Stripping CR from the superseded blob reproduces the new blob exactly: both hash to `879f46ce…`. The 767 bytes of difference are 767 carriage returns |
+
+Verify the claim independently:
+
+```
+git show dc85db5:corpus/I-epistemology/fruits-of-the-spirit/ESSAY.md | tr -d '\r' | sha256sum
+```
+
+An anchor over a `pending-conferral` text may not move on an author's say-so. It moved here, so
+the proof is recorded beside it and the superseded value is retained rather than overwritten —
+`CHARTER.md` §4.5.2: what is pending is conferral, not identity, and identity is exactly what an
+anchor fixes.
 
 The anchor proves **integrity, not provenance**, and here the gap is wider than for E-I.2: there
 is no version line in the text, no conferral record, and no v1.0 on file to supersede. What is
