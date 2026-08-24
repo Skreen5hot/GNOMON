@@ -149,6 +149,25 @@ defects in artifacts committed the day before.
 only because the CI guard of R-28 forced an examination of what git had actually stored. One
 defect surfaced another; neither was found by re-reading.
 
+### Cycle 5 — executing 0.4a, the F-03 confirmation · 2026-08-24
+
+Every row of the F-03 table was located in `Skreen5hot/ariadne` under `docs/`. Reading the
+documents overturned most of the reported states. **Evidence class: header self-declarations read
+at `main`, not ratification records** — stronger than *reported*, weaker than *conferred*.
+
+| Id | Finding | Disposition |
+|---|---|---|
+| **R-30** | **ARIADNE is not a service spec, and is not ratified v1.0.** It is a coherence-review *discipline* over the spec ecosystem — "Architectural Review for Integrity, Alignment, and Design Non-divergence Engine" — with no version and no status line. E-I.2's panel lists it in `grounds:` alongside ARCHON, CTS, and Will Observatory, which miscategorises a process as a service the essay grounds. | ACCEPT → table corrected; `grounds:` miscategorisation folded into **O-JUR-J01**. Whether a discipline can be *grounded* by an essay at all is the substantive question |
+| **R-31** | **The "foundational-period, may be sketch" states were wrong for four rows.** CTS is v1.2.1 "Ready for Milestone 1 Implementation"; NIS v2.1 FINAL "Governance-Ready"; DES v2.0.0 "Release Candidate"; CSS v2.0.0 "Final". IEE was reported in-corpus-only; an external spec exists at v2.1. **R-18's `essay-upstream` inversion applies to no row in the table** — it remains a valid status with zero occupants. | ACCEPT → table corrected. B-1 re-characterised: the risk was never that specs might not exist, but that real versioned specs exist and the corpus has never been checked against them |
+| **R-32** | **The Triple-I Standard has two conflicting upstream formulations.** `01-philosophy/FNSR-Justification.md` §4.2 gives Irreversibility / Inseparability / **Integrity-Maintenance** — which `README.md` and `CHARTER.md` §1 cite. `00-foundation/FNSR-Master-Guide.md` twice gives "the three structural conditions of personhood (irreversibility, inseparability, **answerability**)". The corpus's stated grounding names one triad while its own master guide names another. | ACCEPT → recorded. **Not GNOMON's to resolve** — it is an upstream tension, and ARIADNE has a `tension-log.md` for exactly this. File it there; cite by document and version until it settles |
+| **R-33** | **GNOMON's corpus prose is duplicated upstream.** `ariadne/docs/01-philosophy/` contains `integral-ethics.md`, `fruits-of-the-spirit.md`, and `judge-not-v1.0.md` — the same three documents this repository holds as a foundation and two ratified essays. Neither copy declares itself canonical. Two uncoordinated copies of a hash-anchored text is precisely what the content anchors exist to detect, and they cannot detect it across repositories. | ACCEPT → **new open item O-FND-01**. Canonicity must be declared before any `ARCH.md` cites across the boundary, or the corpus will drift from its own foundation without either side noticing |
+| **R-34** | **ARIADNE's `service_inventory.json` is stale against its own spec directory.** It reports `spec: null` for DES and CSS while `DES-Specification-v2.0.md` and `CSS-Specification-v2.0.md` exist, and points SHML at `middle-layer-shml.md` (v3.0) while v3.2 and v3.3 are present. Its own metadata says `sha256: "PENDING — compute on finalization"`. | ACCEPT → recorded as an upstream observation, not a GNOMON defect. Bears directly on **O-SVC-06**: an inventory that drifts from its directory cannot be consumed as the drift oracle without its own verification |
+
+**What 0.4a did not establish.** No row has a conferral record. Headers are self-declarations, and
+`CHARTER.md` §2.3 does not accept self-declaration as conferral — the same standard the corpus
+applies to its own two essays, which is why they sit at `pending-conferral`. Rows are **located
+and versioned, not ratified**, and `ARCH.md` notes must say so per D-B(d).
+
 ---
 
 ## 3a. Infrastructure events

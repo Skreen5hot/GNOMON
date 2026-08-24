@@ -198,33 +198,72 @@ waiver, and that ruling is not softened by anything in this section.
 
 ## 3. Hard blockers
 
-### B-1 · F-03 — the FNSR specs are unresolvable · highest leverage
+### B-1 · F-03 — the FNSR specs · **located 2026-08-24; still blocking**
 
 Blocks **all 22 `ARCH.md` notes**, whose falsification condition is "cross-checked against service
 specs; drift is a finding" — and therefore blocks triptych completeness for the entire corpus.
 Also forces `gnomon-lint`'s `grounds:` check to report *deferred* rather than *passing*.
 
-v0.2 called this the highest-leverage item and then sized it "S? — may be retrieval, may be
-authoring elsewhere," a span of two orders of magnitude, with an exit criterion that assumed the
-specs exist in vendorable states. **They do not, uniformly** — and that distribution is what
-D-B turns on.
+**0.4a is executed.** Every row is located in `Skreen5hot/ariadne` and carries a version. The
+blocker did not clear; it changed shape:
 
-#### F-03 resolution table
+| | Before 0.4a | After 0.4a |
+|---|---|---|
+| **Feared** | The specs may not exist in citable form | — |
+| **Actual** | — | They exist, are versioned, and are actively maintained. **The corpus has never been checked against any of them** |
+| **Character** | Possibly generative — write the spec downstream of the essay | **Blocking.** Drift is accumulated and unmeasured across nine documents |
 
-**States below are reported from project history and are UNVERIFIED from this repository.**
-Confirming them is item 0.4a; nothing downstream should treat a row as settled until it is.
+An `ARCH.md` can now be *written*. What it cannot yet be is *checked*: O-SVC-02 has not decided
+whether drift-checking is mechanical or adjudicated, and ARIADNE turns out to carry its own drift
+machinery (`00-foundation/drift-record.md`, `tension-log.md`, `coherence-review.md`,
+`04-governance/drift_report.md`). That changes the question from "how do we build one" to "do we
+consume theirs." Raised as **O-SVC-06**.
 
-| Service | Cited by | Reported state | Resolution action |
-|---|---|---|---|
-| **ARIADNE** | E-I.2 | ratified v1.0 | Vendor, or pin by stable id + version |
-| **SHML** | E-II.1 | v3.3 | Pin v3.3 |
-| **Will Observatory** | E-II.3, E-I.2 | v1.0-rc1, **F-08…F-32 open** | Pin rc + status. Cannot be cleanly drift-checked — a spec with open findings will drift by design |
-| **ARCHON** | E-I.2, E-VI.1 | **unknown** | Assess first — highest stakes: grounds *when the synthetic person must say no* |
-| **CTS** | E-I.2, E-II.2 | foundational-period, may be sketch | Assess → likely **`essay-upstream`** |
-| **NIS** | E-V.1 | foundational-period, may be sketch | Assess → likely **`essay-upstream`** |
-| **DES/CSS** | E-V.3 | foundational-period, may be sketch | Assess → likely **`essay-upstream`** |
-| **IEE** | E-I.1 | defined **in-corpus only** (Fruits §3.4) | Decide whether an external spec exists or the corpus definition is canonical |
-| **Triple-I Standard** | `README.md`, `CHARTER.md` | Architectonic Agency Theory papers | Locate and vendor. The corpus's stated grounding is cited from nowhere reachable |
+#### F-03 resolution table — **0.4a executed 2026-08-24**
+
+**The specs are located.** All nine rows resolve into
+[`Skreen5hot/ariadne`](https://github.com/Skreen5hot/ariadne) under `docs/`, which also carries
+its own coherence machinery (`spec-index.md`, `drift-record.md`, `tension-log.md`,
+`service_inventory.json`).
+
+**Evidence class:** version and status lines read from each document's header at
+`main`, 2026-08-24. That is stronger than the previous *reported* column and weaker than a
+ratification record — **a header is a self-declaration**, and `CHARTER.md` §2.3 does not accept
+self-declaration as conferral. Rows are therefore *located and versioned*, not *ratified*.
+
+| Service | Cited by | Location in `ariadne/docs/` | Verified header | Was reported |
+|---|---|---|---|---|
+| **ARCHON** | E-I.2, E-VI.1 | `01-philosophy/archon-framework.md`<br>`03-specifications/archon-functional-requirements.md` | **v2.0** "Publication Draft"<br>**v3.0** "Draft for Technical Review" | *unknown* — now known, and it is **two documents at different versions** |
+| **CTS** | E-I.2, E-II.2 | `03-specifications/CTS-Commitment-Tracking-Service-v1.2.md` | **v1.2.1** · "Ready for Milestone 1 Implementation" | ~~may be sketch~~ **wrong** |
+| **NIS** | E-V.1 | `03-specifications/NIS-Specification-v2.1.md` | **v2.1 FINAL** · "Governance-Ready" | ~~may be sketch~~ **wrong** |
+| **DES** | E-V.3 | `03-specifications/DES-Specification-v2.0.md` | **v2.0.0** · "Release Candidate" | ~~may be sketch~~ **wrong** |
+| **CSS** | E-V.3 | `03-specifications/CSS-Specification-v2.0.md` | **v2.0.0** · "Final" | ~~may be sketch~~ **wrong** |
+| **SHML** | E-II.1 | `03-specifications/SHML-v3_3.md` | **v3.3** · "Normative Draft" | v3.3 ✓ — status now known |
+| **IEE** | E-I.1 | `03-specifications/Integral_Ethics_Agent.md` | **v2.1** · "Reference Architecture" | ~~in-corpus only~~ **wrong** — an external spec exists |
+| **Will Observatory** | E-II.3, E-I.2 | `02-architecture/FNSR Will Observatory and Commitment Architecture.md` | **v1.0 Final** (conceptual) · *"Subsystem specifications remain to be separately ratified. No implementation is conformant merely by claiming conformance to this conceptual document."* | ~~v1.0-rc1, F-08…F-32 open~~ — the rc1 document is a **different** file (`02-architecture/fnsr-conceptual-design-document-v1.0-rc1.md`) |
+| **Triple-I Standard** | `README.md`, `CHARTER.md` | `01-philosophy/FNSR-Justification.md` §4.2 "The Triple-I Substrate & ARCHON Protocol" | Irreversibility · Inseparability · **Integrity-Maintenance** | located — **but see R-32: a second, conflicting triad exists upstream** |
+| **ARIADNE** | E-I.2 | repository root | **no version, no status.** Not a service spec — a coherence-review *discipline* over the spec ecosystem | ~~ratified v1.0~~ **wrong on both counts** |
+
+#### What 0.4a overturned
+
+**The "mostly sketch-grade" hypothesis is false.** Seven of nine rows are versioned documents at
+Final, Release Candidate, Governance-Ready, or Normative Draft. Only ARIADNE lacks a version, and
+it is not a service.
+
+This **inverts R-18's expected consequence.** R-18 reasoned that if CTS were sketch-grade then
+E-II.2 would not be blocked by CTS — CTS would be blocked by E-II.2, with the essay upstream. CTS
+is v1.2.1 and implementation-ready, so that inversion applies to **no row in this table**.
+`essay-upstream` remains a valid status in D-B(d)'s grading; it currently has **zero occupants**.
+
+**B-1's character therefore changes, and not in the comfortable direction.** The blocker was never
+"the specs might not exist." It is that **real, versioned, actively-maintained specs exist and the
+corpus has never been checked against them.** Drift risk is not hypothetical here — it is
+accumulated and unmeasured, across nine documents the corpus claims to ground.
+
+**D-B(d) survives and is strengthened.** The states are genuinely heterogeneous — Final, RC,
+Governance-Ready, Normative Draft, Publication Draft, Reference Architecture, and one document
+with no version at all. A single drift-check rule cannot serve all of them, which is exactly the
+argument for status-graded `ARCH.md`.
 
 #### `essay-upstream` — the resolution v0.3 omitted · new in v0.3.1 (R-18)
 
@@ -404,8 +443,8 @@ existing artifacts are marked. A gate run after this point has vocabulary to rep
 
 | # | Item | Size | Note |
 |---|---|---|---|
-| 0.4a | **F-03 confirmation** — verify the 9-row table | S | R-02, **R-18**. Retrieval, not authoring. Determines B-1's real scope |
-| 0.4b | **F-03 resolution** — vendor, pin, or declare `essay-upstream` per row | ? | Size known only after 0.4a |
+| ~~0.4a~~ | **F-03 confirmation** — **DONE 2026-08-24.** All nine rows located in `Skreen5hot/ariadne`; seven of nine reported states were wrong. Findings R-30…R-34 | S | R-02, R-18 |
+| 0.4b | **F-03 resolution** — pin each row by repo + path + version + status. `essay-upstream` has zero occupants (R-31), so this is pinning, not authoring | **S–M** | Sized now that 0.4a is done. Blocked on **O-FND-01** for the three duplicated documents |
 | 0.5 | **O-INV-01** — elaborate INV-01…05 | M | B-3 |
 | 0.6 | **O-CHT-01** — conferral model; set sunset **unit and value** | M | B-2, R-19 |
 | 0.7 | **O-CHT-02** — review independence | S | Also grounds 0.10's derivation firewall |
@@ -624,7 +663,9 @@ mislabel, not a silently-moved id, and the correction is recorded here rather th
 |---|---|---|---|
 | **F-01** | `foundations/` | **B-4** — `integral-ethics.md` unversioned *(label corrected in v0.3.1; referent unchanged)* | 0.9 |
 | **F-02, F-04** | `foundations/` | Licensing; inherited blocked readiness | 0 |
-| **F-03** | `foundations/` | **B-1** — 9-row resolution table | 0.4 |
+| **F-03** | `foundations/` | **B-1** — all nine rows located (0.4a done); pinning outstanding | 0.4b |
+| **O-FND-01** | `foundations/` | **New (R-33).** `integral-ethics.md`, `fruits-of-the-spirit.md`, `judge-not-v1.0.md` exist in both this repository and `ariadne/docs/01-philosophy/`. Neither copy is declared canonical, and content anchors cannot detect divergence across repositories | 0.4b |
+| **O-SVC-06** | `services/` | **New (R-34).** ARIADNE carries its own drift machinery. Decide whether GNOMON consumes it or builds its own — and note its `service_inventory.json` is stale against its own spec directory | 1 |
 | **O-INV-01** | `INVARIANTS.md` | **B-3** — elaborations | 0.5 |
 | ~~O-INV-02~~ | — | **CLOSED** — witness rule, two statuses, no waiver | — |
 | **O-INV-03** | `INVARIANTS.md` | Partial — INV-03 mechanical; four declaration-only | 1 |
