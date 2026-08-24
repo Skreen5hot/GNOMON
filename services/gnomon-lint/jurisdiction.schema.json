@@ -1,0 +1,226 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/GNOMON/schema/jurisdiction-1.0.json",
+  "title": "GNOMON jurisdiction.yaml",
+  "description": "Machine-readable jurisdiction panel. Normative prose and rationale: SCHEMA.md. Draft for adjudication (G0) - not ratified.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "id", "title", "version", "movement", "gate",
+    "spine", "decides", "does_not_decide",
+    "axes", "registers", "strata", "invariants",
+    "grounds", "carrier"
+  ],
+
+  "$defs": {
+    "essayId": {
+      "type": "string",
+      "pattern": "^E-(I|II|III|IV|V|VI|VII)\\.[0-9]+$"
+    },
+    "locator": {
+      "description": "[<panel>]§<section>. Panel defaults to ESSAY.md. Resolved by gnomon-xref (O-SCH-01).",
+      "type": "string",
+      "pattern": "^([A-Z]+\\.md)?§[^\\s].*$"
+    },
+    "invariantHonored": {
+      "description": "Universal or prohibitive invariant. Vacuity unavailable: status must be honored.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["status", "witness"],
+      "properties": {
+        "status": { "const": "honored" },
+        "witness": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "$ref": "#/$defs/locator" }
+        }
+      }
+    },
+    "invariantConditional": {
+      "description": "Conditional invariant (INV-04, INV-05). May be vacuously satisfied, with a reason.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["status", "witness"],
+      "properties": {
+        "status": { "enum": ["honored", "vacuously-satisfied"] },
+        "witness": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "$ref": "#/$defs/locator" }
+        },
+        "reason": { "type": "string", "minLength": 1 }
+      },
+      "if": {
+        "properties": { "status": { "const": "vacuously-satisfied" } },
+        "required": ["status"]
+      },
+      "then": { "required": ["reason"] }
+    }
+  },
+
+  "properties": {
+    "id": { "$ref": "#/$defs/essayId" },
+
+    "title": { "type": "string", "minLength": 1 },
+
+    "version": {
+      "type": ["string", "null"],
+      "pattern": "^[0-9]+\\.[0-9]+$"
+    },
+
+    "movement": { "enum": ["I", "II", "III", "IV", "V", "VI", "VII"] },
+
+    "gate": {
+      "description": "Highest gate passed. Determines which checks apply.",
+      "enum": ["G0", "G1", "G2", "G3"]
+    },
+
+    "spine": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["stages", "scales"],
+      "properties": {
+        "stages": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "enum": ["see", "judge", "speak", "bind", "act",
+                     "fail", "repair", "form", "endure", "hope"]
+          }
+        },
+        "scales": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": { "enum": ["self", "dyad", "body"] }
+        }
+      }
+    },
+
+    "decides": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": { "type": "string", "minLength": 1 }
+    },
+
+    "does_not_decide": {
+      "description": "MUST be non-empty. An essay that declines to declare its limits fails lint before review.",
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["question", "disposition"],
+        "properties": {
+          "question": { "type": "string", "minLength": 1 },
+          "disposition": { "enum": ["handoff", "reserved", "out-of-scope"] },
+          "to": { "$ref": "#/$defs/essayId" },
+          "stratum": {
+            "description": "Only character and destiny reserve. Strata 1-3 are accessible in principle; declining them is scope, not reservation.",
+            "enum": ["character", "destiny"]
+          },
+          "reason": { "type": "string", "minLength": 1 }
+        },
+        "allOf": [
+          {
+            "if": { "properties": { "disposition": { "const": "handoff" } },
+                    "required": ["disposition"] },
+            "then": { "required": ["question", "disposition", "to"],
+                      "not": { "anyOf": [ { "required": ["stratum"] } ] } }
+          },
+          {
+            "if": { "properties": { "disposition": { "const": "reserved" } },
+                    "required": ["disposition"] },
+            "then": { "required": ["question", "disposition", "stratum"],
+                      "not": { "anyOf": [ { "required": ["to"] } ] } }
+          },
+          {
+            "if": { "properties": { "disposition": { "const": "out-of-scope" } },
+                    "required": ["disposition"] },
+            "then": { "required": ["question", "disposition", "reason"],
+                      "not": { "anyOf": [ { "required": ["to"] }, { "required": ["stratum"] } ] } }
+          }
+        ]
+      }
+    },
+
+    "axes": {
+      "description": "INV-01. Presence is mechanical; correctness is adjudicated at G1.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["responsibility", "humility"],
+      "properties": {
+        "responsibility": { "type": "string", "minLength": 1 },
+        "humility": { "type": "string", "minLength": 1 }
+      }
+    },
+
+    "registers": {
+      "description": "INV-02.",
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": { "enum": ["verdict", "precaution"] }
+    },
+
+    "strata": {
+      "description": "INV-03. All five keys required; character and destiny may never be licensed or defeasible.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["acts", "patterns", "intention_culpability", "character", "destiny"],
+      "properties": {
+        "acts": { "enum": ["licensed", "defeasible", "reserved", "not-addressed"] },
+        "patterns": { "enum": ["licensed", "defeasible", "reserved", "not-addressed"] },
+        "intention_culpability": { "enum": ["licensed", "defeasible", "reserved", "not-addressed"] },
+        "character": {
+          "description": "INV-03 hard constraint. Not waivable at any gate.",
+          "enum": ["reserved", "not-addressed"]
+        },
+        "destiny": {
+          "description": "INV-03 hard constraint. Not waivable at any gate.",
+          "enum": ["reserved", "not-addressed"]
+        }
+      }
+    },
+
+    "invariants": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["INV-01", "INV-02", "INV-03", "INV-04", "INV-05"],
+      "properties": {
+        "INV-01": { "$ref": "#/$defs/invariantHonored" },
+        "INV-02": { "$ref": "#/$defs/invariantHonored" },
+        "INV-03": { "$ref": "#/$defs/invariantHonored" },
+        "INV-04": { "$ref": "#/$defs/invariantConditional" },
+        "INV-05": { "$ref": "#/$defs/invariantConditional" }
+      }
+    },
+
+    "grounds": {
+      "description": "FNSR service ids. Resolution deferred, not passing, until F-03 resolves.",
+      "type": "array",
+      "uniqueItems": true,
+      "items": { "type": "string", "minLength": 1 }
+    },
+
+    "carrier": {
+      "type": ["object", "null"],
+      "additionalProperties": false,
+      "required": ["title", "version"],
+      "properties": {
+        "title": { "type": "string", "minLength": 1 },
+        "version": { "type": "string", "pattern": "^[0-9]+\\.[0-9]+$" }
+      }
+    }
+  },
+
+  "allOf": [
+    {
+      "description": "A ratified essay carries a version.",
+      "if": { "properties": { "gate": { "const": "G3" } }, "required": ["gate"] },
+      "then": { "properties": { "version": { "type": "string" } } }
+    }
+  ]
+}

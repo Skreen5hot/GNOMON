@@ -1,28 +1,39 @@
 # E-I.1 — The Fruits of the Spirit
 #
-# STATUS: STUB. Jurisdiction has NOT been declared for this essay.
+# Schema: services/gnomon-lint/jurisdiction.schema.json (v1.0, G0 draft)
 #
-# This file is deliberately written to FAIL lint: does_not_decide is empty, and an essay that
-# declines to declare its limits fails lint before it reaches review. That failure is correct
-# and should not be silenced. The essay is listed as ratified v2.0 without ever having declared
-# a jurisdiction panel — which is the finding, not the linter.
+# STATUS: UNDECLARED. This essay has never declared a jurisdiction. The file below is valid
+# YAML and is written to FAIL schema validation — that failure is correct and MUST NOT be
+# silenced. E-I.1 is listed as ratified v2.0 without ever having declared a jurisdiction
+# panel, which is the finding; the linter is only reporting it.
 #
-# The `status` key is proposed, not ratified; the schema is undefined (services/gnomon-lint,
-# SVC-1). If the schema adopts a stub state, a stub MUST still fail the G0 gate — it may only
-# change the error from "malformed" to "undeclared", which are different findings.
+# Serves as the schema's negative witness (SCHEMA.md §Worked example): a real non-conformant
+# panel rather than a synthetic fixture. Expected failures, all four load-bearing:
 #
-# Open item: O-JUR-F01.
-
-status: stub
+#   decides                 -> minItems 1 violated (empty)
+#   does_not_decide         -> minItems 1 violated (empty) — THE load-bearing check
+#   invariants.INV-01..05   -> `status` and `witness` absent
+#   axes.responsibility     -> minLength 1 violated (empty)
+#
+# The v0 `status: stub` key is REMOVED. `gate` carries that state now; a separate
+# be-gentle flag is the beginning of a waiver system, which INVARIANTS.md §Declaration
+# rules out. See SCHEMA.md §Migration.
+#
+# Open item: O-JUR-F01. Declaring this jurisdiction is an authoring act performed at G0 and
+# adjudicated at G2 — not a schema-migration act, and deliberately not done here.
 
 id: E-I.1
 title: "The Fruits of the Spirit as Phenomenological Indicators of Integral Alignment"
-version: null          # ESSAY.md carries no version line; README claims 2.0 — see LEDGER.md
+version: null                 # ESSAY.md carries no version line; README claims 2.0 — see LEDGER.md
 movement: I
+gate: G0                      # cannot be higher: G0 exit requires this file to lint green
 
-# Candidate entries below are a READING of ESSAY.md, not a declaration. They are commented out
-# so that nothing here can be mistaken for a claim the essay has made. Declaring them is an
-# authoring act performed at G0 and adjudicated at G2.
+spine:
+  stages: [see]               # recognition. Proposed, undeclared.
+  scales: [self, dyad, body]
+
+# Candidate entries are COMMENTED, not declared. They are a reading of ESSAY.md, and writing
+# them in would put claims in this essay's mouth that it has not made.
 decides: []
   # - the measurement problem left open by Integral Ethics §7.3
   # - the ontological status of the fruits: dispositions with variable realization, not metrics
@@ -30,30 +41,41 @@ decides: []
   # - the division of labor between formal systems and human judgment
   # - absence as diagnostic question rather than verdict
 
-# MUST be non-empty before G0. Currently empty — fails lint by design.
+# MUST be non-empty. Empty by fact, not by oversight — fails lint by design.
 does_not_decide: []
-  # - what a person finally is                      -> reserved, INV-03
-  # - whether an individual's absence of fruit is culpable
-  # - the binding force of one's own conscience     -> E-I.3
-  # - prudential judgment of conduct                -> E-I.2
-
-handoffs: []
+  # - question: whether an individual's absence of fruit is culpable
+  #   disposition: handoff
+  #   to: E-I.2
+  # - question: the binding force of one's own conscience
+  #   disposition: handoff
+  #   to: E-I.3
+  # - question: what any person finally is
+  #   disposition: reserved
+  #   stratum: character
 
 axes:
-  responsibility: null
-  humility: null
+  responsibility: ""          # undeclared
+  humility: ""                # undeclared
 
 registers: []
 
-reserved_strata_touched: []
+# Undeclared. Note this essay would need `character: reserved` at minimum: §6.1 turns absence
+# into a question rather than a verdict precisely to avoid the essence claim.
+strata:
+  acts: not-addressed
+  patterns: not-addressed
+  intention_culpability: not-addressed
+  character: not-addressed
+  destiny: not-addressed
 
+# Undeclared — no status, no witness. Fails validation on all five.
 invariants:
-  INV-01: undeclared
-  INV-02: undeclared
-  INV-03: undeclared
-  INV-04: undeclared
-  INV-05: undeclared
+  INV-01: {}
+  INV-02: {}
+  INV-03: {}
+  INV-04: {}
+  INV-05: {}
 
-grounds: []            # ESSAY.md names IEE; not yet declared here — see ARCH.md (A-I.1)
+grounds: []                   # ESSAY.md names IEE (§3.4, §9.1); not yet declared — ARCH.md, A-I.1
 
-carrier: null          # not drafted — C-I.1
+carrier: null                 # not drafted — C-I.1

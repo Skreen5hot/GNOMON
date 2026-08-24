@@ -1,7 +1,8 @@
 # Red fixtures
 
-**Status:** **EMPTY — no fixture seeded.** Blocked on the `jurisdiction.yaml` schema and the
-findings schema (`../../services/README.md` O-SVC-01, `SVC-1`).
+**Status:** **10 schema-level fixtures seeded** in [`jurisdiction/`](jurisdiction/), all
+verified to fail at their expected paths. Cross-file fixtures remain blocked on the corpus
+graph and the findings schema (`../../services/README.md` O-SVC-01).
 
 Seeded violations. **CI passes only if every red fixture fails.**
 
@@ -19,6 +20,12 @@ rots.
 
 Each fixture therefore pins: the fault, the service that must catch it, the expected finding
 id, and the location the finding must name.
+
+**This is not hypothetical.** The first draft of the `jurisdiction/` suite hit it immediately:
+the fixtures used essay ids (`E-X.1`) that violated the schema's id pattern, so all ten reds
+"failed" — every one on the id, none on its planted fault. Ten green checkmarks, zero coverage.
+The suite now asserts on the **error path**, and each fixture records its expected path in its
+own header. See [`jurisdiction/EXPECTED.md`](jurisdiction/EXPECTED.md).
 
 ---
 
@@ -50,8 +57,29 @@ Raised here rather than lost; not ratified.
 
 ## Register
 
-*Empty.*
+**Schema-level** — `jurisdiction/`, one-factor deltas off `../green/jurisdiction/minimal.yaml`.
+All ten verified failing at their expected paths.
 
-| Fixture | Fault | Service | Expected finding | Status |
+| Fixture | Fault | Service | Expected path | Status |
 |---|---|---|---|---|
-| — | — | — | — | — |
+| **R-01** | Empty `does_not_decide` | `gnomon-lint` | `does_not_decide` | **caught** |
+| **R-06** | Bare `declared` — the v0 rubber stamp | `gnomon-lint` | `invariants/INV-01` | **caught** |
+| **R-09** | `strata.character: licensed` — INV-03 | `gnomon-lint` | `strata/character` | **caught** |
+| **R-10** | `strata.destiny: defeasible` — INV-03 | `gnomon-lint` | `strata/destiny` | **caught** |
+| **R-11** | Handoff with no target | `gnomon-lint` | `does_not_decide/0` | **caught** |
+| **R-12** | `reserved` cited at an accessible stratum | `gnomon-lint` | `does_not_decide/1/stratum` | **caught** |
+| **R-13** | Declaration with an empty witness | `gnomon-lint` | `invariants/INV-01/witness` | **caught** |
+| **R-14** | Vacuity asserted without a reason | `gnomon-lint` | `invariants/INV-04` | **caught** |
+| **R-15** | Vacuity claimed on a universal invariant | `gnomon-lint` | `invariants/INV-01/status` | **caught** |
+| **R-16** | Ratified at G3 with no version | `gnomon-lint` | `version` | **caught** |
+
+**Cross-file** — not seeded. These need the corpus graph.
+
+| # | Fault | Service | Blocked on |
+|---|---|---|---|
+| **R-02** | Dangling handoff to a nonexistent id | `gnomon-xref` | corpus graph |
+| **R-03** | Orphaned essay — no situation routes to it | `gnomon-route` | route schema, O-RTG-05 |
+| **R-04** | Broken ledger hash chain | `gnomon-ledger` | ledger schema |
+| **R-05** | Carrier claiming undeclared jurisdiction | `gnomon-xref` | corpus graph |
+| **R-07** | Handoff resolving to an id whose directory is empty | `gnomon-xref` | corpus graph |
+| **R-08** | Strata-4 verdict in vernacular prose | *adjudicated* | not mechanizable — seeded to document the boundary |

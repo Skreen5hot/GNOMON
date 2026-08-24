@@ -1,6 +1,14 @@
 # gnomon-lint
 
-**Status:** NOT BUILT. Contract sketch only — no code, no tests, no fixtures.
+**Status:** NOT BUILT — but **unblocked**. No code yet. The two dependencies that blocked it are
+resolved:
+
+- **Schema:** [`SCHEMA.md`](SCHEMA.md) (normative prose) + [`jurisdiction.schema.json`](jurisdiction.schema.json)
+  (JSON Schema 2020-12). v1.0, G0 draft.
+- **Declaration vocabulary:** fixed at `../../INVARIANTS.md` §Declaration — every declaration
+  carries a witness, two statuses, no waiver.
+- **Fixtures:** one green base + ten red one-factor deltas in `../../fixtures/`, all verified
+  failing at their expected paths.
 
 Invariant and schema linter. **First build target (SVC-1)** — every gate depends on it: G0 exit requires `jurisdiction.yaml` linting green, and G3 requires a corpus-wide green.
 
@@ -30,10 +38,32 @@ Not implementable. Recorded here so the boundary is visible in the service that 
 
 ## Notes
 
-Two dependencies are unmet and both are upstream of any code:
+Both blocking dependencies are discharged. What remains is implementation.
 
-- The `jurisdiction.yaml` schema does not exist. Two files claim the shape today and they disagree — `corpus/I-epistemology/judge-not/jurisdiction.yaml` (transcribed from an abridged README example) and `corpus/I-epistemology/fruits-of-the-spirit/jurisdiction.yaml` (a stub that adds a `status` key). Reconciling them is the schema's first job.
-- `INVARIANTS.md` has no normative text and no declaration vocabulary (O-INV-02). "INV-01…05 declarations present" is checkable; whether `declared` on all five means anything is not, until the vocabulary distinguishes a declaration from a rubber stamp.
+**Verified against the live corpus.** The schema was run over both real panels:
+
+| Panel | Result |
+|---|---|
+| `corpus/I-epistemology/judge-not/jurisdiction.yaml` | **validates clean** |
+| `corpus/I-epistemology/fruits-of-the-spirit/jurisdiction.yaml` | **15 errors** — empty `decides`, empty `does_not_decide`, empty `axes`, empty `registers`, and five undeclared invariants |
+
+The Fruits failures are correct and MUST NOT be silenced. E-I.1 is listed as ratified v2.0 having
+never declared a jurisdiction; the linter is reporting the finding, not creating it.
+
+**What implementation still owes.** The JSON Schema covers single-file structure only. These
+checks are named in the table above and are *not* expressible in it — they need the corpus graph:
+
+- `id` uniqueness corpus-wide, and agreement between id, `movement`, and directory position
+- `title` matching the `ESSAY.md` H1; `carrier` matching `CARRIER.md`
+- `gate` agreeing with the ledger's latest entry (and O-SCH-04: which is canonical)
+- witness locators resolving against real headings (O-SCH-01) — the check that makes the witness
+  rule bite rather than merely require a well-formed string
+- controlled vocabulary per `GLOSSARY.md`
+
+**A note on runtime.** The fixtures are language-agnostic YAML and the schema is standard JSON
+Schema 2020-12; both were verified with an off-the-shelf validator. Nothing here commits the
+service to a language. Edge-Canonical First implies a JS/TS core with Node and browser host
+profiles, and no `node_modules` has been added to this repository yet — that is SVC-1's first act.
 
 ---
 

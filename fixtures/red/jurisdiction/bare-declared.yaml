@@ -1,0 +1,52 @@
+# RED fixture — R-06
+# Schema: services/gnomon-lint/jurisdiction.schema.json
+# The v0 rubber-stamp shape: invariants declared as bare strings. Must no longer validate.
+#
+# One-factor delta off fixtures/green/jurisdiction/minimal.yaml, per FS method P2
+# (nominal witness + one-factor deltas). Exactly one thing differs from the green base.
+# Expected failure path: invariants/INV-01
+
+id: E-I.99
+title: 'Fixture Essay: A Minimal Conformant Panel'
+version: '1.0'
+movement: I
+gate: G3
+spine:
+  stages:
+  - judge
+  scales:
+  - dyad
+decides:
+- the fixture's single decided question
+does_not_decide:
+- question: a question another essay holds
+  disposition: handoff
+  to: E-I.98
+- question: what any person finally is
+  disposition: reserved
+  stratum: character
+- question: a question outside GNOMON's contribution
+  disposition: out-of-scope
+  reason: not a universal ethics - CHARTER.md 2.2
+axes:
+  responsibility: rises stranger -> household
+  humility: rises toward the interior
+registers:
+- verdict
+- precaution
+strata:
+  acts: licensed
+  patterns: licensed
+  intention_culpability: defeasible
+  character: reserved
+  destiny: reserved
+invariants:
+  INV-01: declared
+  INV-02: declared
+  INV-03: declared
+  INV-04: declared
+  INV-05: declared
+grounds: []
+carrier:
+  title: Fixture Carrier
+  version: '1.0'

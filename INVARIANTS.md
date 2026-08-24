@@ -71,20 +71,112 @@ Spec method's one law (P2). Supplying those falsifiers is the work this stub doe
 
 ---
 
-## Declaration and conformance
+## Declaration
+
+**Status: fixed at v0.1 as a G0 draft.** Closes O-INV-02. Enforced structurally by
+`services/gnomon-lint/SCHEMA.md`; the normative content is here.
 
 Conformance is **declared** per-essay in `jurisdiction.yaml` and **adjudicated** at review.
 These are not the same check and must never be reported as one:
 
 | | Mechanical (`gnomon-lint`) | Adjudicated (G1 → G2) |
 |---|---|---|
-| **Asks** | Is a declaration present, well-formed, and a permitted value? | Does the essay *actually* honor the invariant? |
-| **Can conclude** | The claim is present and structured | The claim is true |
+| **Asks** | Is a declaration present, well-formed, and witnessed? | Does the essay *actually* honor the invariant? |
+| **Can conclude** | The claim is present, structured, and points somewhere real | The claim is true |
 | **Cannot conclude** | Anything about truth | — |
 
-The declaration vocabulary used in `jurisdiction.yaml` is **not yet fixed** — see O-INV-02.
-Until it is, `declared` is the only value in use, and it means only that the author asserts
-conformance.
+### Every declaration MUST carry a witness
+
+The scaffold's vocabulary was a single value, `declared`, and it was worthless. Five `declared`s
+cost one keystroke each, assert conformance, and carry nothing that could contradict them. Under
+the method this corpus runs under, that is the canonical defect —
+`foundations/falsifiable-spec-method-v0.4.md` M1: *a requirement that carries no falsifier can
+be satisfied vacuously; its defects surface at external review, not at build time.*
+
+So the vocabulary is not a set of labels. It is a **rule about evidence**:
+
+> A declaration of conformance MUST name where in the artifact the invariant is honored.
+
+```yaml
+invariants:
+  INV-01:
+    status: honored
+    witness: ["§1.3", "§9.1"]
+```
+
+A witness is a locator — `[<panel>]§<section>`, panel defaulting to `ESSAY.md`. `gnomon-xref`
+resolves it against the panel's headings; an unresolvable witness is a finding.
+
+This costs the author real work, and that is the point: the FS method's M2 forcing function says
+that where an author cannot write the expected output, the requirement was named rather than
+defined. An author who cannot point at where INV-02 is honored has not honored it.
+
+It also changes what a reviewer receives at G1. Under `declared`, a reviewer got an assertion and
+had to search the essay to test it. Under a witness, they get a reading list, and their first
+question becomes answerable in a minute: *does §3.5 actually do what the panel says it does?*
+
+### The two statuses
+
+| Status | Meaning | Requires |
+|---|---|---|
+| `honored` | The artifact actively honors the invariant. | `witness` — where |
+| `vacuously-satisfied` | The artifact makes no claims of the kind this invariant governs, so it is satisfied by having nothing to violate. | `witness` — where the absence is visible; and `reason` |
+
+**Which invariants may be vacuous.** This follows from how each is worded, not from convenience:
+
+| | Form | Vacuity available? |
+|---|---|---|
+| **INV-01** | Universal — "*every* essay locates its subject on the two axes" | **No.** Every essay has a subject and a location. |
+| **INV-02** | Universal — "*every* essay distinguishes…" | **No.** |
+| **INV-03** | Prohibition — "*no* artifact licenses verdicts on strata 4–5" | **No.** A prohibition is satisfied by compliance, and compliance is a state, not an absence. |
+| **INV-04** | Conditional — "*character claims* require pattern evidence" | **Yes**, where the essay makes no character claims. |
+| **INV-05** | Conditional — "*every licensed boundary* is provisional" | **Yes**, where the essay licenses no boundaries. |
+
+`vacuously-satisfied` requires a reason precisely because vacuous satisfaction is the failure
+mode M1 warns about. Naming it converts a silent nothing into a claim a reviewer can reject.
+
+### There is no waiver
+
+No `waived` status exists, and none may be added.
+
+This is not strictness for its own sake. It follows from what an invariant is in this corpus:
+
+> An essay that violates one has broken the corpus.
+
+A constraint that can be set aside for a sufficiently good essay is not an invariant; it is a
+strong preference with a nice name. And the Euclidean condition the invariants encode does not
+survive exceptions — a figure that is *nearly* similar to the original is a different figure. One
+waived invariant does not weaken one essay; it ends the corpus's claim to grow self-similarly,
+because every later artifact now inherits a shape that admits exceptions.
+
+The pressure to add a waiver will be real, and it will arrive attached to a good essay that
+someone does not want to lose. The correct responses are: fix the essay, narrow its declared
+jurisdiction until the invariant holds, or raise a finding against the *invariant* and change it
+by supersession (O-INV-05) — which is slow, visible, and re-opens every artifact that depended on
+the old text. That slowness is the feature. An invariant that can be changed as easily as it can
+be waived protects nothing.
+
+An artifact that cannot honor an invariant does not receive an exemption. It does not pass G0.
+
+### INV-03 is the one with mechanical teeth
+
+Four of the five invariants can only be checked for *declaration* — a witness is present and
+resolves; whether the essay honors it is adjudicated. INV-03 is different. Because the reserved
+domain is enumerable, `jurisdiction.yaml` encodes it as a graded map over the five strata, and
+the core prohibition becomes machine-checkable:
+
+```
+strata.character  MUST NOT be licensed or defeasible
+strata.destiny    MUST NOT be licensed or defeasible
+```
+
+Hard failure at every gate including G0. Not waivable — see above.
+
+What this still cannot catch: an essay declaring `character: reserved` while its prose licenses
+an essence claim anyway. The declaration is made honest by the linter; the essay is made honest
+at G1. Keeping those two apart is `services/README.md`'s central honesty, and a report that
+blurred them would let an unreviewed artifact pass as a verified one — which is
+self-certification, which `CHARTER.md` §2.3 forbids.
 
 ---
 
@@ -92,8 +184,8 @@ conformance.
 
 | Id | Item | Exit criterion |
 |---|---|---|
-| **O-INV-01** | Normative elaboration for each of INV-01…05: scope, MUST/SHOULD force, and what a violation looks like. | Five elaborations written; each reviewed at G1. |
-| **O-INV-02** | Declaration vocabulary and semantics. Is `declared` sufficient, or is a three-state (`declared` / `not-applicable` + reason / `waived` + adjudication ref) required? A blanket `declared` on all five is currently indistinguishable from a rubber stamp. | Vocabulary fixed here; schema updated in `services/gnomon-lint`; red fixture seeded for the rubber-stamp case. |
-| **O-INV-03** | A falsifier per invariant, per FS method P2. Each must state which side of the mechanical/adjudicated line it sits on. | Five falsifiers stated; mechanical ones implemented in `gnomon-lint`; red fixtures pass by failing. |
+| **O-INV-01** | Normative elaboration for each of INV-01…05: scope, MUST/SHOULD force, and what a violation looks like. **Still open** — the Declaration section fixes how conformance is *claimed*, not what each invariant *means* at its edges. | Five elaborations written; each reviewed at G1. |
+| ~~**O-INV-02**~~ | ~~Declaration vocabulary and semantics.~~ **CLOSED at v0.1.** Resolved not as a set of labels but as a rule about evidence: every declaration carries a witness. Two statuses, vacuity restricted to the two conditional invariants, no waiver. See §Declaration; structure enforced by `services/gnomon-lint/SCHEMA.md`. | — |
+| **O-INV-03** | A falsifier per invariant, per FS method P2. **Partially discharged.** INV-03 now has a real mechanical falsifier (the strata constraint). The other four have a *declaration* falsifier — an unresolvable or absent witness fails — but no falsifier bearing on conformance itself. That gap is honest, not fixable by lint, and must be stated in the report contract rather than papered over. | Four remaining falsifiers stated, each assigned to G1 with a review procedure; red fixtures for the declaration falsifiers seeded. |
 | **O-INV-04** | Precedence. If two invariants conflict in a hard case, what governs? INV-03 is plausibly lexically prior to the rest, but this has not been adjudicated. | Precedence rule stated, or genuine independence argued and recorded. |
 | **O-INV-05** | Versioning of this file, and what happens to already-ratified artifacts when an invariant's normative text changes. Per FS method P10.3 a supersession walk is owed. | Supersession protocol for this file stated. |

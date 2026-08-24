@@ -190,36 +190,56 @@ gnomon/
 
 ## `jurisdiction.yaml` — the machine-readable panel
 
-The Routing Test and all linting run against this file. Example (E-I.2, abridged):
+The Routing Test and all linting run against this file. Schema v1.0 (G0 draft): normative prose at `services/gnomon-lint/SCHEMA.md`, machine-readable at `services/gnomon-lint/jurisdiction.schema.json`. Example (E-I.2, abridged — the full panel is `corpus/I-epistemology/judge-not/jurisdiction.yaml`):
 
 ```yaml
 id: E-I.2
 title: "Judge Not: Discernment, Responsibility, and the Judgment of the Self"
 version: "1.0"
 movement: I
+gate: G3
+spine:
+  stages: [see, judge]
+  scales: [self, dyad, body]
 decides:
   - license conditions for prudential judgment of conduct
   - verdict/precaution register separation (two thresholds)
-  - delegated corporate judgment: duties to accuser, accused, institution
-  - reflexive limit: examination without self-sentence
-does_not_decide:
-  - post-wrong first-person repair            # -> E-III.1
-  - release of the offender                   # -> E-III.2
-  - binding force of one's own conscience     # -> E-I.3
-  - legitimacy and limits of authority        # -> E-VI.1
-handoffs: [E-III.1, E-III.2, E-I.3, E-VI.1]
+  - "delegated corporate judgment: duties to accuser, accused, institution"
+does_not_decide:                          # MUST be non-empty
+  - question: post-wrong first-person repair
+    disposition: handoff
+    to: E-III.1
+  - question: binding force of one's own conscience
+    disposition: handoff
+    to: E-I.3
+  - question: the final standing of any person before God
+    disposition: reserved                 # hands off to nothing, ever
+    stratum: destiny
 axes:
-  responsibility: rises stranger -> household; peaks at guardianship
-  humility: rises toward the interior; absolute at strata 4-5
+  responsibility: "rises stranger -> household; peaks at guardianship"
+  humility: "rises toward the interior; absolute at strata 4-5"
 registers: [verdict, precaution]
-reserved_strata_touched: [acts, patterns, intention_culpability]
-invariants: {INV-01: declared, INV-02: declared, INV-03: declared,
-             INV-04: declared, INV-05: declared}
+strata:                                   # INV-03, graded per stratum
+  acts: licensed
+  patterns: licensed
+  intention_culpability: defeasible
+  character: reserved                     # MUST NOT be licensed or defeasible
+  destiny: reserved                       #   — the one invariant with mechanical teeth
+invariants:                               # every declaration carries a witness
+  INV-01: {status: honored, witness: ["§1.3", "§9.1", "§12.1"]}
+  INV-02: {status: honored, witness: ["§3.5", "§9.2"]}
+  INV-03: {status: honored, witness: ["§3.6", "§15"]}
 grounds: [ARCHON, CTS, ARIADNE, WillObservatory]   # elaborated in ARCH.md
 carrier: {title: "The Gavel and the Watch", version: "1.0"}
 ```
 
-`does_not_decide` **must be non-empty.** An essay that declines to declare its limits fails lint before it reaches review. This is the falsifiable-spec discipline applied to ethics: the claim of jurisdiction is inseparable from the disclaimer of it.
+Three things this shape enforces, each fixing a defect in the v0 example:
+
+**`does_not_decide` must be non-empty.** An essay that declines to declare its limits fails lint before it reaches review. This is the falsifiable-spec discipline applied to ethics: the claim of jurisdiction is inseparable from the disclaimer of it.
+
+**A declined question carries its own disposition.** In the v0 shape the routing lived in a YAML comment (`# -> E-III.1`), invisible to every parser — the corpus's most important relation was unreadable by the service built to walk it. And a declined question now has three possible fates, not one: `handoff` to another essay, `reserved` to a stratum no essay may ever hold, or `out-of-scope` with a reason. Without the last two, the file format would commit the corpus to growing an essay for every question it declines, contradicting the non-goal at `CHARTER.md` §2.2.
+
+**Every invariant declaration carries a witness.** `INV-01: declared` asserts conformance and carries nothing that could contradict it — the canonical defect under the method GNOMON runs under. A witness names where the invariant is honored, so a reviewer at G1 gets a reading list instead of a search. See `INVARIANTS.md` §Declaration; there is no waiver state, and the reasoning is given there.
 
 ---
 

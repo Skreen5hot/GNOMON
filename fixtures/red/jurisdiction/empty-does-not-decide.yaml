@@ -1,0 +1,59 @@
+# RED fixture — R-01
+# Schema: services/gnomon-lint/jurisdiction.schema.json
+# does_not_decide is empty. THE load-bearing check: an essay that declines to declare its limits fails lint before it reaches review.
+#
+# One-factor delta off fixtures/green/jurisdiction/minimal.yaml, per FS method P2
+# (nominal witness + one-factor deltas). Exactly one thing differs from the green base.
+# Expected failure path: does_not_decide
+
+id: E-I.99
+title: 'Fixture Essay: A Minimal Conformant Panel'
+version: '1.0'
+movement: I
+gate: G3
+spine:
+  stages:
+  - judge
+  scales:
+  - dyad
+decides:
+- the fixture's single decided question
+does_not_decide: []
+axes:
+  responsibility: rises stranger -> household
+  humility: rises toward the interior
+registers:
+- verdict
+- precaution
+strata:
+  acts: licensed
+  patterns: licensed
+  intention_culpability: defeasible
+  character: reserved
+  destiny: reserved
+invariants:
+  INV-01:
+    status: honored
+    witness:
+    - §1.1
+  INV-02:
+    status: honored
+    witness:
+    - §2.1
+  INV-03:
+    status: honored
+    witness:
+    - §3.1
+  INV-04:
+    status: honored
+    witness:
+    - §4.1
+  INV-05:
+    status: vacuously-satisfied
+    witness:
+    - §5.1
+    reason: the fixture licenses no boundaries
+grounds: []
+carrier:
+  title: Fixture Carrier
+  version: '1.0'

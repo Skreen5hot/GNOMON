@@ -33,8 +33,18 @@ not lorem ipsum with the right keys. A green fixture full of placeholder text te
 that the panels are paperwork.
 
 The counter-pressure is real: a fixture with genuine prose is a corpus artifact that never
-passed a gate. It should be marked unmistakably as fixture, live outside `corpus/`, and use
-invented essay ids (`E-X.1`, `E-X.2`) that can never collide with real ones.
+passed a gate. It should be marked unmistakably as fixture and live outside `corpus/`.
+
+**Correction, recorded rather than quietly fixed.** An earlier draft of this file recommended
+invented essay ids — `E-X.1`, `E-X.2` — "that can never collide with real ones." That advice was
+wrong, and building the first fixture proved it: `E-X.1` violates the schema's id pattern, so
+the green base failed and all ten reds failed *on the id* rather than on their planted faults.
+The suite was fully green while testing nothing.
+
+Fixture ids MUST be schema-valid. Collision with a real essay is prevented by **location** —
+fixtures live outside `corpus/`, which is the only tree the linter walks — not by id shape. A
+schema that special-cases test data has a hole in production validation, which is the more
+expensive of the two problems. Current fixtures use `E-I.99` and `E-I.98`.
 
 ---
 
@@ -48,8 +58,15 @@ non-determinism owing a property, or a defect (`../../services/shared/README.md`
 
 ## Register
 
-*Empty.*
-
 | Fixture | Exercises | Status |
 |---|---|---|
-| — | — | — |
+| `jurisdiction/minimal.yaml` | Every `jurisdiction.yaml` schema constraint: all three `does_not_decide` dispositions, the graded strata map, both invariant statuses, a carrier link | **validates clean** |
+
+The minimal panel is also the base for every red fixture in `../red/jurisdiction/`, each a
+one-factor delta from it. That coupling is deliberate: when the schema changes, the green base
+changes once and all ten reds follow, so the suite cannot drift into testing a shape the schema
+no longer has.
+
+**Still missing.** The list above the fold — two essays, a route, a gap, a ledger chain, a
+pinned source — remains unbuilt. Those exercise cross-file checks that need the corpus graph,
+so they arrive with `gnomon-xref`, `gnomon-route`, and `gnomon-ledger`, not before.
