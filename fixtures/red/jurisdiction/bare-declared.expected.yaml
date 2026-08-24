@@ -1,8 +1,8 @@
 # Expectation for bare-declared.yaml
 #
-# Data, not code. The harness reads this file; it does not carry these values itself.
-# A red fixture must fail AT THIS PATH with THIS KEYWORD. "Fails at all" is how a parse
-# error impersonates a caught defect, so failing for any other reason fails the run.
+# Data, not code. The harness reads this file; it does not carry these values.
+# A red fixture MUST fail at this path with this keyword. Failing merely somewhere is
+# how a parse error impersonates a caught defect, so any other failure fails the run.
 
 fixture: bare-declared
 finding: RF-06
@@ -10,4 +10,4 @@ expect:
   instancePath: "/invariants/INV-01"
   keyword: type
 why: >-
-  The v0 rubber-stamp shape: invariants as bare strings. A declaration that carries no witness must not validate.
+  The v0 rubber-stamp shape: invariants declared as bare strings, carrying nothing that could contradict them.

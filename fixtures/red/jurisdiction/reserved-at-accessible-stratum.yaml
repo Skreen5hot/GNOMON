@@ -1,16 +1,19 @@
 # RED fixture — RF-12
 # Schema: services/gnomon-lint/jurisdiction.schema.json
-# disposition: reserved citing stratum `acts`. Only character and destiny reserve; dressing an ordinary omission as a sacred limit must fail.
+# disposition reserved citing stratum acts. Only character and destiny reserve; dressing an ordinary omission as a sacred limit must fail.
 #
 # One-factor delta off fixtures/green/jurisdiction/minimal.yaml, per FS method P2
-# (nominal witness + one-factor deltas). Exactly one thing differs from the green base.
-# Expected failure path: does_not_decide/1/stratum
+# (nominal witness + one-factor deltas). Exactly one thing differs from the base.
+# Expected failure: /does_not_decide/1/stratum (enum)
 
 id: E-I.99
 title: 'Fixture Essay: A Minimal Conformant Panel'
 version: '1.0'
 movement: I
 gate: G3
+ratification:
+  status: conferred
+  record: LEDGER.md#fixture-conferral
 spine:
   stages:
   - judge

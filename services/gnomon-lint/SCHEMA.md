@@ -112,6 +112,22 @@ is honored. See `INVARIANTS.md` §Declaration for the vocabulary; this schema en
 | `version` | string \| null | **yes** | `^[0-9]+\.[0-9]+$` or null; null iff `gate` < G3; monotone across the ledger chain | — |
 | `movement` | enum I…VII | **yes** | Agrees with `id` and with directory | — |
 | `gate` | enum | **yes** | One of `G0 G1 G2 G3`; agrees with `LEDGER.md`'s latest entry | Whether the gate was actually passed |
+| `ratification` | object | **yes** | `status` ∈ {`pending-conferral`, `conferred`}; `record` required iff `conferred` | Whether the conferral record is adequate |
+| `ratified-under` | — | **illegal** | Present ⇒ error. Declared in the schema only so its presence yields a named failure rather than a generic one | — |
+
+**`ratification` — mechanizing `CHARTER.md` §4.5.** A jurisdiction panel is a **corpus** artifact
+(§4.3), and the two marks have disjoint scopes: corpus prose never self-ratifies, so `ratification`
+withholds the ratified predicate rather than granting it, and `ratified-under` — the *grant* mark —
+is illegal here.
+
+The disjointness is enforced rather than described. §4.2 rule 4 states the operational test — *a
+query for self-ratified governance MUST NOT return corpus prose* — and a schema that merely
+documented the rule while accepting `ratified-under` on a panel would leave that query answerable
+only by convention. Fixture **RF-17** plants exactly that violation.
+
+`conferred` requires a `record` locator for the same reason a witness is required of an invariant
+declaration: a conferral claim pointing at nothing is the bare-`declared` defect (D-5) wearing a
+different field name. Fixture **RF-18**.
 
 `gate` is new. Lint needs it: most checks apply only at G0 and above, and a draft that fails a
 G3 check is not yet in error. Without it every unfinished essay reports as broken, and a service

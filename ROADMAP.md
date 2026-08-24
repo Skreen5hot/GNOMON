@@ -1,6 +1,6 @@
 # Roadmap
 
-**Status:** v0.3.2 — maintenance release. Supersedes v0.3.1. **Ratified under: bootstrap** ·
+**Status:** v0.3.3 — Phase 0-alpha closed. Supersedes v0.3.2. **Ratified under: bootstrap** ·
 `bootstrap-entry: BE-006` — see §2.1.
 
 **What v0.3.2 fixes.** Three items landed after v0.3.1 was written — 0.12 fixture harness, 0.4a
@@ -435,12 +435,19 @@ written is the whole point.
 
 | # | Item | Size | Note |
 |---|---|---|---|
-| **0.1** | **Bootstrap Protocol** into `CHARTER.md`; add **both** `ratified-under` and `ratification` to the schema; mark existing artifacts | S | R-01, **R-14** — two fields, disjoint scopes |
-| **0.2** | **Deferral semantics** into gate definitions; report carries the deferred set; check universe versioned | S | R-04, **R-15** — no-regression + admission, *not* set-shrinkage |
-| **0.3** | **Handoff grade scale** into gate definitions + `gnomon-xref` contract; open-handoff register admission channel | S | R-05, **R-15** |
+| ~~0.1~~ | **Bootstrap Protocol — DONE 2026-08-24.** `CHARTER.md` §4; `ratification` mechanized in the schema with fixtures RF-17 (`ratified-under` on a corpus panel) and RF-18 (conferred without record); both live panels marked | S | R-01, R-14 |
+| ~~0.2~~ | **Deferral semantics — DONE 2026-08-24.** `CHARTER.md` §5.2: green = zero failures among implemented checks + enumerated deferred set; no-regression + admission; versioned check universe | S | R-04, R-15 |
+| ~~0.3~~ | **Handoff grades — DONE 2026-08-24.** `CHARTER.md` §5.3: `stub`/`declared`/`ratified`; G3 requires ≥ `stub` + open-handoff register; composes with §4.5.4 | S | R-05, R-15 |
 
-**Exit 0-alpha:** the four partiality grains are defined, mechanized in the schema, and the
-existing artifacts are marked. A gate run after this point has vocabulary to report in.
+**Exit 0-alpha: REACHED 2026-08-24.** The four partiality grains are defined in `CHARTER.md`
+§4–§5, the corpus-side mark is mechanized in the schema and guarded by two fixtures, and both live
+panels are marked. A gate run after this point has vocabulary to report in.
+
+**What is mechanized and what is not.** `ratification` is enforced on jurisdiction panels, and
+`ratified-under` on a panel is a named error. The *instrumental* mark is still a header line no
+check reads — instrumental artifacts are markdown, not panels, so verifying them needs a header
+parser in `gnomon-lint` (**O-CHT-06**). Half the partition is enforced; the half that grants
+authority is not.
 
 **Phase 0-beta — everything the vocabulary governs.**
 
@@ -774,6 +781,7 @@ and review is what O-CHT-02 and O-CHT-07 exist to make repeatable rather than oc
 | 2026-08-23 | Roadmap v0.2: dependency graph, six-phase order, coupling points. Surfaced B-1. | `ROADMAP.md` |
 | 2026-08-23 | **Roadmap v0.3** after adversarial review. Thirteen findings, all accepted. Root defect: partiality defined for checks and nothing else, leaving a plan that could not start (R-01) or ratify (R-04). Added the Bootstrap Protocol, deferral monotonicity, handoff grades, the F-03 resolution table, and the gap-preemption rule; pulled situations to Phase 0. **Content anchors recorded for all three ratified panels.** | `ROADMAP.md`, both `LEDGER.md` |
 | 2026-08-24 | **0.12 — fixture harness (O-SVC-05).** D-E decided: ESM + JSDoc + `tsc --checkJs`, zero build step, LTS floor. `tools/fixture-harness` committed with expectations as per-fixture data and a CI workflow on LTS+current. **The status table's "verified against 11 fixtures" is corrected to "witnessed"** — the prior verifier lived in scratch and was discarded, so the claim had no witness and the red discipline was reassurance. Three findings raised by the build (R-27 id collision, R-28 broken CI guard, R-29 IE-001 overclaim), all accepted; see `LEDGER.md` §3 cycle 4. | `tools/fixture-harness/`, `.github/`, `.gitattributes`, `fixtures/`, `LEDGER.md`, `LICENSE` |
+| 2026-08-24 | **Phase 0-alpha closed.** 0.2 and 0.3 specified into `CHARTER.md` §5, which until now said *"corpus-wide `gnomon check` green"* with no account of what green means when most checks do not exist, and referenced handoff grades defined nowhere in the charter. 0.1's unfinished half mechanized: `ratification` is now a required schema field, `ratified-under` on a corpus panel is a named error, and both live panels carry the mark. Two fixtures added (RF-17, RF-18) — suite now 1 green + 12 red, all at their expected paths. **R-41:** regenerating the suite destroyed all twelve expectations, because they were written by a different script than the fixtures — the same derived-artifact defect GNOMON had just diagnosed in ARIADNE at cycle 6. Generator now emits both from one table. | `CHARTER.md`, `jurisdiction.schema.json`, `SCHEMA.md`, both panels, `fixtures/`, `LEDGER.md` |
 | 2026-08-24 | **Roadmap v0.3.2** — maintenance release after a self-audit. Three items had landed and been edited in place without a version bump; nine defects had accumulated, two of them self-contradictions the file would fail its own review on (§3 arguing both sides of the sketch-grade question, §2.1 keeping the second registry it forbids). Dispositioned at §10.3. **Edit-in-place is named as the failure mode**: each edit was locally right and nothing re-read the whole. | `ROADMAP.md` |
 | 2026-08-24 | **0.13 — precedent review.** GNOMON is a spin-out of ARIADNE, so ARIADNE's management is evidence about GNOMON's failure modes. Adopted: the **tension log** (R-32 reclassified as an inherited tension, not a finding) and the **drift register**. Rejected with reasons: blank approvers (6 of 7 ARIADNE drift records are unapproved — O-CHT-01's failure mode demonstrated, not predicted) and `Resolved in principle`. Confirmed with evidence: mechanical CI over periodic manual review, version-in-ledger over version-in-filename, self-governance via bootstrap marks. **R-39: ARIADNE's `spec-index.md` may hold the closest thing to a conferral record the two essays have** — bears on O-CHT-04. Findings R-35…R-40. | `foundations/PRECEDENT.md`, `TENSIONS.md`, `LEDGER.md`, `foundations/README.md` |
 | 2026-08-24 | **Roadmap v0.3.1** — point release after a second cycle against v0.3's own machinery. Six findings, all accepted, one partially corrected. Bootstrap mark split into two fields with disjoint scopes (R-14); monotonicity restated as no-regression + admission rather than set-shrinkage, which the first new essay would have violated by existing (R-15); D-B marked provisionally decided rather than open-while-enacted (R-16); `derived_from:` firewall added so harvested situations cannot self-confirm coverage (R-17); `essay-upstream` added, splitting B-1 into blocking and generative halves (R-18); register retention convention fixed and Phase 0 staged into 0-alpha/0-beta (R-19). No content anchors changed. | `ROADMAP.md` |

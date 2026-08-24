@@ -1,13 +1,13 @@
-# Expectation for vacuous-without-reason.yaml
+# Expectation for conferred-without-record.yaml
 #
 # Data, not code. The harness reads this file; it does not carry these values.
 # A red fixture MUST fail at this path with this keyword. Failing merely somewhere is
 # how a parse error impersonates a caught defect, so any other failure fails the run.
 
-fixture: vacuous-without-reason
-finding: RF-14
+fixture: conferred-without-record
+finding: RF-18
 expect:
-  instancePath: "/invariants/INV-04"
+  instancePath: "/ratification"
   keyword: required
 why: >-
-  INV-04 vacuously-satisfied with no reason. Vacuity must be argued, not asserted.
+  ratification conferred with no record. A conferral claim with nothing to point at is the bare-declared defect wearing a different field name.

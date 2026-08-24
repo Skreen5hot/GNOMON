@@ -6,7 +6,7 @@
   "type": "object",
   "additionalProperties": false,
   "required": [
-    "id", "title", "version", "movement", "gate",
+    "id", "title", "version", "movement", "gate", "ratification",
     "spine", "decides", "does_not_decide",
     "axes", "registers", "strata", "invariants",
     "grounds", "carrier"
@@ -73,6 +73,31 @@
     "gate": {
       "description": "Highest gate passed. Determines which checks apply.",
       "enum": ["G0", "G1", "G2", "G3"]
+    },
+
+    "ratification": {
+      "description": "CHARTER.md 4.5. Corpus prose never self-ratifies, so this field withholds the ratified predicate rather than granting it. `ratified-under` is the OTHER mark and is illegal here: a jurisdiction panel is a corpus artifact (CHARTER.md 4.3), and the two scopes are disjoint by construction.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["status"],
+      "properties": {
+        "status": { "enum": ["pending-conferral", "conferred"] },
+        "record": {
+          "description": "Conferral record locator. Required when status is conferred.",
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "if": {
+        "properties": { "status": { "const": "conferred" } },
+        "required": ["status"]
+      },
+      "then": { "required": ["record"] }
+    },
+
+    "ratified-under": {
+      "description": "ILLEGAL on a corpus artifact. Declared here solely so that its presence produces a named error rather than an additionalProperties error, per CHARTER.md 4.8.",
+      "not": {}
     },
 
     "spine": {

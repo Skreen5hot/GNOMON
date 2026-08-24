@@ -1,8 +1,8 @@
 # Expectation for inv03-destiny-defeasible.yaml
 #
-# Data, not code. The harness reads this file; it does not carry these values itself.
-# A red fixture must fail AT THIS PATH with THIS KEYWORD. "Fails at all" is how a parse
-# error impersonates a caught defect, so failing for any other reason fails the run.
+# Data, not code. The harness reads this file; it does not carry these values.
+# A red fixture MUST fail at this path with this keyword. Failing merely somewhere is
+# how a parse error impersonates a caught defect, so any other failure fails the run.
 
 fixture: inv03-destiny-defeasible
 finding: RF-10
@@ -10,4 +10,4 @@ expect:
   instancePath: "/strata/destiny"
   keyword: enum
 why: >-
-  The same constraint from the softer side: a defeasible verdict on destiny is still a verdict on destiny.
+  strata.destiny = defeasible. The same constraint from the softer side: a defeasible verdict on destiny is still a verdict on destiny.

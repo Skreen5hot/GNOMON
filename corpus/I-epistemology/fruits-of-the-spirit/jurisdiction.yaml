@@ -28,6 +28,12 @@ version: null                 # ESSAY.md carries no version line; README claims 
 movement: I
 gate: G0                      # cannot be higher: G0 exit requires this file to lint green
 
+# CHARTER.md §4.5. README claims ratified v2.0; ESSAY.md carries no version line and no
+# conferral record exists. ARIADNE's spec-index.md records "PASS (exemplary), 2026-05-15",
+# which may be evidence toward conferral (R-39) but has not been adjudicated as such.
+ratification:
+  status: pending-conferral
+
 spine:
   stages: [see]               # recognition. Proposed, undeclared.
   scales: [self, dyad, body]

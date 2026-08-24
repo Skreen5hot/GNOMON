@@ -3,14 +3,17 @@
 # gate G3 with version null. A ratified essay carries a version.
 #
 # One-factor delta off fixtures/green/jurisdiction/minimal.yaml, per FS method P2
-# (nominal witness + one-factor deltas). Exactly one thing differs from the green base.
-# Expected failure path: version
+# (nominal witness + one-factor deltas). Exactly one thing differs from the base.
+# Expected failure: /version (type)
 
 id: E-I.99
 title: 'Fixture Essay: A Minimal Conformant Panel'
 version: null
 movement: I
 gate: G3
+ratification:
+  status: conferred
+  record: LEDGER.md#fixture-conferral
 spine:
   stages:
   - judge

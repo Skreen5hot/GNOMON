@@ -16,6 +16,12 @@ version: "1.0"
 movement: I
 gate: G3
 
+# CHARTER.md §4.5. Corpus prose never self-ratifies. v1.0 was promoted at G3 before the charter
+# existed and no conferral record is on file, so the *ratified* predicate is suspended — what is
+# pending is conferral, not identity. The version and the content anchor remain facts.
+ratification:
+  status: pending-conferral
+
 # [NEW] Spine location. Grounds SPINE.md's stage->essay mapping (O-SPN-01) and makes the
 # spine self-coverage check (O-SPN-03) mechanical.
 spine:

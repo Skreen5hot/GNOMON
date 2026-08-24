@@ -3,14 +3,17 @@
 # INV-04 vacuously-satisfied with no reason. Vacuity must be argued, not asserted.
 #
 # One-factor delta off fixtures/green/jurisdiction/minimal.yaml, per FS method P2
-# (nominal witness + one-factor deltas). Exactly one thing differs from the green base.
-# Expected failure path: invariants/INV-04
+# (nominal witness + one-factor deltas). Exactly one thing differs from the base.
+# Expected failure: /invariants/INV-04 (required)
 
 id: E-I.99
 title: 'Fixture Essay: A Minimal Conformant Panel'
 version: '1.0'
 movement: I
 gate: G3
+ratification:
+  status: conferred
+  record: LEDGER.md#fixture-conferral
 spine:
   stages:
   - judge

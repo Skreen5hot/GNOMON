@@ -1,16 +1,19 @@
 # RED fixture — RF-06
 # Schema: services/gnomon-lint/jurisdiction.schema.json
-# The v0 rubber-stamp shape: invariants declared as bare strings. Must no longer validate.
+# The v0 rubber-stamp shape: invariants declared as bare strings, carrying nothing that could contradict them.
 #
 # One-factor delta off fixtures/green/jurisdiction/minimal.yaml, per FS method P2
-# (nominal witness + one-factor deltas). Exactly one thing differs from the green base.
-# Expected failure path: invariants/INV-01
+# (nominal witness + one-factor deltas). Exactly one thing differs from the base.
+# Expected failure: /invariants/INV-01 (type)
 
 id: E-I.99
 title: 'Fixture Essay: A Minimal Conformant Panel'
 version: '1.0'
 movement: I
 gate: G3
+ratification:
+  status: conferred
+  record: LEDGER.md#fixture-conferral
 spine:
   stages:
   - judge

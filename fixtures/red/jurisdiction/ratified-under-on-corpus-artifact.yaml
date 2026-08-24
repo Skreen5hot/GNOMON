@@ -1,10 +1,10 @@
-# RED fixture — RF-13
+# RED fixture — RF-17
 # Schema: services/gnomon-lint/jurisdiction.schema.json
-# A declaration with an empty witness list. Asserting conformance while pointing nowhere is the exact defect the witness rule exists to catch.
+# A corpus panel carrying ratified-under. The two marks have disjoint scopes by construction (CHARTER 4.3): corpus prose never self-ratifies, so the grant mark is illegal here.
 #
 # One-factor delta off fixtures/green/jurisdiction/minimal.yaml, per FS method P2
 # (nominal witness + one-factor deltas). Exactly one thing differs from the base.
-# Expected failure: /invariants/INV-01/witness (minItems)
+# Expected failure: /ratified-under (not)
 
 id: E-I.99
 title: 'Fixture Essay: A Minimal Conformant Panel'
@@ -46,7 +46,8 @@ strata:
 invariants:
   INV-01:
     status: honored
-    witness: []
+    witness:
+    - §1.1
   INV-02:
     status: honored
     witness:
@@ -68,3 +69,4 @@ grounds: []
 carrier:
   title: Fixture Carrier
   version: '1.0'
+ratified-under: bootstrap

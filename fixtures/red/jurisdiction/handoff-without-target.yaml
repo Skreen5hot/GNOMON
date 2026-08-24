@@ -1,16 +1,19 @@
 # RED fixture — RF-11
 # Schema: services/gnomon-lint/jurisdiction.schema.json
-# A declined question disposed as handoff with no `to`. The v0 shape's defect: routing that goes nowhere a parser can follow.
+# A declined question disposed as handoff with no to. The v0 defect: routing that goes nowhere a parser can follow, because it lived in a YAML comment.
 #
 # One-factor delta off fixtures/green/jurisdiction/minimal.yaml, per FS method P2
-# (nominal witness + one-factor deltas). Exactly one thing differs from the green base.
-# Expected failure path: does_not_decide/0
+# (nominal witness + one-factor deltas). Exactly one thing differs from the base.
+# Expected failure: /does_not_decide/0 (required)
 
 id: E-I.99
 title: 'Fixture Essay: A Minimal Conformant Panel'
 version: '1.0'
 movement: I
 gate: G3
+ratification:
+  status: conferred
+  record: LEDGER.md#fixture-conferral
 spine:
   stages:
   - judge

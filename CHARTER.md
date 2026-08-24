@@ -1,16 +1,17 @@
 # Charter
 
-**Status:** v0.2 — partial. **`ratified-under: bootstrap`** (§4).
+**Status:** v0.3 — partial. **`ratified-under: bootstrap`** · `bootstrap-entry: BE-001` (§4).
 
 The contribution statement and the four refused claims are carried from `README.md` and are
-settled in substance. **§4, the Bootstrap Protocol, is specified** — it is the first normative
-section of this charter and it exists to make the rest writable. The conferral model at §3 — who
+settled in substance. **§4 (Bootstrap Protocol) and §5 (Review gates) are specified** — §4 exists
+to make the rest writable, and §5 now states what "green" means and what a handoff must resolve to,
+discharging roadmap items 0.2 and 0.3. The conferral model at §3 — who
 ratifies, under what authority, and how that authority is itself conferred — remains **named but
 not specified**, which is still the gap most consequential for a corpus whose central claim is
 that it does not self-certify.
 
-**Normative language:** MUST / MUST NOT / SHOULD / MAY per RFC 2119 / RFC 8174. §4 uses it; the
-remaining sections do not yet contain normative text.
+**Normative language:** MUST / MUST NOT / SHOULD / MAY per RFC 2119 / RFC 8174. §4 and §5 use it;
+the remaining sections do not yet contain normative text.
 
 ---
 
@@ -326,13 +327,108 @@ an undefined clock binds nothing and MUST NOT be reported as binding.**
 
 ## 5. Review gates
 
+**Status:** §5.2 and §5.3 specified at v0.3, discharging roadmap items 0.2 and 0.3. Until then the
+gate table said *"corpus-wide `gnomon check` green"* with no account of what green means when most
+checks do not exist yet, and referred to handoff grades that were defined nowhere in this charter.
+
+### 5.1 The gates
+
 | Gate | Name | Exit condition |
 |---|---|---|
-| **G0** | Draft | Triptych panels drafted; `jurisdiction.yaml` lints green |
-| **G1** | Hostile review | Findings ledgered with IDs (per-essay prefix, e.g. J-01…); invariant conformance reviewed |
+| **G0** | Draft | Triptych panels drafted; `jurisdiction.yaml` **green under §5.2** |
+| **G1** | Hostile review | Findings ledgered with IDs (per-essay prefix, e.g. J-01…); invariant conformance reviewed against `INVARIANTS.md`; witness locators resolve |
 | **G2** | Adjudication | Every finding dispositioned by the ratifying architect; ledger closes |
-| **G3** | Ratification | Version promoted (→ 1.0 / 2.0); routes updated; corpus-wide `gnomon check` green |
+| **G3** | Ratification | Version promoted (→ 1.0 / 2.0); routes updated; corpus-wide `gnomon check` **green under §5.2**; every handoff target at **≥ `stub`** and the open-handoff register current (§5.3) |
 | **CG** | Carrier Test | Carrier walks its anchor scene in plain language; fidelity adjudicated |
+
+No artifact skips a gate. A gate is passed by an artifact of a given version; a version bump
+re-enters at G0 unless the supersession protocol says otherwise.
+
+**Interaction with §4.** A bootstrap-marked artifact past its sunset MAY NOT govern any new gate
+event (§4.4.4). Where that artifact is `INVARIANTS.md`, the practical effect is that no gate runs
+at all — which is correct, and is why that sunset is the one not to let lapse inattentively.
+
+### 5.2 Deferral semantics — what "green" means
+
+> **Green does not mean "all checks passed." Green means: zero failures among the checks that are
+> implemented, with the deferred set enumerated in the report.**
+
+Without this, G2 and G3 are unreachable until every service exists, because `gnomon check` is the
+conjunction of five services and three of them arrive late in the plan. An essay would sit
+complete and unratifiable for want of a linter nobody had written. With it, an artifact passes
+against the checks that exist and carries an explicit list of what has not been asked.
+
+**5.2.1 The two rules.** Deferral is bounded by monotonicity, or "green" becomes negotiable
+exactly when the corpus grows and green gets expensive — which is when it matters.
+
+> **1 · No element regresses.** A check that has reported *passing* MUST NOT return to *deferred*.
+> A regression is permitted only as a **recorded finding**, never as a status change.
+>
+> **2 · The universe grows only by admission.** New checks MAY enter the check universe — that is
+> what building services *is* — but each entry MUST be admitted with a ledger record naming what is
+> deferred, why, and its exit criterion.
+
+**5.2.2 Why not "the deferred set may only shrink."** Because the deferred set *must* be able to
+grow: every service built adds checks nothing has yet run. An earlier draft of this rule said
+shrinkage, under which implementing `gnomon-route` would have violated the rule by existing. The
+invariant is **per-element no-regression plus admission-controlled growth**, not set-shrinkage.
+
+**5.2.3 The check universe is versioned.** It carries a version; a bump REQUIRES a ledger entry.
+This is what makes rule 2 auditable rather than aspirational — growth by admission is healthy,
+growth unrecorded is the failure.
+
+**5.2.4 What deferral never covers.** INV-03's strata constraint. `character` and `destiny` MUST
+NOT be `licensed` or `defeasible` — no deferral, no grade, no bootstrap exemption, at any gate
+(§4.7.1). Deferral answers *has this been checked yet*; it never answers *may this be violated*.
+
+### 5.3 Handoff grades — what "resolves" means
+
+An essay declares what it does not decide and hands each declined question to another essay
+(`SCHEMA.md`, `does_not_decide[].to`). G3 must say what it means for such a handoff to resolve.
+
+**5.3.1 Why a scale is needed.** Under the strict reading — a handoff must resolve to a *ratified*
+target — E-I.2 cannot ratify until E-VI.1 ships, E-VI.1's own handoffs point further out, and by
+induction almost nothing ratifies until nearly everything exists. A corpus of 22 interdependent
+essays would have to appear atomically. That is a topological trap, not a standard.
+
+**5.3.2 The scale.**
+
+| Grade | Means |
+|---|---|
+| `stub` | The target directory exists and carries a `STATUS.md` declaring its id, movement, and priority |
+| `declared` | The target has a `jurisdiction.yaml` that is green at G0 |
+| `ratified` | The target has passed G3 |
+
+**5.3.3 The requirement.** **G3 REQUIRES every handoff target at ≥ `stub`**, plus an
+**open-handoff register** listing each target below `ratified` together with its expected phase.
+A handoff to an id that does not exist is a dangling handoff and fails at any grade.
+
+**5.3.4 Monotonicity applies here too.** Per §5.2.1, with the same correction:
+
+- **No target regresses.** A target that has reached a grade MUST NOT descend except as a
+  recorded finding.
+- **New targets enter by admission**, tagged with expected phase. Every new essay adds handoff
+  targets and therefore *grows* the register; that is the channel operating normally, not a
+  violation.
+
+**5.3.5 Composition with §4.5.4.** A `pending-conferral` topic whose panel is green counts as
+`declared`, never `ratified`. The grade scale and the ratification mark compose; neither overrides
+the other. **Consequence, stated so it is not discovered at a gate: no artifact in the corpus is
+currently at `ratified`.** E-I.2, the only topic with a green panel, is `declared`.
+
+### 5.4 The gate report contract
+
+Every gate report carries **two lines**:
+
+```
+Disposition:  PASS | FAIL | <gate-specific verdict>
+Deferred:     <enumerated set, or "none">
+```
+
+A report omitting the second line is **malformed** and MUST NOT be recorded as a gate event. The
+vocabulary does not permit a grade to impersonate an authorization — a disposition says what was
+found; the deferred set says how much was looked at. Reporting the first without the second is how
+a partial check comes to be read as a complete one.
 
 ---
 

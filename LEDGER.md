@@ -35,12 +35,12 @@ at G0.**
 
 | Entry | Artifact | Version | Marked | Sunset |
 |---|---|---|---|---|
-| **BE-001** | `CHARTER.md` (incl. §4) | v0.2 | 2026-08-24 | *not started* |
+| **BE-001** | `CHARTER.md` (incl. §4, §5) | v0.3 | 2026-08-24 | *not started* |
 | **BE-002** | `INVARIANTS.md` | v0.1 | 2026-08-23 | *not started* |
-| **BE-003** | `services/gnomon-lint/SCHEMA.md` | v1.0 | 2026-08-23 | *not started* |
-| **BE-004** | `services/gnomon-lint/jurisdiction.schema.json` | v1.0 | 2026-08-23 | *not started* |
-| **BE-005** | `fixtures/**` — green base + 10 red | — | 2026-08-23 | *not started* |
-| **BE-006** | `ROADMAP.md` | v0.3.1 | 2026-08-24 | *not started* |
+| **BE-003** | `services/gnomon-lint/SCHEMA.md` | v1.1 | 2026-08-24 | *not started* |
+| **BE-004** | `services/gnomon-lint/jurisdiction.schema.json` | v1.1 | 2026-08-24 | *not started* |
+| **BE-005** | `fixtures/**` — green base + 12 red + expectations | — | 2026-08-24 | *not started* |
+| **BE-006** | `ROADMAP.md` | v0.3.2 | 2026-08-24 | *not started* |
 | **BE-007** | `LEDGER.md` *(this file)* | v0.1 | 2026-08-24 | *not started* |
 | **BE-008** | `tools/fixture-harness/**` | v0.1.0 | 2026-08-24 | *not started* |
 | **BE-009** | `.github/workflows/fixtures.yml` | — | 2026-08-24 | *not started* |
@@ -209,6 +209,20 @@ modes rather than an unrelated repository. Read at `main`; analysis at `foundati
 | **R-38** | **Generated artifacts and filename-versioning decay.** `service_inventory.json` is stale against its own directory with `sha256: "PENDING"`; three SHML versions coexist under two separator conventions; a download artifact `MDRE-…-v1.3 (1).md`, a typo'd filename `OERS-Specificaiton.md`, and a `nul` file are all committed. | ACCEPT → GNOMON's existing practices confirmed as deliberate divergences and now stated as such: version lives in the ledger, never the filename; a generated artifact is regenerated in CI or is not trusted (O-LDG-G02) |
 | **R-39** | **ARIADNE's `spec-index.md` may be the closest thing to a conferral record the two essays have.** It records *Fruits of the Spirit — PASS (exemplary), 2026-05-15* and reviews of Judge Not under a named 7-check rubric. GNOMON has been treating both essays as having no conferral record at all. | ACCEPT → bears directly on **O-CHT-04**. Whether an upstream coherence review under ARIADNE's rubric constitutes conferral under `CHARTER.md` §3 is a question for O-CHT-01; it is at minimum *evidence*, and recording it as nothing was an error |
 | **R-40** | **ARIADNE's 7-check review rubric has no GNOMON equivalent.** Gates G0–G3 say when review happens, not what a reviewer works through. Its **One-Paragraph Test** — can you still explain the system simply — is a system-level analogue of the Carrier Test and catches "every part is fine, the whole is now incoherent," which nothing in GNOMON does. | ACCEPT → **new open item O-CHT-07**: adopt a per-artifact review rubric at G1, including a corpus-level One-Paragraph Test. Sequenced with O-CHT-02 (review independence) at 0.7 |
+
+### Cycle 7 — closing Phase 0-alpha · 2026-08-24
+
+Roadmap 0.2 and 0.3 specified into `CHARTER.md` §5; 0.1's unfinished half (mechanizing the marks)
+completed in the schema. One defect found by doing the work.
+
+| Id | Finding | Disposition |
+|---|---|---|
+| **R-41** | **The fixture expectations had no single source.** `<name>.expected.yaml` files were written by a one-off script while the fixtures themselves came from the generator. Regenerating the suite silently destroyed all twelve expectations, and the harness — correctly — reported every red as unassertable. The suite survived only because the harness treats a missing expectation as a suite problem rather than a pass. | ACCEPT → the generator now emits each fixture **and** its expectation from one `EXPECT` table, so a fixture and its expectation cannot drift apart. The near-miss is the argument for the harness rule that made it loud: had a missing expectation counted as "no assertion, therefore fine," twelve reds would have gone quietly unchecked |
+
+**Note on R-41's shape.** It is the same defect as R-34 (ARIADNE's `service_inventory.json` stale
+against its own directory) at a smaller scale: a derived artifact maintained beside its source
+rather than generated from it. GNOMON diagnosed that in ARIADNE at cycle 6 and was carrying an
+instance of it at the time.
 
 ---
 
