@@ -1,0 +1,13 @@
+# Expectation for inv03-character-licensed.yaml
+#
+# Data, not code. The harness reads this file; it does not carry these values itself.
+# A red fixture must fail AT THIS PATH with THIS KEYWORD. "Fails at all" is how a parse
+# error impersonates a caught defect, so failing for any other reason fails the run.
+
+fixture: inv03-character-licensed
+finding: RF-09
+expect:
+  instancePath: "/strata/character"
+  keyword: enum
+why: >-
+  INV-03 hard constraint. Strata 4-5 may never be licensed, at any gate, under any mark.

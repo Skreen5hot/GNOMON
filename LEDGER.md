@@ -42,6 +42,9 @@ at G0.**
 | **BE-005** | `fixtures/**` — green base + 10 red | — | 2026-08-23 | *not started* |
 | **BE-006** | `ROADMAP.md` | v0.3.1 | 2026-08-24 | *not started* |
 | **BE-007** | `LEDGER.md` *(this file)* | v0.1 | 2026-08-24 | *not started* |
+| **BE-008** | `tools/fixture-harness/**` | v0.1.0 | 2026-08-24 | *not started* |
+| **BE-009** | `.github/workflows/fixtures.yml` | — | 2026-08-24 | *not started* |
+| **BE-010** | `.gitattributes` | — | 2026-08-24 | *not started* |
 
 **No sunset clock is running.** D-F is open: neither N nor the unit of "review cycle" is set, and
 per `CHARTER.md` §4.11 a sunset with an undefined clock binds nothing and MUST NOT be reported as
@@ -131,6 +134,21 @@ as a file — the merge record is this entry, per §4.9.3's distinction between 
 
 ---
 
+### Cycle 4 — building the fixture harness (roadmap 0.12) · 2026-08-24
+
+Findings raised by the build itself, recorded rather than silently fixed. Two of the three are
+defects in artifacts committed the day before.
+
+| Id | Finding | Disposition |
+|---|---|---|
+| **R-27** | **Id collision across registers.** The red fixtures used `R-01…R-16` and the governance findings use `R-01…R-26`, so `R-14` denoted both "vacuity asserted without a reason" (fixture) and "bootstrap mark overloaded" (finding). Two registers, one namespace — the ledger would have been ambiguous the first time either was cited without context. | ACCEPT → fixtures re-namespaced to **`RF-`**; mapping preserved so existing references keep their meaning. `fixtures/red/README.md` and `EXPECTED.md` updated |
+| **R-28** | **The line-ending CI guard was broken in the dangerous direction.** Its first draft grepped for a carriage return; passing a bare CR as a shell argument left the pattern empty, so it matched every line and reported all 56 tracked text files as CRLF while the index was entirely clean. A guard that fails on every push is deleted, after which nothing guards the invariant. | ACCEPT → rewritten with `git ls-files --eol`, which reports what git stored. Proven to fail by planting a CRLF blob with `hash-object --no-filters` |
+| **R-29** | **IE-001 overclaimed.** It stated that `eol=lf` makes the working tree byte-identical to the blob and that an anchor "no longer has to name which byte stream it means." True for a *fresh checkout* only — git does not rewrite an existing working tree, and this repository's own tree reports `i/lf w/crlf` today. The overclaim had already propagated into both corpus ledgers. | ACCEPT → claim narrowed and verified in both directions (fresh clone `i/lf w/lf`; local tree `i/lf w/crlf`). Corrected in `.gitattributes`, IE-001, and both corpus ledgers. The blob remains canonical |
+
+**On R-29's origin:** the claim was written into three files before it was tested. It was caught
+only because the CI guard of R-28 forced an examination of what git had actually stored. One
+defect surfaced another; neither was found by re-reading.
+
 ---
 
 ## 3a. Infrastructure events
@@ -152,11 +170,21 @@ chain computed on one platform would have failed verification on another.
 reproduces the new blob exactly; the change is representation, not content, and the proof is
 recorded in the affected ledger rather than asserted.
 
-`eol=lf` additionally makes the working tree byte-identical to the blob, so an anchor no longer
-has to name which byte stream it means. The ambiguity documented when the anchors were first
-taken is now removed at the source.
+`eol=lf` makes a **fresh checkout** byte-identical to the blob — confirmed against a clean clone,
+which reports `i/lf w/lf`. It does **not** rewrite an existing working tree, and this repository's
+own tree still reports `i/lf w/crlf`. The blob therefore remains canonical for every anchor.
+
+**Correction, recorded rather than quietly amended.** IE-001 as first written claimed the policy
+"removes the ambiguity at the source" and that an anchor "no longer has to name which byte stream
+it means." That was an overclaim, propagated into both corpus ledgers before it was checked. The
+narrowed and verified claim is above; the three affected passages were corrected the same day.
 
 **Anchor supersession:** one, at `corpus/I-epistemology/fruits-of-the-spirit/LEDGER.md`.
+
+### IE-002 · Fixture harness · 2026-08-24
+
+Roadmap 0.12 / O-SVC-05. See `tools/fixture-harness/README.md`. Two defects were found by
+building it, both recorded as findings at §3 cycle 4 rather than silently fixed.
 
 ---
 

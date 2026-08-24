@@ -41,13 +41,21 @@ the repair, and it is the reason this version exists.
 | Routes | ≥ 1 per essay | 0 | — |
 | Gaps filed | — | 0 | — |
 | Services | 5 + shared | 0 | — |
-| Schema | 1 | 1 (v1.0, **bootstrap**) | verified against 11 fixtures |
+| Schema | 1 | 1 (v1.0, **bootstrap**) | **witnessed** against 11 fixtures § |
 
 † E-I.2's panel validates against a schema that is itself unratified. "Conformant" here means
 *conformant to a proposal*, and it inherits that proposal's status. Marking it otherwise would be
 the same flat assertion the corpus refuses everywhere else.
 ‡ v0.2 asserted "≥ 25 rolling" while O-RTG-01 (window size) was open. The initial value is
 inherited from `README.md` with no argument attached; it is not a target until adjudicated.
+
+§ **This cell read "verified" from 2026-08-23 until 0.12 landed, and it should not have.** The
+verifier lived in a scratch directory and was discarded, so the conformance claim had no witness
+that anyone could re-run — declared, not witnessed, in the corpus's own vocabulary, and therefore
+the red discipline was reassurance for exactly as long as the cell said otherwise. It now reads
+*witnessed* because `tools/fixture-harness` is committed and runs in CI. The distinction is the
+one `services/README.md` draws between mechanical and adjudicated, applied one level up: a claim
+about a check is worth what its witness is worth.
 
 **Triptych completeness: 3 of 66 panels, 0 of 22 topics.** No topic can complete today.
 
@@ -405,6 +413,7 @@ existing artifacts are marked. A gate run after this point has vocabulary to rep
 | 0.9 | **B-4 / F-01** — version `integral-ethics.md` | S | R-09 |
 | **0.10** | **RT-1a — seed ~20 situations** with `provenance:` **and `derived_from:`** | M | R-03, **R-17**. See below |
 | 0.11 | `coupled:` relation in schema | S | R-07 |
+| **0.12** | **Fixture harness + CI** — O-SVC-05. **DONE 2026-08-24.** `tools/fixture-harness`, ESM + JSDoc, `tsc --checkJs`, expectations as per-fixture data, mutation-tested; workflow on LTS+current with a line-ending guard | S | D-E. Gives the red discipline its first witness |
 
 **0.10 is the change most likely to be skipped and should not be.** Situation *authoring* is
 cheap and depends on nothing but a provisional provenance stance. v0.2 put situations in Phase 4
@@ -565,7 +574,7 @@ regardless of what phase says otherwise.
 | **D-B** | If F-03 cannot clear, what happens to triptych completeness? | **Provisionally decided: (d) status-graded `ARCH.md`, with `essay-upstream` as a fourth status.** Confirmation gated on 0.4a. *Corrected in v0.3.1 (R-16): v0.3 marked this open while item 5.5 enacted (d) in the build order — the same theater v0.3 convicted v0.2 of.* **Delta if 0.4a surprises:** homogeneous states revive the simple options — all-ratified revives (a)-as-strictness, all-sketch means B-1 is not a blocker at all and (c) is moot. 5.5 stands **conditioned** on confirmation |
 | **D-C** | Ratify E-I.1/E-I.2 retroactively, or restate as provisional? | **Resolved by §2.1.** Restate under `ratification: pending-conferral` — *not* the bootstrap mark (R-14); corpus prose carries no self-conferred force. Exits on first conferral, not on sunset. Applies to E-I.2's **carrier** as well as both essays |
 | **D-D** | Draft ahead of the gates? | **Decided: no — option (a).** v0.2 listed this as open while its entire phase structure assumed (a); a decision table containing an already-made decision is theater. *Delta under (b):* Phase 3 could start immediately, at the cost of re-review against O-INV-01 and re-anchoring under 1.4 |
-| **D-E** | Service implementation language | **Open.** Edge-Canonical implies JS/TS. No `node_modules` committed; schema and fixtures are language-agnostic and stay that way |
+| **D-E** | Service implementation language | **Decided 2026-08-24.** Modern **ESM JavaScript**, typed via **JSDoc** with `tsc --checkJs` enforced in CI. **Zero build step** — the same file runs unmodified in Node and browser, which is the commitment's actual content. Promotion to TS is a v0.4 question with a migration note if `checkJs` proves too weak for the graph code; that cost is not pre-paid. **Runtime:** develop on Node 25 freely; CI pins active LTS as the floor (`engines` + `.nvmrc`) and runs an LTS + current matrix. **Dependencies:** fixtures and schema stay language-agnostic data; harnesses may take a minimal pinned dev-set (`yaml`, `ajv`) with a lockfile. Cores stay pure; dual-host equivalence still gates service ratification per R-13, not first use |
 | **D-F** | Sunset N for bootstrap marks | **Open.** Must settle **the unit as well as the value** (R-19): "N review cycles" is undefined — cycles of *what*, counted corpus-wide or per-artifact? A per-artifact count lets a rarely-reviewed governance document outlive its bootstrap indefinitely. Set in `CHARTER.md` at 0.6. Applies to `ratified-under: bootstrap` only; `ratification: pending-conferral` has no sunset |
 
 ---
@@ -689,4 +698,5 @@ was wrong about the mechanism (referent change vs. lossy summary). Both halves a
 | 2026-08-23 | **SVC-1 unblocked.** `jurisdiction.yaml` schema v1.0, fixing five v0 defects. Declaration vocabulary fixed (witness required; no waiver). Both panels migrated — E-I.2 clean, E-I.1 fails on 15 real defects. Green base + ten red one-factor deltas verified failing at expected paths. | `INVARIANTS.md`, `services/gnomon-lint/`, both panels, `fixtures/` |
 | 2026-08-23 | Roadmap v0.2: dependency graph, six-phase order, coupling points. Surfaced B-1. | `ROADMAP.md` |
 | 2026-08-23 | **Roadmap v0.3** after adversarial review. Thirteen findings, all accepted. Root defect: partiality defined for checks and nothing else, leaving a plan that could not start (R-01) or ratify (R-04). Added the Bootstrap Protocol, deferral monotonicity, handoff grades, the F-03 resolution table, and the gap-preemption rule; pulled situations to Phase 0. **Content anchors recorded for all three ratified panels.** | `ROADMAP.md`, both `LEDGER.md` |
+| 2026-08-24 | **0.12 — fixture harness (O-SVC-05).** D-E decided: ESM + JSDoc + `tsc --checkJs`, zero build step, LTS floor. `tools/fixture-harness` committed with expectations as per-fixture data and a CI workflow on LTS+current. **The status table's "verified against 11 fixtures" is corrected to "witnessed"** — the prior verifier lived in scratch and was discarded, so the claim had no witness and the red discipline was reassurance. Three findings raised by the build (R-27 id collision, R-28 broken CI guard, R-29 IE-001 overclaim), all accepted; see `LEDGER.md` §3 cycle 4. | `tools/fixture-harness/`, `.github/`, `.gitattributes`, `fixtures/`, `LEDGER.md`, `LICENSE` |
 | 2026-08-24 | **Roadmap v0.3.1** — point release after a second cycle against v0.3's own machinery. Six findings, all accepted, one partially corrected. Bootstrap mark split into two fields with disjoint scopes (R-14); monotonicity restated as no-regression + admission rather than set-shrinkage, which the first new essay would have violated by existing (R-15); D-B marked provisionally decided rather than open-while-enacted (R-16); `derived_from:` firewall added so harvested situations cannot self-confirm coverage (R-17); `essay-upstream` added, splitting B-1 into blocking and generative halves (R-18); register retention convention fixed and Phase 0 staged into 0-alpha/0-beta (R-19). No content anchors changed. | `ROADMAP.md` |

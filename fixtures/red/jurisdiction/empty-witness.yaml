@@ -1,4 +1,4 @@
-# RED fixture — R-13
+# RED fixture — RF-13
 # Schema: services/gnomon-lint/jurisdiction.schema.json
 # A declaration with an empty witness list. Asserting conformance while pointing nowhere is the exact defect the witness rule exists to catch.
 #

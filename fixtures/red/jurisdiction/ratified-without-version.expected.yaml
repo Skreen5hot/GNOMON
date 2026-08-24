@@ -1,0 +1,13 @@
+# Expectation for ratified-without-version.yaml
+#
+# Data, not code. The harness reads this file; it does not carry these values itself.
+# A red fixture must fail AT THIS PATH with THIS KEYWORD. "Fails at all" is how a parse
+# error impersonates a caught defect, so failing for any other reason fails the run.
+
+fixture: ratified-without-version
+finding: RF-16
+expect:
+  instancePath: "/version"
+  keyword: type
+why: >-
+  A ratified essay carries a version.

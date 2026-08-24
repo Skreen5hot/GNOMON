@@ -1,0 +1,30 @@
+{
+  "name": "@gnomon/fixture-harness",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Fixture harness for the jurisdiction schema. Asserts the green base validates clean and every red fixture fails AT ITS EXPECTED PATH. Not gnomon-lint; absorbed by it at roadmap 1.2.",
+  "license": "Apache-2.0",
+  "type": "module",
+  "exports": {
+    ".": "./src/harness.js",
+    "./node": "./src/node.js"
+  },
+  "bin": {
+    "gnomon-fixtures": "./src/cli.js"
+  },
+  "engines": {
+    "node": ">=24.0.0"
+  },
+  "scripts": {
+    "test": "node src/cli.js",
+    "typecheck": "tsc --noEmit -p jsconfig.json"
+  },
+  "dependencies": {
+    "ajv": "8.17.1",
+    "yaml": "2.6.1"
+  },
+  "devDependencies": {
+    "@types/node": "22.10.2",
+    "typescript": "5.7.2"
+  }
+}

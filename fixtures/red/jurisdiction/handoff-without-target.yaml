@@ -1,4 +1,4 @@
-# RED fixture — R-11
+# RED fixture — RF-11
 # Schema: services/gnomon-lint/jurisdiction.schema.json
 # A declined question disposed as handoff with no `to`. The v0 shape's defect: routing that goes nowhere a parser can follow.
 #

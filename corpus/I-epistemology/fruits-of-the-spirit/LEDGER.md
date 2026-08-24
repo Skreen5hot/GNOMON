@@ -16,10 +16,9 @@ chain.
 |---|---|---|
 | `ESSAY.md` | `879f46cec1b7be0ed276398355129c51cd309f732e2caa145481a441acf109bb` | 66288 |
 
-**Anchored byte stream: the committed git blob.** Since `.gitattributes` (2026-08-24) the working
-tree is byte-identical to the blob, so `sha256sum ESSAY.md` and
-`git show HEAD:<path> | sha256sum` now agree and the anchor no longer depends on which stream is
-meant.
+**Anchored byte stream: the committed git blob**, which remains canonical. `.gitattributes`
+(2026-08-24) makes a *fresh checkout* byte-identical to the blob, but does not rewrite a working
+tree that already exists — see `../judge-not/LEDGER.md`.
 
 #### Anchor supersession — 2026-08-24
 

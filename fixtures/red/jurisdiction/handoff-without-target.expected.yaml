@@ -1,0 +1,13 @@
+# Expectation for handoff-without-target.yaml
+#
+# Data, not code. The harness reads this file; it does not carry these values itself.
+# A red fixture must fail AT THIS PATH with THIS KEYWORD. "Fails at all" is how a parse
+# error impersonates a caught defect, so failing for any other reason fails the run.
+
+fixture: handoff-without-target
+finding: RF-11
+expect:
+  instancePath: "/does_not_decide/0"
+  keyword: required
+why: >-
+  Routing that goes nowhere a parser can follow - the v0 defect where handoffs lived in YAML comments.

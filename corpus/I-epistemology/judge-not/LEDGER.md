@@ -26,16 +26,19 @@ were already stored LF and were **not** affected by the 2026-08-24 line-ending n
 values above are original. (`../fruits-of-the-spirit/LEDGER.md` records a supersession, because
 that file was one of the two stored with CRLF.)
 
-Naming the byte stream was load-bearing when these anchors were taken: `ESSAY.md` hashed
-differently in the working tree than in the blob, so an anchor that did not say which it meant
-would have verified green on one machine and red on the next. Since `.gitattributes` the working
-tree is byte-identical to the blob and the ambiguity is removed rather than merely documented —
-both of these now verify either way:
+Naming the byte stream is load-bearing and remains so. Verify against the blob:
 
 ```
-git show HEAD:corpus/I-epistemology/judge-not/ESSAY.md | sha256sum
-sha256sum corpus/I-epistemology/judge-not/ESSAY.md
+git cat-file blob $(git rev-parse HEAD:corpus/I-epistemology/judge-not/ESSAY.md) | sha256sum
 ```
+
+`.gitattributes` (2026-08-24) narrows the exposure without removing it. In a **fresh checkout**
+the working tree is byte-identical to the blob and `sha256sum <file>` agrees — confirmed against
+a clean clone. But git does not rewrite a working tree that already exists, so a tree predating
+the policy can still hold CRLF against an LF index; this repository's own tree reports
+`i/lf w/crlf` today. An anchor verified against such a tree fails for no reason at all.
+
+**The blob is canonical. The working tree is a convenience that is only sometimes equal to it.**
 
 These anchors prove **integrity, not provenance**. They establish that the text has not changed
 since 2026-08-23; they do not establish that this is the text a reviewer ratified, because no

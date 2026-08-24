@@ -1,4 +1,4 @@
-# RED fixture — R-01
+# RED fixture — RF-01
 # Schema: services/gnomon-lint/jurisdiction.schema.json
 # does_not_decide is empty. THE load-bearing check: an essay that declines to declare its limits fails lint before it reaches review.
 #

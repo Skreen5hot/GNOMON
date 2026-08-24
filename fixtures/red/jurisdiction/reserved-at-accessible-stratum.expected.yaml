@@ -1,0 +1,13 @@
+# Expectation for reserved-at-accessible-stratum.yaml
+#
+# Data, not code. The harness reads this file; it does not carry these values itself.
+# A red fixture must fail AT THIS PATH with THIS KEYWORD. "Fails at all" is how a parse
+# error impersonates a caught defect, so failing for any other reason fails the run.
+
+fixture: reserved-at-accessible-stratum
+finding: RF-12
+expect:
+  instancePath: "/does_not_decide/1/stratum"
+  keyword: enum
+why: >-
+  Only character and destiny reserve. Dressing an ordinary omission as a sacred limit must fail.

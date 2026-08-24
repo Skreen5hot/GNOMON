@@ -18,24 +18,24 @@ So the assertion is on the **path**, not the exit code.
 
 | Fixture | File | Expected failure path |
 |---|---|---|
-| **R-01** | `empty-does-not-decide.yaml` | `does_not_decide` |
-| **R-06** | `bare-declared.yaml` | `invariants/INV-01` |
-| **R-09** | `inv03-character-licensed.yaml` | `strata/character` |
-| **R-10** | `inv03-destiny-defeasible.yaml` | `strata/destiny` |
-| **R-11** | `handoff-without-target.yaml` | `does_not_decide/0` |
-| **R-12** | `reserved-at-accessible-stratum.yaml` | `does_not_decide/1/stratum` |
-| **R-13** | `empty-witness.yaml` | `invariants/INV-01/witness` |
-| **R-14** | `vacuous-without-reason.yaml` | `invariants/INV-04` |
-| **R-15** | `vacuity-on-universal-invariant.yaml` | `invariants/INV-01/status` |
-| **R-16** | `ratified-without-version.yaml` | `version` |
+| **RF-01** | `empty-does-not-decide.yaml` | `does_not_decide` |
+| **RF-06** | `bare-declared.yaml` | `invariants/INV-01` |
+| **RF-09** | `inv03-character-licensed.yaml` | `strata/character` |
+| **RF-10** | `inv03-destiny-defeasible.yaml` | `strata/destiny` |
+| **RF-11** | `handoff-without-target.yaml` | `does_not_decide/0` |
+| **RF-12** | `reserved-at-accessible-stratum.yaml` | `does_not_decide/1/stratum` |
+| **RF-13** | `empty-witness.yaml` | `invariants/INV-01/witness` |
+| **RF-14** | `vacuous-without-reason.yaml` | `invariants/INV-04` |
+| **RF-15** | `vacuity-on-universal-invariant.yaml` | `invariants/INV-01/status` |
+| **RF-16** | `ratified-without-version.yaml` | `version` |
 
 ## Not covered here
 
 These are schema-level checks over a single file. Faults spanning files — a dangling handoff
-to a nonexistent essay (R-02), an orphaned essay no situation routes to (R-03), a broken ledger
-hash chain (R-04), a carrier claiming undeclared jurisdiction (R-05) — need the corpus graph and
+to a nonexistent essay (RF-02), an orphaned essay no situation routes to (RF-03), a broken ledger
+hash chain (RF-04), a carrier claiming undeclared jurisdiction (RF-05) — need the corpus graph and
 belong to `gnomon-xref`, `gnomon-route`, and `gnomon-ledger`. See `../README.md`.
 
-Note what the schema made impossible rather than caught: **R-07** (a handoff resolving to an id
-whose directory is empty) cannot be expressed as a single-file fixture at all, and **R-08** (a
+Note what the schema made impossible rather than caught: **RF-07** (a handoff resolving to an id
+whose directory is empty) cannot be expressed as a single-file fixture at all, and **RF-08** (a
 strata-4 verdict in vernacular prose) remains outside mechanical reach by construction.

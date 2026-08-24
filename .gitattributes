@@ -9,10 +9,19 @@
 # stored with CRLF and 68 with LF, by accident of how they were uploaded. See LEDGER.md
 # and the anchor supersession recorded in the two corpus ledgers.
 #
-# `eol=lf` is deliberate and does more than pick a convention: it makes the working tree
-# byte-identical to the stored blob. A hash taken with `sha256sum <file>` then equals one
-# taken with `git show HEAD:<file> | sha256sum`, so an anchor no longer has to name which
-# byte stream it means. The ambiguity is removed rather than documented.
+# `eol=lf` is deliberate and does more than pick a convention: in a FRESH CHECKOUT it makes
+# the working tree byte-identical to the stored blob, so `sha256sum <file>` equals
+# `git cat-file blob <rev>:<file> | sha256sum`.
+#
+# It does NOT retroactively rewrite an existing working tree — git leaves already-present
+# files alone — so a tree that predates this policy can still hold CRLF while the index
+# holds LF. The anchors therefore continue to name the committed blob as canonical. Verified
+# both ways: a fresh clone reports `i/lf w/lf`, this repository's pre-existing tree reports
+# `i/lf w/crlf`. Refresh a stale tree with `git rm --cached -r . && git reset --hard`.
+#
+# Check what git actually stored with `git ls-files --eol`, never by grepping for a carriage
+# return — passing a bare CR as a shell argument silently yields an empty pattern that
+# matches every line. See .github/workflows/fixtures.yml.
 
 * text=auto eol=lf
 

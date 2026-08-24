@@ -1,0 +1,13 @@
+# Expectation for vacuity-on-universal-invariant.yaml
+#
+# Data, not code. The harness reads this file; it does not carry these values itself.
+# A red fixture must fail AT THIS PATH with THIS KEYWORD. "Fails at all" is how a parse
+# error impersonates a caught defect, so failing for any other reason fails the run.
+
+fixture: vacuity-on-universal-invariant
+finding: RF-15
+expect:
+  instancePath: "/invariants/INV-01/status"
+  keyword: const
+why: >-
+  INV-01 is stated universally, so vacuity is not available to it.

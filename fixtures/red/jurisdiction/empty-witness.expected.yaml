@@ -1,0 +1,13 @@
+# Expectation for empty-witness.yaml
+#
+# Data, not code. The harness reads this file; it does not carry these values itself.
+# A red fixture must fail AT THIS PATH with THIS KEYWORD. "Fails at all" is how a parse
+# error impersonates a caught defect, so failing for any other reason fails the run.
+
+fixture: empty-witness
+finding: RF-13
+expect:
+  instancePath: "/invariants/INV-01/witness"
+  keyword: minItems
+why: >-
+  Asserting conformance while pointing nowhere is exactly what the witness rule exists to catch.

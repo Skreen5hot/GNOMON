@@ -1,0 +1,92 @@
+# Fixture harness — roadmap 0.12 / O-SVC-05.
+#
+# Enforces the red discipline the corpus has claimed since the fixtures were seeded:
+#
+#   "CI passes only if every red fixture fails."
+#
+# Until this workflow existed the claim had no witness. The verifier lived in a scratch
+# directory and was discarded, so "verified against 11 fixtures" was declared, not witnessed —
+# the corpus's own distinction, applied to the corpus.
+#
+# Scope: this runs the fixture harness only. It does not lint the corpus. E-I.1's panel is
+# non-conformant on purpose and gnomon-lint (roadmap 1.2) is what will report it; a workflow
+# that quietly grew into a corpus linter would be a service nobody reviewed.
+
+name: fixtures
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+defaults:
+  run:
+    working-directory: tools/fixture-harness
+
+jobs:
+  harness:
+    name: harness (node ${{ matrix.node }})
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        # Active LTS is the supported floor and matches .nvmrc + the engines field.
+        # Current is run so that a break arrives here rather than at the next LTS promotion.
+        node: ['24', '25']
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node }}
+          cache: npm
+          cache-dependency-path: tools/fixture-harness/package-lock.json
+
+      - name: Install (locked)
+        run: npm ci
+
+      - name: Typecheck — tsc --checkJs over JSDoc
+        run: npm run typecheck
+
+      - name: Fixture harness
+        # Exits non-zero unless the green base validates clean AND every red fixture fails
+        # at its expected instancePath with its expected keyword. Failing for any other
+        # reason fails the run: "fails at all" is how a parse error impersonates a caught
+        # defect, and an earlier draft of this suite did exactly that on all ten reds.
+        run: npm test
+
+  line-endings:
+    name: line endings
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: .
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: No CRLF in the index
+        # .gitattributes pins eol=lf so that a content anchor need not name its byte stream
+        # and a ledger hash chain verifies identically on every platform. This guards the
+        # invariant rather than trusting it: the repository had already drifted once, with
+        # 2 of 70 text files stored CRLF by accident of upload.
+        #
+        # Uses `git ls-files --eol`, which reports what git actually stored, rather than
+        # grepping for a carriage return. The first draft of this step did the latter and
+        # was wrong in the dangerous direction: passing a bare CR as a shell argument left
+        # the pattern empty, so it matched every line of every file and reported all 56
+        # tracked text files as CRLF. A guard that cries wolf on every push gets deleted,
+        # and then nothing guards the invariant at all.
+        run: |
+          bad=$(git ls-files --eol -- '*.md' '*.yaml' '*.yml' '*.json' \
+                | awk '$1 ~ /crlf|mixed/ { print $NF }')
+          if [ -n "$bad" ]; then
+            echo "::error::CRLF or mixed endings in the index:"
+            echo "$bad"
+            exit 1
+          fi
+          echo "clean — every tracked text file is stored LF"

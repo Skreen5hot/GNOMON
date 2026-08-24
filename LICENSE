@@ -26,6 +26,8 @@ corpus/**/sources.lock      Apache-2.0       machine-readable; consumed by gnomo
 routing/**/*.md             CC BY-SA 4.0     protocol, situations
 routing/**/*.yaml           Apache-2.0       routes; consumed by gnomon-route
 services/**                 Apache-2.0       tooling
+tools/**                    Apache-2.0       harnesses and scripts, incl. their .md files
+.github/**                  Apache-2.0       CI workflows
 fixtures/**                 Apache-2.0       test corpora, including their .md files
 foundations/**              see below        inherited documents — license is upstream's to set
 *.md (repository root)      CC BY-SA 4.0     README, CHARTER, INVARIANTS, SPINE, GLOSSARY, ROADMAP
