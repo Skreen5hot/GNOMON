@@ -7,6 +7,25 @@ chain.
 
 ---
 
+## Pre-chain content anchor
+
+**Recorded 2026-08-23.** Pre-chain: unwitnessed, self-recorded, to be re-anchored when
+`gnomon-ledger` exists (O-LDG-F04).
+
+| Panel | SHA-256 | Bytes |
+|---|---|---|
+| `ESSAY.md` | `14c0fdc78811fa323b60aee32096c6fabf4c7e357c37547fdcd5c8e579561735` | 67055 |
+
+**Anchored byte stream: the committed git blob**, at commit `dc85db5`. See
+`../judge-not/LEDGER.md` for why the byte stream must be named — the two essays normalize
+differently, and this one happens to match its working-tree hash while the other does not.
+
+The anchor proves **integrity, not provenance**, and here the gap is wider than for E-I.2: there
+is no version line in the text, no conferral record, and no v1.0 on file to supersede. What is
+anchored is *a* text claimed to be v2.0, not a text shown to be it.
+
+---
+
 ## Version chain
 
 | Version | Gate | Date | Note |

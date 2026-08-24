@@ -9,6 +9,35 @@ identity, and the G1/G2 dates. See Open items.
 
 ---
 
+## Pre-chain content anchors
+
+**Recorded 2026-08-23.** `gnomon-ledger` does not exist, so no hash chain protects these texts.
+Until it does, these anchors are the only evidence that the files in this directory are the texts
+that were ratified. They are **pre-chain**: unwitnessed, self-recorded, and to be re-anchored
+into the chain when it exists (O-LDG-J05).
+
+| Panel | SHA-256 | Bytes |
+|---|---|---|
+| `ESSAY.md` | `579416aafb011dfae13a61aa51782cda8efaa1ab67950d022281fd494decb2a0` | 73840 |
+| `CARRIER.md` | `198cdad3a9af8c1baf06ed028d9baf6e6441f51b4ec9b763f73076584d57c43d` | 21394 |
+
+**Anchored byte stream: the committed git blob**, at commit `dc85db5`. This is load-bearing and
+not a formality — `ESSAY.md` hashes *differently* in the working tree, because git normalized its
+line endings on commit while `../fruits-of-the-spirit/ESSAY.md` was already CRLF and did not
+change. An anchor that does not name its byte stream would have verified green on one machine
+and red on the next. Verify with:
+
+```
+git show <commit>:corpus/I-epistemology/judge-not/ESSAY.md | sha256sum
+```
+
+These anchors prove **integrity, not provenance**. They establish that the text has not changed
+since 2026-08-23; they do not establish that this is the text a reviewer ratified, because no
+conferral record exists (O-LDG-J01). A hash over an unwitnessed adjudication proves only that
+nobody edited the unwitnessed thing.
+
+---
+
 ## Version chain
 
 | Version | Gate | Date | Note |
